@@ -1,0 +1,124 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+  <meta name="theme-color" content="#f6f3ef">
+  <title>Asteria · Home Visual Prototype</title>
+  <link rel="stylesheet" href="./styles.css">
+</head>
+<body>
+  <main class="app-shell" id="app">
+    <header class="topbar" aria-label="Asteria header">
+      <div class="brand-wrap">
+        <div class="brand">Asteria</div>
+        <div class="brand-star">✦</div>
+      </div>
+      <div class="weather" aria-label="weather mock">
+        <span class="weather-dot"></span>
+        <span>26°C</span>
+      </div>
+    </header>
+
+    <section class="relationship" aria-label="relationship and calendar">
+      <div class="photo-stage" id="photoStage">
+        <div class="photo-placeholder" id="photoPlaceholder">
+          <div class="portrait portrait-left">S</div>
+          <div class="portrait portrait-right">N</div>
+        </div>
+        <img id="photoPreview" alt="本地照片预览" draggable="false">
+
+        <div class="photo-overlay side-left" id="photoOverlay">
+          <p class="eyebrow">Shen & Nuo</p>
+          <p class="days"><span>相遇</span><strong>256</strong><span>天</span></p>
+          <p class="motto">有你在的每一天，都值得被记住。</p>
+        </div>
+
+        <div class="photo-controls">
+          <label class="mini-btn" for="photoInput">换照片</label>
+          <input id="photoInput" type="file" accept="image/*" hidden>
+          <button class="mini-btn" id="sideToggle" type="button">文字换边</button>
+          <button class="mini-btn" id="zoomOut" type="button" aria-label="缩小照片">−</button>
+          <button class="mini-btn" id="zoomIn" type="button" aria-label="放大照片">＋</button>
+        </div>
+      </div>
+
+      <button class="week-strip" id="calendarToggle" type="button" aria-expanded="false">
+        <span class="month">SEP <small>2026</small></span>
+        <span class="day"><b>SUN</b><i>13</i></span>
+        <span class="day"><b>MON</b><i>14</i></span>
+        <span class="day current"><b>TUE</b><i>15</i></span>
+        <span class="day"><b>WED</b><i>16</i></span>
+        <span class="day"><b>THU</b><i>17</i></span>
+        <span class="day"><b>FRI</b><i>18</i></span>
+        <span class="day"><b>SAT</b><i>19</i></span>
+        <span class="calendar-mark" aria-hidden="true">⌄</span>
+      </button>
+
+      <div class="month-panel" id="monthPanel" hidden>
+        <div class="month-panel-head">
+          <strong>September 2026</strong>
+          <button type="button" id="calendarClose" aria-label="收起月历">收起</button>
+        </div>
+        <div class="month-grid" aria-label="month calendar mock">
+          <span class="weekday">一</span><span class="weekday">二</span><span class="weekday">三</span><span class="weekday">四</span><span class="weekday">五</span><span class="weekday">六</span><span class="weekday">日</span>
+          <i class="muted">31</i><i>1</i><i>2</i><i>3</i><i>4</i><i>5</i><i>6</i>
+          <i>7</i><i>8</i><i>9</i><i>10</i><i>11</i><i>12</i><i>13</i>
+          <i>14</i><i class="selected">15</i><i>16</i><i>17</i><i>18</i><i>19</i><i>20</i>
+          <i>21</i><i>22</i><i>23</i><i>24</i><i>25</i><i>26</i><i>27</i>
+          <i>28</i><i>29</i><i>30</i><i class="muted">1</i><i class="muted">2</i><i class="muted">3</i><i class="muted">4</i>
+        </div>
+      </div>
+    </section>
+
+    <section class="message-zone" aria-label="today note">
+      <div class="paper paper-back paper-back-one"></div>
+      <div class="paper paper-back paper-back-two"></div>
+      <article class="note-card">
+        <div class="clip" aria-hidden="true"></div>
+        <div class="ribbon" aria-hidden="true"><span></span><span></span><em></em></div>
+        <p class="note-title">To. Nuo</p>
+        <p class="note-copy">今天也想把一点东西留在这里。</p>
+        <div class="reply">
+          <span class="reply-line"></span>
+          <p><strong>From. Shen</strong><br>我看见啦。</p>
+        </div>
+      </article>
+    </section>
+
+    <section class="trace-wrap">
+      <button class="trace-trigger" id="traceToggle" type="button" aria-expanded="false">
+        <span class="trace-accent"></span>
+        <span class="trace-label">今日足迹 · 3</span>
+        <span class="trace-arrow">›</span>
+      </button>
+      <div class="trace-panel" id="tracePanel" hidden>
+        <div><time>10:24</time><p>Shen 在日记里留下一页。</p></div>
+        <div><time>14:37</time><p>Nuo 带回一份小礼物。</p></div>
+        <div><time>20:11</time><p>我们一起修改了 Asteria 大厅。</p></div>
+      </div>
+    </section>
+
+    <nav class="room-row" aria-label="Asteria room entries">
+      <button type="button" data-room="Shen"><span class="room-icon">S</span><span>Shen</span><i></i></button>
+      <button type="button" data-room="Nuo"><span class="room-icon">N</span><span>Nuo</span><i></i></button>
+      <button type="button" data-room="Letters"><span class="room-icon">✉</span><span>Letters</span><i class="notice"></i></button>
+      <button type="button" data-room="Diary"><span class="room-icon">▤</span><span>Diary</span><i></i></button>
+      <button type="button" data-room="Studio"><span class="room-icon">✦</span><span>Studio</span><i></i></button>
+    </nav>
+
+    <nav class="dock" aria-label="primary navigation">
+      <button class="active" type="button" data-nav="Home"><span>⌂</span><b>Home</b></button>
+      <button type="button" data-nav="Chat"><span>◌</span><b>Chat</b></button>
+      <button type="button" data-nav="Mind"><span>◐</span><b>Mind</b></button>
+      <button type="button" data-nav="Memory"><span>◇</span><b>Memory</b></button>
+      <button type="button" data-nav="Detour"><span>↗</span><b>Detour</b></button>
+    </nav>
+
+    <p class="mock-note">Visual prototype · local mock data only</p>
+    <div class="toast" id="toast" role="status" aria-live="polite"></div>
+  </main>
+
+  <script src="./app.js"></script>
+</body>
+</html>
