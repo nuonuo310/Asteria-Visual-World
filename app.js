@@ -158,6 +158,15 @@
     button.addEventListener('click', () => showToast(`${button.dataset.room} 尚未接入`));
   });
 
+  const themeButtons = root.querySelectorAll('[data-theme-choice]');
+  themeButtons.forEach((button) => {
+    button.addEventListener('click', () => {
+      const choice = button.dataset.themeChoice;
+      document.body.classList.toggle('theme-b', choice === 'b');
+      themeButtons.forEach((item) => item.classList.toggle('active', item === button));
+    });
+  });
+
   root.querySelectorAll('[data-nav]').forEach((button) => {
     button.addEventListener('click', () => {
       root.querySelectorAll('[data-nav]').forEach((item) => item.classList.remove('active'));
