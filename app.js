@@ -27,6 +27,8 @@
   let toastTimer;
   let baseWidth = 0;
   let baseHeight = 0;
+  let pinchStartDistance = 0;
+  let pinchStartScale = 1;
 
   function renderPhoto() {
     photoPreview.style.width = baseWidth ? `${baseWidth}px` : 'auto';
@@ -37,9 +39,9 @@
   function fitPhoto() {
     if (!photoPreview.naturalWidth || !photoPreview.naturalHeight) return;
     const box = stage.getBoundingClientRect();
-    const fit = Math.min(box.width / photoPreview.naturalWidth, box.height / photoPreview.naturalHeight);
-    baseWidth = photoPreview.naturalWidth * fit;
-    baseHeight = photoPreview.naturalHeight * fit;
+    const cover = Math.max(box.width / photoPreview.naturalWidth, box.height / photoPreview.naturalHeight);
+    baseWidth = photoPreview.naturalWidth * cover;
+    baseHeight = photoPreview.naturalHeight * cover;
     scale = 1;
     offsetX = 0;
     offsetY = 0;
@@ -112,6 +114,26 @@
   });
   photoPreview.addEventListener('pointerup', () => dragging = false);
   photoPreview.addEventListener('pointercancel', () => dragging = false);
+
+  stage.addEventListener('touchstart', (e) => {
+    if (e.touches.length !== 2 || !photoPreview.naturalWidth) return;
+    const [a, b] = e.touches;
+    pinchStartDistance = Math.hypot(b.clientX - a.clientX, b.clientY - a.clientY);
+    pinchStartScale = scale;
+  }, { passive: true });
+
+  stage.addEventListener('touchmove', (e) => {
+    if (e.touches.length !== 2 || !pinchStartDistance) return;
+    e.preventDefault();
+    const [a, b] = e.touches;
+    const distance = Math.hypot(b.clientX - a.clientX, b.clientY - a.clientY);
+    scale = Math.max(.35, Math.min(3.5, pinchStartScale * distance / pinchStartDistance));
+    renderPhoto();
+  }, { passive: false });
+
+  stage.addEventListener('touchend', (e) => {
+    if (e.touches.length < 2) pinchStartDistance = 0;
+  }, { passive: true });
 
   function setCalendar(open) {
     monthPanel.hidden = !open;
