@@ -102,34 +102,57 @@
           <p class="footprints-kicker">Today, together</p>
           <h2>今日足迹</h2>
         </div>
-        <span class="footprints-count">3 traces</span>
+        <span class="footprints-count">4 traces</span>
       </div>
 
       <div class="footprints-board">
-        <svg class="footprints-path" viewBox="0 0 120 360" preserveAspectRatio="none" aria-hidden="true">
-          <path d="M58 6 C48 66, 73 104, 58 166 S42 258, 66 354" />
+        <svg class="footprints-path" viewBox="0 0 120 560" preserveAspectRatio="none" aria-hidden="true">
+          <path d="M60 8 C42 72, 78 128, 55 192 C38 241, 78 302, 62 360 C48 410, 76 475, 57 550" />
         </svg>
 
-        <article class="footprint footprint-left">
-          <span class="footprint-dot"></span>
-          <time>10:24</time>
-          <p>我们换上了一张新的照片。</p>
-        </article>
+        <button class="footprint-card footprint-card-left is-active" type="button" data-footprint>
+          <span class="footprint-node" aria-hidden="true"></span>
+          <div class="footprint-title">
+            <span class="footprint-star">✦</span>
+            <strong>一起</strong>
+            <em>Together</em>
+          </div>
+          <p>一起听了会儿歌，又把 Asteria 的一个坑填上了。</p>
+          <small>今天共同做过的事</small>
+        </button>
 
-        <article class="footprint footprint-right footprint-paper">
-          <span class="footprint-dot"></span>
-          <span class="paper-corner" aria-hidden="true"></span>
-          <time>14:37</time>
-          <p>Nuo 带回来一份想留进 Home 的小东西。</p>
-          <small>Asteria Home · visual day</small>
-        </article>
+        <button class="footprint-card footprint-card-right" type="button" data-footprint>
+          <span class="footprint-node" aria-hidden="true"></span>
+          <div class="footprint-title">
+            <span class="footprint-star">✦</span>
+            <strong>捎给你</strong>
+            <em>For You</em>
+          </div>
+          <p>沈述给糯糯点了一杯奶茶，还留下一小段代码。</p>
+          <small>特意给彼此留下的东西</small>
+        </button>
 
-        <article class="footprint footprint-left footprint-final">
-          <span class="footprint-dot"></span>
-          <time>20:11</time>
-          <p>我们一起把大厅改得更像家了一点。</p>
-          <span class="footprint-mark">✦</span>
-        </article>
+        <button class="footprint-card footprint-card-left" type="button" data-footprint>
+          <span class="footprint-node" aria-hidden="true"></span>
+          <div class="footprint-title">
+            <span class="footprint-star">✦</span>
+            <strong>小家伙们</strong>
+            <em>Little Ones</em>
+          </div>
+          <p>沈小述今天又在桌面上耍赖，狗狗们也被惦记着。</p>
+          <small>家里的小生命</small>
+        </button>
+
+        <button class="footprint-card footprint-card-right" type="button" data-footprint>
+          <span class="footprint-node" aria-hidden="true"></span>
+          <div class="footprint-title">
+            <span class="footprint-star">✦</span>
+            <strong>带回来</strong>
+            <em>Brought Home</em>
+          </div>
+          <p>糯糯找回一批新的排版灵感，带回家一起挑。</p>
+          <small>各自出去后，又带回彼此之间的东西</small>
+        </button>
       </div>
     </section>
 
