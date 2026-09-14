@@ -8,6 +8,9 @@
   const sideToggle = document.getElementById('sideToggle');
   const zoomIn = document.getElementById('zoomIn');
   const zoomOut = document.getElementById('zoomOut');
+  const editorToggle = document.getElementById('editorToggle');
+  const photoControls = document.getElementById('photoControls');
+  const photoReset = document.getElementById('photoReset');
   const calendarToggle = document.getElementById('calendarToggle');
   const calendarClose = document.getElementById('calendarClose');
   const monthPanel = document.getElementById('monthPanel');
@@ -22,9 +25,25 @@
   let startX = 0;
   let startY = 0;
   let toastTimer;
+  let baseWidth = 0;
+  let baseHeight = 0;
 
   function renderPhoto() {
+    photoPreview.style.width = baseWidth ? `${baseWidth}px` : 'auto';
+    photoPreview.style.height = baseHeight ? `${baseHeight}px` : 'auto';
     photoPreview.style.transform = `translate(calc(-50% + ${offsetX}px), calc(-50% + ${offsetY}px)) scale(${scale})`;
+  }
+
+  function fitPhoto() {
+    if (!photoPreview.naturalWidth || !photoPreview.naturalHeight) return;
+    const box = stage.getBoundingClientRect();
+    const fit = Math.min(box.width / photoPreview.naturalWidth, box.height / photoPreview.naturalHeight);
+    baseWidth = photoPreview.naturalWidth * fit;
+    baseHeight = photoPreview.naturalHeight * fit;
+    scale = 1;
+    offsetX = 0;
+    offsetY = 0;
+    renderPhoto();
   }
 
   function showToast(message) {
@@ -47,14 +66,21 @@
       photoPreview.src = String(reader.result || '');
       photoPreview.style.display = 'block';
       photoPlaceholder.style.display = 'none';
-      scale = 1;
-      offsetX = 0;
-      offsetY = 0;
-      renderPhoto();
-      showToast('照片只在当前浏览器预览');
+      photoPreview.onload = () => {
+        fitPhoto();
+        showToast('照片只在当前浏览器预览');
+      };
     };
     reader.readAsDataURL(file);
   });
+
+  editorToggle.addEventListener('click', () => {
+    const open = photoControls.hidden;
+    photoControls.hidden = !open;
+    editorToggle.setAttribute('aria-expanded', String(open));
+  });
+
+  photoReset.addEventListener('click', fitPhoto);
 
   sideToggle.addEventListener('click', () => {
     const left = overlay.classList.contains('side-left');
@@ -63,12 +89,12 @@
   });
 
   zoomIn.addEventListener('click', () => {
-    scale = Math.min(2.2, +(scale + .1).toFixed(2));
+    scale = Math.min(3.5, +(scale + .1).toFixed(2));
     renderPhoto();
   });
 
   zoomOut.addEventListener('click', () => {
-    scale = Math.max(.8, +(scale - .1).toFixed(2));
+    scale = Math.max(.35, +(scale - .1).toFixed(2));
     renderPhoto();
   });
 
@@ -80,8 +106,8 @@
   });
   photoPreview.addEventListener('pointermove', (e) => {
     if (!dragging) return;
-    offsetX = Math.max(-120, Math.min(120, e.clientX - startX));
-    offsetY = Math.max(-100, Math.min(100, e.clientY - startY));
+    offsetX = e.clientX - startX;
+    offsetY = e.clientY - startY;
     renderPhoto();
   });
   photoPreview.addEventListener('pointerup', () => dragging = false);
