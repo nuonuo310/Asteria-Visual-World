@@ -140,6 +140,20 @@
   calendarToggle.addEventListener('click', () => setCalendar(monthPanel.hidden));
   calendarClose.addEventListener('click', () => setCalendar(false));
 
+
+  const footprintCards = root.querySelectorAll('[data-footprint]');
+  const footprintsBoard = root.querySelector('.footprints-board');
+  footprintCards.forEach((card) => {
+    card.addEventListener('click', () => {
+      const wasActive = card.classList.contains('is-active');
+      footprintCards.forEach((item) => item.classList.remove('is-active'));
+      if (!wasActive) card.classList.add('is-active');
+      if (footprintsBoard) {
+        footprintsBoard.classList.toggle('has-selection', !wasActive);
+      }
+    });
+  });
+
   root.querySelectorAll('[data-room]').forEach((button) => {
     button.addEventListener('click', () => showToast(`${button.dataset.room} 尚未接入`));
   });
