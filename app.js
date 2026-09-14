@@ -14,8 +14,6 @@
   const calendarToggle = document.getElementById('calendarToggle');
   const calendarClose = document.getElementById('calendarClose');
   const monthPanel = document.getElementById('monthPanel');
-  const traceToggle = document.getElementById('traceToggle');
-  const tracePanel = document.getElementById('tracePanel');
   const toast = document.getElementById('toast');
 
   let scale = 1;
@@ -141,12 +139,6 @@
   }
   calendarToggle.addEventListener('click', () => setCalendar(monthPanel.hidden));
   calendarClose.addEventListener('click', () => setCalendar(false));
-
-  traceToggle.addEventListener('click', () => {
-    const open = tracePanel.hidden;
-    tracePanel.hidden = !open;
-    traceToggle.setAttribute('aria-expanded', String(open));
-  });
 
   root.querySelectorAll('[data-room]').forEach((button) => {
     button.addEventListener('click', () => showToast(`${button.dataset.room} 尚未接入`));
