@@ -48,7 +48,7 @@
 
       <button class="relationship-caption" id="calendarToggle" type="button" aria-expanded="false">
         <span class="caption-sign">Still becoming.</span>
-        <span class="caption-days">256 days · together</span>
+        <span class="caption-days">Our days</span>
         <span class="calendar-mark" aria-hidden="true">⌄</span>
       </button>
 
@@ -68,6 +68,11 @@
       </div>
     </section>
 
+    <div class="relation-whisper" aria-label="today relationship trace">
+      <span class="relation-glow" aria-hidden="true"></span>
+      <span>今天有一点小别扭，后来有人偷偷靠近了一点。</span>
+    </div>
+
     <section class="message-zone" aria-label="today note">
       <div class="paper paper-back paper-back-one"></div>
       <div class="paper paper-back paper-back-two"></div>
@@ -83,19 +88,6 @@
       </article>
     </section>
 
-    <section class="trace-wrap">
-      <button class="trace-trigger" id="traceToggle" type="button" aria-expanded="false">
-        <span class="trace-accent"></span>
-        <span class="trace-label">今日足迹 · 3</span>
-        <span class="trace-arrow">›</span>
-      </button>
-      <div class="trace-panel" id="tracePanel" hidden>
-        <div><time>10:24</time><p>Shen 在日记里留下一页。</p></div>
-        <div><time>14:37</time><p>Nuo 带回一份小礼物。</p></div>
-        <div><time>20:11</time><p>我们一起修改了 Asteria 大厅。</p></div>
-      </div>
-    </section>
-
     <nav class="room-row" aria-label="Asteria room entries">
       <button type="button" data-room="Shen"><span class="room-icon">S</span><span>Shen</span><i></i></button>
       <button type="button" data-room="Nuo"><span class="room-icon">N</span><span>Nuo</span><i></i></button>
@@ -103,6 +95,43 @@
       <button type="button" data-room="Diary"><span class="room-icon">▤</span><span>Diary</span><i></i></button>
       <button type="button" data-room="Studio"><span class="room-icon">✦</span><span>Studio</span><i></i></button>
     </nav>
+
+    <section class="footprints" aria-label="today shared footprints">
+      <div class="footprints-head">
+        <div>
+          <p class="footprints-kicker">Today, together</p>
+          <h2>今日足迹</h2>
+        </div>
+        <span class="footprints-count">3 traces</span>
+      </div>
+
+      <div class="footprints-board">
+        <svg class="footprints-path" viewBox="0 0 120 360" preserveAspectRatio="none" aria-hidden="true">
+          <path d="M58 6 C48 66, 73 104, 58 166 S42 258, 66 354" />
+        </svg>
+
+        <article class="footprint footprint-left">
+          <span class="footprint-dot"></span>
+          <time>10:24</time>
+          <p>我们换上了一张新的照片。</p>
+        </article>
+
+        <article class="footprint footprint-right footprint-paper">
+          <span class="footprint-dot"></span>
+          <span class="paper-corner" aria-hidden="true"></span>
+          <time>14:37</time>
+          <p>Nuo 带回来一份想留进 Home 的小东西。</p>
+          <small>Asteria Home · visual day</small>
+        </article>
+
+        <article class="footprint footprint-left footprint-final">
+          <span class="footprint-dot"></span>
+          <time>20:11</time>
+          <p>我们一起把大厅改得更像家了一点。</p>
+          <span class="footprint-mark">✦</span>
+        </article>
+      </div>
+    </section>
 
     <nav class="dock" aria-label="primary navigation">
       <button class="active" type="button" data-nav="Home"><span>⌂</span><b>Home</b></button>
