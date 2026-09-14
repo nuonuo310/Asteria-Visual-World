@@ -34,12 +34,16 @@
           <p class="motto">有你在的每一天，都值得被记住。</p>
         </div>
 
-        <div class="photo-controls">
-          <label class="mini-btn" for="photoInput">换照片</label>
-          <input id="photoInput" type="file" accept="image/*" hidden>
-          <button class="mini-btn" id="sideToggle" type="button">文字换边</button>
-          <button class="mini-btn" id="zoomOut" type="button" aria-label="缩小照片">−</button>
-          <button class="mini-btn" id="zoomIn" type="button" aria-label="放大照片">＋</button>
+        <div class="photo-editor">
+          <button class="editor-toggle" id="editorToggle" type="button" aria-expanded="false" aria-label="照片编辑">•••</button>
+          <div class="photo-controls" id="photoControls" hidden>
+            <label class="mini-btn" for="photoInput">换照片</label>
+            <input id="photoInput" type="file" accept="image/*" hidden>
+            <button class="mini-btn" id="sideToggle" type="button">文字换边</button>
+            <button class="mini-btn" id="zoomOut" type="button" aria-label="缩小照片">−</button>
+            <button class="mini-btn" id="zoomIn" type="button" aria-label="放大照片">＋</button>
+            <button class="mini-btn" id="photoReset" type="button">重置</button>
+          </div>
         </div>
       </div>
 
