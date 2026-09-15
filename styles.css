@@ -303,3 +303,126 @@ body.theme-b .photo-stage{background:linear-gradient(135deg,rgba(252,232,246,.92
   .v3-timeline:before{left:84px}
   .v3-timeline article{grid-template-columns:66px 18px 1fr}
 }
+
+
+/* 2026-09-15 Home structural review v2
+   Shared upper structure; only footprint presentation differs across Layout 1/2/3. */
+.message-split{
+  grid-template-columns:minmax(0,1.58fr) minmax(0,.92fr);
+  gap:12px;
+  margin:18px 4px 0;
+  min-height:198px;
+  align-items:stretch;
+}
+.review-note{
+  position:relative!important;
+  inset:auto!important;
+  height:198px;
+  transform:none;
+  border-radius:18px;
+  padding:24px 21px 19px;
+}
+.review-note .note-copy{max-width:92%;font-size:15px}
+.review-note .reply{right:17px;bottom:15px;width:59%}
+.message-side{
+  height:198px;
+  display:grid;
+  grid-template-rows:minmax(0,1fr) minmax(0,1fr);
+  gap:12px;
+}
+.mini-panel{
+  min-height:0;
+  border-radius:18px;
+  padding:14px 12px;
+  background:rgba(255,255,255,.34);
+}
+.mini-panel strong{font-size:28px}
+
+/* Life entrances: one quiet translucent field, no divider rules. */
+.life-strip{
+  margin:24px 0 20px;
+  padding:12px 8px 10px;
+  border:1px solid color-mix(in srgb,var(--line) 72%,transparent);
+  border-radius:22px;
+  background:rgba(255,255,255,.18);
+  box-shadow:0 8px 24px rgba(80,60,80,.018);
+}
+.life-strip .room-icon{
+  background:rgba(255,255,255,.34);
+  border-color:color-mix(in srgb,var(--line) 86%,transparent);
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.34);
+}
+.life-strip button{padding-top:2px;padding-bottom:4px}
+
+/* Layout 1: keep the accepted simple left timeline. */
+.footprint-v1{margin-top:22px}
+
+/* Layout 2: pills control one contained footprint stage. */
+.footprint-v2{
+  margin:22px 0 0;
+  padding-top:0;
+  border-top:0;
+}
+.foot-tabs{padding:0 2px 12px}
+.footprint-content{
+  border:1px solid color-mix(in srgb,var(--line) 80%,transparent);
+  border-radius:22px;
+  background:rgba(255,255,255,.22);
+  padding:14px 8px 2px;
+  box-shadow:0 9px 26px rgba(80,60,80,.025);
+}
+.tab-timeline{margin-top:0;padding:0 3px}
+.tab-timeline article>div{background:rgba(255,255,255,.32)}
+
+/* Layout 3: agenda — time hugs the left edge, then node/line, then content. */
+.footprint-v3{
+  margin:22px 0 0;
+  padding-top:0;
+  border-top:0;
+}
+.v3-timeline{position:relative;padding:2px 0 2px 2px}
+.v3-timeline:before{
+  left:59px;
+  top:22px;
+  bottom:22px;
+  background:linear-gradient(var(--line-strong),var(--line),var(--line-strong));
+}
+.v3-timeline article{
+  grid-template-columns:48px 18px minmax(0,1fr);
+  align-items:center;
+  min-height:88px;
+  margin-bottom:9px;
+}
+.v3-time{
+  justify-self:start;
+  font:500 9px/1 system-ui,sans-serif;
+  color:var(--muted);
+}
+.v3-timeline article>i{
+  width:8px;
+  height:8px;
+  background:var(--bg);
+  box-shadow:0 0 0 4px color-mix(in srgb,var(--accent-soft) 40%,transparent);
+}
+.v3-card{
+  min-height:76px;
+  border-radius:18px;
+  background:rgba(255,255,255,.34);
+  padding:12px 14px;
+}
+.v3-card em{
+  font:600 10px/1 system-ui,sans-serif;
+  font-style:normal;
+  letter-spacing:.04em;
+  color:var(--ink);
+}
+.v3-card p{margin:8px 0 0}
+
+@media(max-width:360px){
+  .message-split{grid-template-columns:minmax(0,1.52fr) minmax(0,.94fr);gap:9px}
+  .message-side{gap:9px}
+  .review-note{padding-left:17px;padding-right:17px}
+  .mini-panel{padding-left:9px;padding-right:9px}
+  .v3-timeline:before{left:55px}
+  .v3-timeline article{grid-template-columns:44px 18px minmax(0,1fr)}
+}
