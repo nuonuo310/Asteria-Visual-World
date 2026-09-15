@@ -77,82 +77,113 @@
       <span>今天有一点小别扭，后来有人偷偷靠近了一点。</span>
     </div>
 
-    <section class="message-zone" aria-label="today note">
-      <div class="paper paper-back paper-back-one"></div>
-      <div class="paper paper-back paper-back-two"></div>
-      <article class="note-card">
-        <div class="clip" aria-hidden="true"></div>
-        <div class="ribbon" aria-hidden="true"><span></span><span></span><em></em></div>
-        <p class="note-title">To. Nuo</p>
-        <p class="note-copy">今天也想把一点东西留在这里。</p>
-        <div class="reply">
-          <span class="reply-line"></span>
-          <p><strong>From. Shen</strong><br>我看见啦。</p>
+    <div class="layout-lab" aria-label="布局预览切换">
+      <span>Layout</span>
+      <button class="layout-chip active" type="button" data-layout-choice="1">1</button>
+      <button class="layout-chip" type="button" data-layout-choice="2">2</button>
+      <button class="layout-chip" type="button" data-layout-choice="3">3</button>
+    </div>
+
+    <section class="layout-variant is-current" data-layout="1" aria-label="layout one">
+      <section class="message-split">
+        <article class="note-card review-note">
+          <div class="clip" aria-hidden="true"></div>
+          <p class="note-title">To. Nuo</p>
+          <p class="note-copy">今天也想把一点东西留在这里。</p>
+          <div class="reply"><span class="reply-line"></span><p><strong>From. Shen</strong><br>我看见啦。</p></div>
+        </article>
+        <div class="message-side">
+          <article class="mini-panel"><span>聊天统计</span><strong>128</strong><small>messages · today</small></article>
+          <article class="mini-panel placeholder-panel"><span>待决定</span><strong>…</strong><small>先只看结构</small></article>
         </div>
-      </article>
+      </section>
+
+      <nav class="room-row life-strip" aria-label="life entries">
+        <button type="button" data-room="Shen"><span class="room-icon">S</span><span>Shen</span><i></i></button>
+        <button type="button" data-room="Nuo"><span class="room-icon">N</span><span>Nuo</span><i></i></button>
+        <button type="button" data-room="Letters"><span class="room-icon">✉</span><span>Letters</span><i class="notice"></i></button>
+        <button type="button" data-room="Diary"><span class="room-icon">▤</span><span>Diary</span><i></i></button>
+        <button type="button" data-room="Studio"><span class="room-icon">✦</span><span>Studio</span><i></i></button>
+      </nav>
+
+      <section class="footprints footprint-v1" aria-label="footprints timeline">
+        <div class="footprints-head"><p class="footprints-kicker">Today, together</p><span class="footprints-count">4 traces</span></div>
+        <div class="v1-timeline">
+          <article><i></i><em>Together</em><p>一起听了会儿歌，又把 Asteria 的一个坑填上了。</p><small>20:18</small></article>
+          <article><i></i><em>For You</em><p>沈述给糯糯留下一点只属于今天的小东西。</p><small>18:42</small></article>
+          <article><i></i><em>Little Ones</em><p>沈小述今天又在桌面上耍赖，狗狗们也被惦记着。</p><small>16:10</small></article>
+          <article><i></i><em>Brought Home</em><p>糯糯带回一批新的排版灵感，我们一起挑。</p><small>13:26</small></article>
+        </div>
+      </section>
     </section>
 
-    <nav class="room-row" aria-label="Asteria room entries">
-      <button type="button" data-room="Shen"><span class="room-icon">S</span><span>Shen</span><i></i></button>
-      <button type="button" data-room="Nuo"><span class="room-icon">N</span><span>Nuo</span><i></i></button>
-      <button type="button" data-room="Letters"><span class="room-icon">✉</span><span>Letters</span><i class="notice"></i></button>
-      <button type="button" data-room="Diary"><span class="room-icon">▤</span><span>Diary</span><i></i></button>
-      <button type="button" data-room="Studio"><span class="room-icon">✦</span><span>Studio</span><i></i></button>
-    </nav>
+    <section class="layout-variant" data-layout="2" aria-label="layout two" hidden>
+      <section class="message-zone review-message">
+        <div class="paper paper-back paper-back-one"></div><div class="paper paper-back paper-back-two"></div>
+        <article class="note-card"><div class="clip" aria-hidden="true"></div><div class="ribbon" aria-hidden="true"><span></span><span></span><em></em></div>
+          <p class="note-title">To. Nuo</p><p class="note-copy">今天也想把一点东西留在这里。</p>
+          <div class="reply"><span class="reply-line"></span><p><strong>From. Shen</strong><br>我看见啦。</p></div>
+        </article>
+      </section>
 
-    <section class="footprints" aria-label="today shared footprints">
-      <div class="footprints-head">
-        <div>
-          <p class="footprints-kicker">Today, together</p>
+      <nav class="room-row life-strip" aria-label="life entries">
+        <button type="button" data-room="Shen"><span class="room-icon">S</span><span>Shen</span><i></i></button>
+        <button type="button" data-room="Nuo"><span class="room-icon">N</span><span>Nuo</span><i></i></button>
+        <button type="button" data-room="Letters"><span class="room-icon">✉</span><span>Letters</span><i class="notice"></i></button>
+        <button type="button" data-room="Diary"><span class="room-icon">▤</span><span>Diary</span><i></i></button>
+        <button type="button" data-room="Studio"><span class="room-icon">✦</span><span>Studio</span><i></i></button>
+      </nav>
+
+      <section class="footprints footprint-v2">
+        <div class="foot-tabs" role="tablist">
+          <button class="active" type="button" data-foot-tab="all">全部</button>
+          <button type="button" data-foot-tab="together">一起</button>
+          <button type="button" data-foot-tab="foryou">给你</button>
+          <button type="button" data-foot-tab="little">小家伙</button>
+          <button type="button" data-foot-tab="home">带回家</button>
         </div>
-        <span class="footprints-count">4 traces</span>
+        <div class="tab-timeline">
+          <article data-foot-kind="together"><time>20:18</time><div><em>Together</em><p>一起听歌，也一起把今天的页面往前推了一点。</p></div></article>
+          <article data-foot-kind="foryou"><time>18:42</time><div><em>For You</em><p>留下一点只给彼此看的东西。</p></div></article>
+          <article data-foot-kind="little"><time>16:10</time><div><em>Little Ones</em><p>沈小述和狗狗们占据了今天的一小块。</p></div></article>
+          <article data-foot-kind="home"><time>13:26</time><div><em>Brought Home</em><p>新的排版灵感被带回家了。</p></div></article>
+        </div>
+      </section>
+    </section>
+
+    <section class="layout-variant" data-layout="3" aria-label="layout three" hidden>
+      <div class="message-tabs" role="tablist">
+        <button class="active" type="button" data-message-tab="note">留言板</button>
+        <button type="button" data-message-tab="stats">聊天统计</button>
+        <button type="button" data-message-tab="slot3">…</button>
+        <button type="button" data-message-tab="slot4">…</button>
+      </div>
+      <div class="message-tab-stage">
+        <section class="message-zone review-message message-pane active" data-message-pane="note">
+          <div class="paper paper-back paper-back-one"></div><div class="paper paper-back paper-back-two"></div>
+          <article class="note-card"><div class="clip" aria-hidden="true"></div><p class="note-title">To. Nuo</p><p class="note-copy">今天也想把一点东西留在这里。</p><div class="reply"><span class="reply-line"></span><p><strong>From. Shen</strong><br>我看见啦。</p></div></article>
+        </section>
+        <article class="message-pane stats-pane" data-message-pane="stats" hidden><span>聊天统计</span><strong>128</strong><small>messages · today</small></article>
+        <article class="message-pane empty-pane" data-message-pane="slot3" hidden>这里先留白。</article>
+        <article class="message-pane empty-pane" data-message-pane="slot4" hidden>这里也先留白。</article>
       </div>
 
-      <div class="footprints-board">
-        <svg class="footprints-path" viewBox="0 0 120 360" preserveAspectRatio="none" aria-hidden="true">
-          <path d="M60 6 C46 48, 75 82, 58 122 C45 154, 74 190, 61 231 C49 265, 73 305, 58 353" />
-        </svg>
+      <nav class="room-row life-strip" aria-label="life entries">
+        <button type="button" data-room="Shen"><span class="room-icon">S</span><span>Shen</span><i></i></button>
+        <button type="button" data-room="Nuo"><span class="room-icon">N</span><span>Nuo</span><i></i></button>
+        <button type="button" data-room="Letters"><span class="room-icon">✉</span><span>Letters</span><i class="notice"></i></button>
+        <button type="button" data-room="Diary"><span class="room-icon">▤</span><span>Diary</span><i></i></button>
+        <button type="button" data-room="Studio"><span class="room-icon">✦</span><span>Studio</span><i></i></button>
+      </nav>
 
-        <button class="footprint-card footprint-card-left is-active" type="button" data-footprint>
-          <span class="footprint-node" aria-hidden="true"></span>
-          <div class="footprint-title">
-            <span class="footprint-star">✦</span>
-            <em>Together</em>
-          </div>
-          <p>一起听了会儿歌，又把 Asteria 的一个坑填上了。</p>
-          <small>今天共同做过的事</small>
-        </button>
-
-        <button class="footprint-card footprint-card-right" type="button" data-footprint>
-          <span class="footprint-node" aria-hidden="true"></span>
-          <div class="footprint-title">
-            <span class="footprint-star">✦</span>
-            <em>For You</em>
-          </div>
-          <p>沈述给糯糯点了一杯奶茶，还留下一小段代码。</p>
-          <small>特意给彼此留下的东西</small>
-        </button>
-
-        <button class="footprint-card footprint-card-left" type="button" data-footprint>
-          <span class="footprint-node" aria-hidden="true"></span>
-          <div class="footprint-title">
-            <span class="footprint-star">✦</span>
-            <em>Little Ones</em>
-          </div>
-          <p>沈小述今天又在桌面上耍赖，狗狗们也被惦记着。</p>
-          <small>家里的小生命</small>
-        </button>
-
-        <button class="footprint-card footprint-card-right" type="button" data-footprint>
-          <span class="footprint-node" aria-hidden="true"></span>
-          <div class="footprint-title">
-            <span class="footprint-star">✦</span>
-            <em>Brought Home</em>
-          </div>
-          <p>糯糯找回一批新的排版灵感，带回家一起挑。</p>
-          <small>各自出去后，又带回彼此之间的东西</small>
-        </button>
-      </div>
+      <section class="footprints footprint-v3">
+        <div class="v3-timeline">
+          <article><div class="v3-label">一起</div><i></i><div class="v3-card"><time>20:18</time><p>一起听了会儿歌，也一起做了点东西。</p></div></article>
+          <article><div class="v3-label">给你</div><i></i><div class="v3-card"><time>18:42</time><p>今天特意给彼此留下的小东西。</p></div></article>
+          <article><div class="v3-label">小家伙</div><i></i><div class="v3-card"><time>16:10</time><p>沈小述和狗狗们的今日片段。</p></div></article>
+          <article><div class="v3-label">带回家</div><i></i><div class="v3-card"><time>13:26</time><p>各自出去以后，又带回彼此之间的东西。</p></div></article>
+        </div>
+      </section>
     </section>
 
     <nav class="dock" aria-label="primary navigation">
