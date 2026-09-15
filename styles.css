@@ -57,7 +57,7 @@ button{color:inherit}
   isolation:isolate;
   width:min(100%,430px);
   margin:0 auto;
-  padding:20px 18px calc(118px + env(safe-area-inset-bottom));
+  padding:20px 14px calc(118px + env(safe-area-inset-bottom));
 }
 .app-shell::before{
   content:"";
@@ -255,10 +255,10 @@ body.theme-b .photo-stage{background:linear-gradient(135deg,rgba(252,232,246,.92
   min-height:196px;
   transform:none!important;
   border-radius:20px;
-  padding:22px 20px 18px;
+  padding:18px 20px 16px;
 }
 .review-note .note-title{
-  margin-bottom:22px;
+  margin-bottom:16px;
 }
 .review-note .note-copy{
   max-width:94%;
