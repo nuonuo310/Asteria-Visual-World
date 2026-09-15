@@ -426,3 +426,71 @@ body.theme-b .photo-stage{background:linear-gradient(135deg,rgba(252,232,246,.92
   .v1-timeline{padding-left:18px}
   .v1-timeline article>i{left:-23px}
 }
+
+
+/* 2026-09-15 cover experiment: turn the relationship block into a page cover, not a nested card. */
+.relationship{
+  border:0;
+  border-radius:0;
+  padding:0;
+  background:transparent;
+}
+.photo-stage{
+  height:176px;
+  border-radius:19px;
+  box-shadow:0 9px 24px rgba(88,62,76,.035);
+}
+.photo-overlay{
+  top:auto;
+  bottom:0;
+  width:52%;
+  height:48%;
+  padding:13px 14px 15px 16px;
+  justify-content:flex-end;
+}
+.photo-overlay.side-left{
+  background:linear-gradient(90deg,rgba(252,248,238,.88) 0%,rgba(252,248,238,.48) 56%,rgba(252,248,238,0) 100%);
+}
+.photo-overlay.side-right{
+  background:linear-gradient(270deg,rgba(248,245,241,.90) 0%,rgba(248,245,241,.48) 56%,rgba(248,245,241,0) 100%);
+}
+.photo-overlay .eyebrow{
+  margin:0 0 4px;
+  font-size:12px;
+  letter-spacing:.055em;
+}
+.photo-overlay .days{
+  font-size:10px;
+  gap:4px;
+}
+.photo-overlay .days strong{
+  font-size:20px;
+}
+.photo-editor{
+  right:9px;
+  bottom:9px;
+}
+.relationship-caption{
+  height:39px;
+  padding:0 2px;
+  grid-template-columns:1fr auto auto;
+  gap:8px;
+}
+.caption-sign{
+  font-size:12px;
+}
+.caption-days{
+  font-size:9px;
+}
+.month-panel{
+  margin:0 0 6px;
+  border:1px solid var(--line);
+  border-radius:18px;
+  background:rgba(255,255,255,.28);
+}
+.relation-whisper{
+  margin:11px 5px 0;
+}
+.home-body{
+  margin-top:12px;
+}
