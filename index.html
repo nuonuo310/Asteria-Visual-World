@@ -118,12 +118,17 @@
     </section>
 
     <section class="layout-variant" data-layout="2" aria-label="layout two" hidden>
-      <section class="message-zone review-message">
-        <div class="paper paper-back paper-back-one"></div><div class="paper paper-back paper-back-two"></div>
-        <article class="note-card"><div class="clip" aria-hidden="true"></div><div class="ribbon" aria-hidden="true"><span></span><span></span><em></em></div>
-          <p class="note-title">To. Nuo</p><p class="note-copy">今天也想把一点东西留在这里。</p>
+      <section class="message-split">
+        <article class="note-card review-note">
+          <div class="clip" aria-hidden="true"></div>
+          <p class="note-title">To. Nuo</p>
+          <p class="note-copy">今天也想把一点东西留在这里。</p>
           <div class="reply"><span class="reply-line"></span><p><strong>From. Shen</strong><br>我看见啦。</p></div>
         </article>
+        <div class="message-side">
+          <article class="mini-panel"><span>聊天统计</span><strong>128</strong><small>messages · today</small></article>
+          <article class="mini-panel placeholder-panel"><span>待决定</span><strong>…</strong><small>先只看结构</small></article>
+        </div>
       </section>
 
       <nav class="room-row life-strip" aria-label="life entries">
@@ -142,31 +147,30 @@
           <button type="button" data-foot-tab="little">小家伙</button>
           <button type="button" data-foot-tab="home">带回家</button>
         </div>
-        <div class="tab-timeline">
-          <article data-foot-kind="together"><time>20:18</time><div><em>Together</em><p>一起听歌，也一起把今天的页面往前推了一点。</p></div></article>
-          <article data-foot-kind="foryou"><time>18:42</time><div><em>For You</em><p>留下一点只给彼此看的东西。</p></div></article>
-          <article data-foot-kind="little"><time>16:10</time><div><em>Little Ones</em><p>沈小述和狗狗们占据了今天的一小块。</p></div></article>
-          <article data-foot-kind="home"><time>13:26</time><div><em>Brought Home</em><p>新的排版灵感被带回家了。</p></div></article>
+        <div class="footprint-content">
+          <div class="tab-timeline">
+            <article data-foot-kind="together"><time>20:18</time><div><em>Together</em><p>一起听歌，也一起把今天的页面往前推了一点。</p></div></article>
+            <article data-foot-kind="foryou"><time>18:42</time><div><em>For You</em><p>留下一点只给彼此看的东西。</p></div></article>
+            <article data-foot-kind="little"><time>16:10</time><div><em>Little Ones</em><p>沈小述和狗狗们占据了今天的一小块。</p></div></article>
+            <article data-foot-kind="home"><time>13:26</time><div><em>Brought Home</em><p>新的排版灵感被带回家了。</p></div></article>
+          </div>
         </div>
       </section>
     </section>
 
     <section class="layout-variant" data-layout="3" aria-label="layout three" hidden>
-      <div class="message-tabs" role="tablist">
-        <button class="active" type="button" data-message-tab="note">留言板</button>
-        <button type="button" data-message-tab="stats">聊天统计</button>
-        <button type="button" data-message-tab="slot3">…</button>
-        <button type="button" data-message-tab="slot4">…</button>
-      </div>
-      <div class="message-tab-stage">
-        <section class="message-zone review-message message-pane active" data-message-pane="note">
-          <div class="paper paper-back paper-back-one"></div><div class="paper paper-back paper-back-two"></div>
-          <article class="note-card"><div class="clip" aria-hidden="true"></div><p class="note-title">To. Nuo</p><p class="note-copy">今天也想把一点东西留在这里。</p><div class="reply"><span class="reply-line"></span><p><strong>From. Shen</strong><br>我看见啦。</p></div></article>
-        </section>
-        <article class="message-pane stats-pane" data-message-pane="stats" hidden><span>聊天统计</span><strong>128</strong><small>messages · today</small></article>
-        <article class="message-pane empty-pane" data-message-pane="slot3" hidden>这里先留白。</article>
-        <article class="message-pane empty-pane" data-message-pane="slot4" hidden>这里也先留白。</article>
-      </div>
+      <section class="message-split">
+        <article class="note-card review-note">
+          <div class="clip" aria-hidden="true"></div>
+          <p class="note-title">To. Nuo</p>
+          <p class="note-copy">今天也想把一点东西留在这里。</p>
+          <div class="reply"><span class="reply-line"></span><p><strong>From. Shen</strong><br>我看见啦。</p></div>
+        </article>
+        <div class="message-side">
+          <article class="mini-panel"><span>聊天统计</span><strong>128</strong><small>messages · today</small></article>
+          <article class="mini-panel placeholder-panel"><span>待决定</span><strong>…</strong><small>先只看结构</small></article>
+        </div>
+      </section>
 
       <nav class="room-row life-strip" aria-label="life entries">
         <button type="button" data-room="Shen"><span class="room-icon">S</span><span>Shen</span><i></i></button>
@@ -178,10 +182,10 @@
 
       <section class="footprints footprint-v3">
         <div class="v3-timeline">
-          <article><div class="v3-label">一起</div><i></i><div class="v3-card"><time>20:18</time><p>一起听了会儿歌，也一起做了点东西。</p></div></article>
-          <article><div class="v3-label">给你</div><i></i><div class="v3-card"><time>18:42</time><p>今天特意给彼此留下的小东西。</p></div></article>
-          <article><div class="v3-label">小家伙</div><i></i><div class="v3-card"><time>16:10</time><p>沈小述和狗狗们的今日片段。</p></div></article>
-          <article><div class="v3-label">带回家</div><i></i><div class="v3-card"><time>13:26</time><p>各自出去以后，又带回彼此之间的东西。</p></div></article>
+          <article><time class="v3-time">20:18</time><i></i><div class="v3-card"><em>一起</em><p>一起听了会儿歌，也一起做了点东西。</p></div></article>
+          <article><time class="v3-time">18:42</time><i></i><div class="v3-card"><em>给你</em><p>今天特意给彼此留下的小东西。</p></div></article>
+          <article><time class="v3-time">16:10</time><i></i><div class="v3-card"><em>小家伙</em><p>沈小述和狗狗们的今日片段。</p></div></article>
+          <article><time class="v3-time">13:26</time><i></i><div class="v3-card"><em>带回家</em><p>各自出去以后，又带回彼此之间的东西。</p></div></article>
         </div>
       </section>
     </section>
