@@ -154,6 +154,44 @@
     });
   });
 
+  const layoutButtons = root.querySelectorAll('[data-layout-choice]');
+  const layoutVariants = root.querySelectorAll('[data-layout]');
+  layoutButtons.forEach((button) => {
+    button.addEventListener('click', () => {
+      const choice = button.dataset.layoutChoice;
+      layoutButtons.forEach((item) => item.classList.toggle('active', item === button));
+      layoutVariants.forEach((variant) => {
+        const current = variant.dataset.layout === choice;
+        variant.hidden = !current;
+        variant.classList.toggle('is-current', current);
+      });
+    });
+  });
+
+  const footTabs = root.querySelectorAll('[data-foot-tab]');
+  footTabs.forEach((button) => {
+    button.addEventListener('click', () => {
+      const kind = button.dataset.footTab;
+      footTabs.forEach((item) => item.classList.toggle('active', item === button));
+      root.querySelectorAll('[data-foot-kind]').forEach((item) => {
+        item.hidden = kind !== 'all' && item.dataset.footKind !== kind;
+      });
+    });
+  });
+
+  const messageTabs = root.querySelectorAll('[data-message-tab]');
+  messageTabs.forEach((button) => {
+    button.addEventListener('click', () => {
+      const pane = button.dataset.messageTab;
+      messageTabs.forEach((item) => item.classList.toggle('active', item === button));
+      root.querySelectorAll('[data-message-pane]').forEach((item) => {
+        const active = item.dataset.messagePane === pane;
+        item.hidden = !active;
+        item.classList.toggle('active', active);
+      });
+    });
+  });
+
   root.querySelectorAll('[data-room]').forEach((button) => {
     button.addEventListener('click', () => showToast(`${button.dataset.room} 尚未接入`));
   });
