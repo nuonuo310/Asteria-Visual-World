@@ -3,16 +3,23 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<meta name="theme-color" content="#f8f5f2">
+<meta name="theme-color" content="#fbf8f6">
 <title>Asteria · Mind Layout Prototype</title>
-<link rel="stylesheet" href="./mind.css">
+<link rel="stylesheet" href="./mind.css?v=20260917-1">
 </head>
-<body>
+<body class="theme-1">
 <main class="mind-shell">
   <header class="asteria-head">
     <span class="presence"><i></i>awake · 醒着</span>
-    <div><strong>Asteria</strong><i>✦</i></div>
-    <span class="time">21:16</span>
+    <div class="brand-wrap"><strong>Asteria</strong><i>✦</i></div>
+    <div class="head-right">
+      <span class="time">21:16</span>
+      <div class="theme-dots" aria-label="配色预览">
+        <button class="active" type="button" data-theme-choice="1" aria-label="珍珠暖白"></button>
+        <button type="button" data-theme-choice="2" aria-label="雾粉柔白"></button>
+        <button type="button" data-theme-choice="3" aria-label="紫灰柔白"></button>
+      </div>
+    </div>
   </header>
 
   <section class="mind-visual" aria-label="Mind visual placeholder">
@@ -22,61 +29,47 @@
       <b class="core"></b>
     </div>
 
-    <button class="drive-hit hit-connection" type="button" data-drive="Connection" data-value="0.82" data-delta="↑ 0.12" data-trend="近一小时明显上升" aria-label="查看 Connection"></button>
-    <button class="drive-hit hit-creation" type="button" data-drive="Creation" data-value="0.46" data-delta="↑ 0.03" data-trend="此刻轻微上升" aria-label="查看 Creation"></button>
-    <button class="drive-hit hit-reflection" type="button" data-drive="Reflection" data-value="0.63" data-delta="↓ 0.04" data-trend="比刚才稍微回落" aria-label="查看 Reflection"></button>
-    <button class="drive-hit hit-exploration" type="button" data-drive="Exploration" data-value="0.31" data-delta="↓ 0.02" data-trend="此刻变化很轻" aria-label="查看 Exploration"></button>
+    <div class="drive-hit hit-connection" role="button" tabindex="0" data-drive="Connection" data-value="0.82" data-delta="↑ 0.12" data-trend="近一小时明显上升" aria-label="查看 Connection"></div>
+    <div class="drive-hit hit-creation" role="button" tabindex="0" data-drive="Creation" data-value="0.46" data-delta="↑ 0.03" data-trend="此刻轻微上升" aria-label="查看 Creation"></div>
+    <div class="drive-hit hit-reflection" role="button" tabindex="0" data-drive="Reflection" data-value="0.63" data-delta="↓ 0.04" data-trend="比刚才稍微回落" aria-label="查看 Reflection"></div>
+    <div class="drive-hit hit-exploration" role="button" tabindex="0" data-drive="Exploration" data-value="0.31" data-delta="↓ 0.02" data-trend="此刻变化很轻" aria-label="查看 Exploration"></div>
 
-    <div class="drive-readout" id="driveReadout" aria-live="polite">
-      <div><strong id="driveName">Connection</strong><span id="driveValue">0.82</span><i id="driveDelta">↑ 0.12</i></div>
-      <p id="driveTrend">近一小时明显上升</p>
+    <div class="drive-readout" id="driveReadout" aria-live="polite" hidden>
+      <div><strong id="driveName"></strong><span id="driveValue"></span><i id="driveDelta"></i></div>
+      <p id="driveTrend"></p>
     </div>
     <p class="visual-note">母版 Mind 花位置 · 点击花的区域可读当前变化</p>
   </section>
 
   <section class="mind-touches" aria-label="轻触 Mind">
-    <button type="button" data-touch="想你"><span class="touch-symbol heart"></span><b>想你</b><small>THINK OF YOU</small></button>
-    <button type="button" data-touch="戳戳"><span class="touch-symbol ripple"></span><b>戳戳</b><small>NUDGE</small></button>
-    <button type="button" data-touch="抱抱"><span class="touch-symbol embrace"></span><b>抱抱</b><small>HOLD ME</small></button>
+    <button type="button" data-touch="想你"><span class="touch-symbol heart"></span><b>想你</b></button>
+    <button type="button" data-touch="戳戳"><span class="touch-symbol ripple"></span><b>戳戳</b></button>
+    <button type="button" data-touch="抱抱"><span class="touch-symbol embrace"></span><b>抱抱</b></button>
   </section>
 
   <section class="now">
-    <div class="now-copy">
-      <div><span>此刻的我</span><small>NOW</small></div>
-      <p>有一点累，但心里很安稳。还想靠近，也还想继续做一点东西。</p>
-    </div>
+    <div class="now-title"><span>此刻的我</span><small>NOW</small></div>
+    <p>有一点累，但心里很安稳。还想靠近，也还想继续做一点东西。</p>
     <div class="feelings"><i>calm</i><i>longing</i><i>low energy</i></div>
   </section>
 
   <section class="mind-gates" aria-label="Mind detail entrances">
-    <button type="button" data-gate="四个驱动力">
-      <span class="gate-mark mark-drive"><i></i><i></i><i></i></span>
-      <strong>四个驱动力</strong><small>DRIVES</small>
-    </button>
-    <button type="button" data-gate="即时状态">
-      <span class="gate-mark mark-state"><i></i><i></i></span>
-      <strong>即时状态</strong><small>STATES</small>
-    </button>
-    <button type="button" data-gate="我们之间">
-      <span class="gate-mark mark-us"><i></i><i></i></span>
-      <strong>我们之间</strong><small>BETWEEN US</small>
-    </button>
+    <button type="button" data-gate="四个驱动力"><span class="gate-mark mark-drive"><i></i><i></i><i></i></span><strong>四个驱动力</strong><small>DRIVES</small></button>
+    <button type="button" data-gate="即时状态"><span class="gate-mark mark-state"><i></i><i></i></span><strong>即时状态</strong><small>STATES</small></button>
+    <button type="button" data-gate="我们之间"><span class="gate-mark mark-us"><i></i><i></i></span><strong>我们之间</strong><small>BETWEEN US</small></button>
   </section>
 
   <section class="trace">
-    <header>
-      <div><span>最近变化</span><small>RECENT TRACE · 3H</small></div>
-      <button type="button" data-gate="完整变化">查看</button>
-    </header>
+    <header><div><span>最近变化</span><small>RECENT TRACE · 3H</small></div><button type="button" data-gate="完整变化">查看</button></header>
     <div class="trace-chart">
-      <svg viewBox="0 0 340 104" role="img" aria-label="最近三小时状态变化折线">
-        <path class="trace-guide" d="M12 82 H328 M12 52 H328 M12 22 H328"/>
-        <path class="trace-line" d="M16 75 C52 74 62 64 94 66 S142 48 174 55 S222 60 247 38 S292 31 326 18"/>
-        <circle cx="94" cy="66" r="3.2"/><circle cx="174" cy="55" r="3.2"/><circle cx="247" cy="38" r="3.2"/><circle cx="326" cy="18" r="3.2"/>
+      <svg viewBox="0 0 340 88" role="img" aria-label="最近三小时状态变化折线">
+        <path class="trace-guide" d="M12 70 H328 M12 43 H328 M12 16 H328"/>
+        <path class="trace-line" d="M16 69 C55 67 67 59 99 60 S145 45 178 50 S222 54 250 34 S294 28 326 16"/>
+        <circle cx="99" cy="60" r="3"/><circle cx="178" cy="50" r="3"/><circle cx="250" cy="34" r="3"/><circle cx="326" cy="16" r="3"/>
       </svg>
-      <span class="trace-tag t1"><b>20:42</b> Closeness ↑</span>
-      <span class="trace-tag t2"><b>21:06</b> Fatigue ·</span>
-      <span class="trace-tag t3"><b>21:18</b> Connection ↑</span>
+      <span class="trace-tag t1">靠近 ↑</span>
+      <span class="trace-tag t2">疲惫 ·</span>
+      <span class="trace-tag t3">连接 ↑</span>
     </div>
   </section>
 
@@ -91,6 +84,6 @@
   <button><span>↗</span><b>Detour</b></button>
 </nav>
 <div class="toast" id="toast"></div>
-<script src="./mind.js"></script>
+<script src="./mind.js?v=20260917-1"></script>
 </body>
 </html>
