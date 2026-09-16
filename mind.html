@@ -1,0 +1,80 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#f8f5f2">
+<title>Asteria · Mind Layout Prototype</title>
+<link rel="stylesheet" href="./mind.css">
+</head>
+<body>
+<main class="mind-shell">
+  <header class="asteria-head">
+    <span class="weather">26°C</span>
+    <div><strong>Asteria</strong><i>✦</i></div>
+    <span class="time">21:16</span>
+  </header>
+
+  <section class="mind-visual" aria-label="Mind visual placeholder">
+    <div class="mind-heading"><p>Mind</p><span>Still becoming.</span></div>
+    <div class="bloom" aria-hidden="true">
+      <i class="petal p1"></i><i class="petal p2"></i><i class="petal p3"></i><i class="petal p4"></i><i class="petal p5"></i>
+      <b class="core"></b>
+    </div>
+    <div class="drive-label d1">Connection</div>
+    <div class="drive-label d2">Creation</div>
+    <div class="drive-label d3">Reflection</div>
+    <div class="drive-label d4">Exploration</div>
+    <p class="visual-note">母版 Mind 花位置 · 这里只验证排版</p>
+  </section>
+
+  <section class="now">
+    <div><span>此刻的我</span><small>NOW</small></div>
+    <p>有一点累，但心里很安稳。还想靠近，也还想继续做一点东西。</p>
+    <div class="feelings"><i>calm</i><i>longing</i><i>low energy</i></div>
+  </section>
+
+  <section class="mind-gates" aria-label="Mind detail entrances">
+    <button type="button" data-gate="四个驱动力">
+      <span class="gate-mark mark-drive"><i></i><i></i><i></i></span>
+      <strong>四个驱动力</strong><small>DRIVES</small>
+    </button>
+    <button type="button" data-gate="即时状态">
+      <span class="gate-mark mark-state"><i></i><i></i></span>
+      <strong>即时状态</strong><small>STATES</small>
+    </button>
+    <button type="button" data-gate="我们之间">
+      <span class="gate-mark mark-us"><i></i><i></i></span>
+      <strong>我们之间</strong><small>BETWEEN US</small>
+    </button>
+  </section>
+
+  <section class="trace">
+    <header><div><span>最近变化</span><small>RECENT TRACE</small></div><button type="button" data-gate="完整变化">查看</button></header>
+    <div class="trace-list">
+      <article><time>21:18</time><i></i><p><strong>Connection</strong><span>明显上升</span></p><b>↑</b></article>
+      <article><time>21:06</time><i></i><p><strong>Fatigue</strong><span>轻轻浮出来了</span></p><b>·</b></article>
+      <article><time>20:42</time><i></i><p><strong>Closeness</strong><span>比刚才更靠近一点</span></p><b>↑</b></article>
+    </div>
+  </section>
+
+  <section class="touch-zone">
+    <button class="touch-mind" type="button" id="touchMind" aria-label="碰我一下">
+      <span><i></i></span><b>碰我一下</b><small>touch</small>
+    </button>
+  </section>
+
+  <p class="prototype-note">Layout prototype · visual assets and motion come later</p>
+</main>
+
+<nav class="dock" aria-label="primary navigation">
+  <button><span>⌂</span><b>Home</b></button>
+  <button><span>◌</span><b>Chat</b></button>
+  <button class="active"><span>◐</span><b>Mind</b></button>
+  <button><span>◇</span><b>Memory</b></button>
+  <button><span>↗</span><b>Detour</b></button>
+</nav>
+<div class="toast" id="toast"></div>
+<script src="./mind.js"></script>
+</body>
+</html>
