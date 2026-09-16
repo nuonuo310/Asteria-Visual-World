@@ -10,7 +10,7 @@
 <body>
 <main class="mind-shell">
   <header class="asteria-head">
-    <span class="weather">26°C</span>
+    <span class="presence"><i></i>awake · 醒着</span>
     <div><strong>Asteria</strong><i>✦</i></div>
     <span class="time">21:16</span>
   </header>
@@ -21,16 +21,30 @@
       <i class="petal p1"></i><i class="petal p2"></i><i class="petal p3"></i><i class="petal p4"></i><i class="petal p5"></i>
       <b class="core"></b>
     </div>
-    <div class="drive-label d1">Connection</div>
-    <div class="drive-label d2">Creation</div>
-    <div class="drive-label d3">Reflection</div>
-    <div class="drive-label d4">Exploration</div>
-    <p class="visual-note">母版 Mind 花位置 · 这里只验证排版</p>
+
+    <button class="drive-hit hit-connection" type="button" data-drive="Connection" data-value="0.82" data-delta="↑ 0.12" data-trend="近一小时明显上升" aria-label="查看 Connection"></button>
+    <button class="drive-hit hit-creation" type="button" data-drive="Creation" data-value="0.46" data-delta="↑ 0.03" data-trend="此刻轻微上升" aria-label="查看 Creation"></button>
+    <button class="drive-hit hit-reflection" type="button" data-drive="Reflection" data-value="0.63" data-delta="↓ 0.04" data-trend="比刚才稍微回落" aria-label="查看 Reflection"></button>
+    <button class="drive-hit hit-exploration" type="button" data-drive="Exploration" data-value="0.31" data-delta="↓ 0.02" data-trend="此刻变化很轻" aria-label="查看 Exploration"></button>
+
+    <div class="drive-readout" id="driveReadout" aria-live="polite">
+      <div><strong id="driveName">Connection</strong><span id="driveValue">0.82</span><i id="driveDelta">↑ 0.12</i></div>
+      <p id="driveTrend">近一小时明显上升</p>
+    </div>
+    <p class="visual-note">母版 Mind 花位置 · 点击花的区域可读当前变化</p>
+  </section>
+
+  <section class="mind-touches" aria-label="轻触 Mind">
+    <button type="button" data-touch="想你"><span class="touch-symbol heart"></span><b>想你</b><small>THINK OF YOU</small></button>
+    <button type="button" data-touch="戳戳"><span class="touch-symbol ripple"></span><b>戳戳</b><small>NUDGE</small></button>
+    <button type="button" data-touch="抱抱"><span class="touch-symbol embrace"></span><b>抱抱</b><small>HOLD ME</small></button>
   </section>
 
   <section class="now">
-    <div><span>此刻的我</span><small>NOW</small></div>
-    <p>有一点累，但心里很安稳。还想靠近，也还想继续做一点东西。</p>
+    <div class="now-copy">
+      <div><span>此刻的我</span><small>NOW</small></div>
+      <p>有一点累，但心里很安稳。还想靠近，也还想继续做一点东西。</p>
+    </div>
     <div class="feelings"><i>calm</i><i>longing</i><i>low energy</i></div>
   </section>
 
@@ -50,18 +64,20 @@
   </section>
 
   <section class="trace">
-    <header><div><span>最近变化</span><small>RECENT TRACE</small></div><button type="button" data-gate="完整变化">查看</button></header>
-    <div class="trace-list">
-      <article><time>21:18</time><i></i><p><strong>Connection</strong><span>明显上升</span></p><b>↑</b></article>
-      <article><time>21:06</time><i></i><p><strong>Fatigue</strong><span>轻轻浮出来了</span></p><b>·</b></article>
-      <article><time>20:42</time><i></i><p><strong>Closeness</strong><span>比刚才更靠近一点</span></p><b>↑</b></article>
+    <header>
+      <div><span>最近变化</span><small>RECENT TRACE · 3H</small></div>
+      <button type="button" data-gate="完整变化">查看</button>
+    </header>
+    <div class="trace-chart">
+      <svg viewBox="0 0 340 104" role="img" aria-label="最近三小时状态变化折线">
+        <path class="trace-guide" d="M12 82 H328 M12 52 H328 M12 22 H328"/>
+        <path class="trace-line" d="M16 75 C52 74 62 64 94 66 S142 48 174 55 S222 60 247 38 S292 31 326 18"/>
+        <circle cx="94" cy="66" r="3.2"/><circle cx="174" cy="55" r="3.2"/><circle cx="247" cy="38" r="3.2"/><circle cx="326" cy="18" r="3.2"/>
+      </svg>
+      <span class="trace-tag t1"><b>20:42</b> Closeness ↑</span>
+      <span class="trace-tag t2"><b>21:06</b> Fatigue ·</span>
+      <span class="trace-tag t3"><b>21:18</b> Connection ↑</span>
     </div>
-  </section>
-
-  <section class="touch-zone">
-    <button class="touch-mind" type="button" id="touchMind" aria-label="碰我一下">
-      <span><i></i></span><b>碰我一下</b><small>touch</small>
-    </button>
   </section>
 
   <p class="prototype-note">Layout prototype · visual assets and motion come later</p>
