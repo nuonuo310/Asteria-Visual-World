@@ -159,14 +159,19 @@
     button.addEventListener('click', () => showToast(`${button.dataset.room} 尚未接入`));
   });
 
-  const themeButtons = root.querySelectorAll('[data-theme-choice]');
-  themeButtons.forEach((button) => {
-    button.addEventListener('click', () => {
-      const choice = button.dataset.themeChoice;
-      document.body.classList.toggle('theme-b', choice === 'b');
-      themeButtons.forEach((item) => item.classList.toggle('active', item === button));
-    });
-  });
+  const themeButtons = [...root.querySelectorAll('[data-theme-choice]')];
+  function setTheme(choice) {
+    document.body.classList.remove('theme-b','theme-c');
+    if (choice === '2') document.body.classList.add('theme-b');
+    if (choice === '3') document.body.classList.add('theme-c');
+    themeButtons.forEach((item) => item.classList.toggle('active', item.dataset.themeChoice === choice));
+    try { localStorage.setItem('asteria-theme', choice); } catch (_) {}
+  }
+  let savedTheme = '1';
+  try { savedTheme = localStorage.getItem('asteria-theme') || '1'; } catch (_) {}
+  if (!['1','2','3'].includes(savedTheme)) savedTheme = '1';
+  setTheme(savedTheme);
+  themeButtons.forEach((button) => button.addEventListener('click', () => setTheme(button.dataset.themeChoice)));
 
   root.querySelectorAll('[data-nav]').forEach((button) => {
     button.addEventListener('click', () => {
