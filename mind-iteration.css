@@ -1,8 +1,13 @@
 /* 2026-09-17 Mind refinement pass.
-   This file intentionally overrides the layout prototype without disturbing the locked base palette. */
+   Locked structure; this layer now establishes the surface hierarchy. */
+
+/* Background is atmosphere. Functional cards use a deeper companion tone instead of more white. */
+:root{--entity:#f6ecec;--entity-soft:#f8f0f0;--entity-line:rgba(143,112,130,.105);--entity-shadow:0 10px 28px rgba(111,78,91,.035);--gate-text:#8e7d86}
+body.theme-2{--entity:#f6e8ee;--entity-soft:#f9edf2;--entity-line:rgba(177,112,142,.095);--entity-shadow:0 10px 28px rgba(126,76,99,.034);--gate-text:#927985}
+body.theme-3{--entity:#eee9f2;--entity-soft:#f2edf5;--entity-line:rgba(132,113,157,.095);--entity-shadow:0 10px 28px rgba(82,72,103,.034);--gate-text:#81778d}
 
 /* Presence belongs to the Mind composition, not the page chrome. */
-.presence{padding-top:32px}
+.presence{padding-top:38px}
 
 /* Shen's room is a place beside Mind, not a layer inside Shen's inner state. */
 .mind-room-row{position:relative;height:0;z-index:9}
@@ -11,69 +16,43 @@
 .room-door i:after{content:"";position:absolute;right:2px;top:8px;width:2px;height:2px;border-radius:50%;background:color-mix(in srgb,var(--ink) 48%,transparent)}
 .room-door small{font:500 8px/1 system-ui,sans-serif;letter-spacing:.08em;text-transform:uppercase}
 
-/* Let Mind be the widest visual surface on this page and pull it slightly upward. */
-.mind-visual{height:432px;width:calc(100% + 10px);margin-left:-5px;margin-top:-6px}
+/* Mind stays pale and atmospheric; unlike the entity cards below it should merge softly with the page. */
+.mind-visual{height:432px;width:calc(100% + 10px);margin-left:-5px;margin-top:-6px;border-color:rgba(143,112,130,.10);background:radial-gradient(48% 35% at 50% 45%,rgba(255,255,255,.76),transparent 76%),var(--mind-panel)}
+.mind-heading{left:22px;top:21px}.mind-heading p{font-size:23px;line-height:1.05}.mind-heading span{margin-top:4px;font-size:11px}
 
-/* Flower-region selection: no selection ring. The selected colour only breathes a little brighter. */
+/* Flower-region selection. */
 .drive-hit:after,.drive-hit.selected:after{content:none!important;border:0!important;box-shadow:none!important;background:transparent!important}
-.mind-visual:has(.hit-connection.selected) .p1,
-.mind-visual:has(.hit-creation.selected) .p4,
-.mind-visual:has(.hit-reflection.selected) .p3,
-.mind-visual:has(.hit-exploration.selected) .p2{opacity:.78;filter:blur(8px) brightness(1.08)}
-
-/* Read the flower in place. The milk mist is only a tiny legibility halo, not a painted patch. */
-.drive-readout{left:50%;top:55%;width:160px;transform:translate(-50%,-42%);padding:7px 7px;border:0;border-radius:0;background:radial-gradient(ellipse at center,rgba(255,254,253,.38) 0%,rgba(255,254,253,.16) 43%,transparent 68%);box-shadow:none;backdrop-filter:none;text-shadow:0 1px 7px rgba(255,255,255,.94);animation:mindReadIn .22s ease-out}
-.drive-readout>div{gap:7px;justify-content:center}
-.drive-readout strong{font-size:10px;font-weight:500}
-.drive-readout span{font-size:15px}
-.drive-readout i{margin-left:4px;font-size:8px}
-.drive-readout p{margin:5px -8px 0;text-align:center;font-size:8px;line-height:1.45;color:#94868e}
+.mind-visual:has(.hit-connection.selected) .p1,.mind-visual:has(.hit-creation.selected) .p4,.mind-visual:has(.hit-reflection.selected) .p3,.mind-visual:has(.hit-exploration.selected) .p2{opacity:.78;filter:blur(8px) brightness(1.08)}
+.drive-readout{left:50%;top:55%;width:160px;transform:translate(-50%,-42%);padding:7px;border:0;border-radius:0;background:radial-gradient(ellipse at center,rgba(255,254,253,.38) 0%,rgba(255,254,253,.16) 43%,transparent 68%);box-shadow:none;backdrop-filter:none;text-shadow:0 1px 7px rgba(255,255,255,.94);animation:mindReadIn .22s ease-out}
+.drive-readout>div{gap:7px;justify-content:center}.drive-readout strong{font-size:10px;font-weight:500}.drive-readout span{font-size:15px}.drive-readout i{margin-left:4px;font-size:8px}.drive-readout p{margin:5px -8px 0;text-align:center;font-size:8px;line-height:1.45;color:#94868e}
 @keyframes mindReadIn{from{opacity:0;transform:translate(-50%,calc(-42% + 5px))}to{opacity:1;transform:translate(-50%,-42%)}}
 
-/* Four relationship actions share one quiet row between Mind and Now. */
-.mind-touches{grid-template-columns:repeat(4,1fr);width:78%;margin:7px auto 9px;gap:0}
-.mind-touches button{gap:4px;padding:3px 1px}
-.mind-touches b{font-size:10px}
-.touch-symbol{width:18px;height:18px}
-.touch-symbol.reply:before{content:"";position:absolute;left:3px;top:4px;width:11px;height:8px;border:1px solid #b39eaa;border-radius:7px 7px 7px 2px;opacity:.8}
-.touch-symbol.reply:after{content:"";position:absolute;left:7px;top:7px;width:3px;height:1px;border-radius:2px;background:#b39eaa;box-shadow:4px 0 #b39eaa;opacity:.65}
+/* Four relationship actions. */
+.mind-touches{grid-template-columns:repeat(4,1fr);width:78%;margin:7px auto 9px;gap:0}.mind-touches button{gap:4px;padding:3px 1px}.mind-touches b{font-size:10px}.touch-symbol{width:18px;height:18px}
+.touch-symbol.reply:before{content:"";position:absolute;left:3px;top:4px;width:11px;height:8px;border:1px solid #b39eaa;border-radius:7px 7px 7px 2px;opacity:.8}.touch-symbol.reply:after{content:"";position:absolute;left:7px;top:7px;width:3px;height:1px;border-radius:2px;background:#b39eaa;box-shadow:4px 0 #b39eaa;opacity:.65}
 
-/* Recent trace: the line remains visual; two small glints lead the natural-language reading. */
-.trace{padding-bottom:14px}
-.trace-chart{height:76px;margin-top:3px}
-.trace-chart svg{height:76px}
-.trace-tag{display:none}
-.trace-summary{margin:5px 1px 0;padding-top:9px;border-top:1px solid rgba(143,112,130,.07)}
-.trace-summary p{position:relative;margin:0;padding-left:14px;color:#8f818a;font:400 9px/1.65 "Noto Serif SC","Songti SC",serif;letter-spacing:.01em}
-.trace-summary p:before{content:"✦";position:absolute;left:0;top:.02em;color:var(--apricot);font:400 10px/1.45 Georgia,serif;text-shadow:0 0 8px color-mix(in srgb,var(--apricot) 48%,transparent);opacity:.92}
-.trace-summary p+p{margin-top:1px}
-.trace-summary p+p:before{font-size:8px;left:1px;top:.14em;opacity:.48;text-shadow:0 0 6px color-mix(in srgb,var(--apricot) 32%,transparent)}
+/* Entity surfaces: clearly deeper than the milk-white page, with the border stepping back. */
+.now,.mind-gates button,.trace{border-color:var(--entity-line);background:var(--entity);box-shadow:var(--entity-shadow)}
+.now{background:var(--entity-soft)}
+.feelings i{background:color-mix(in srgb,var(--panel) 50%,var(--entity));border-color:rgba(143,112,130,.07)}
 
-/* Response appears where the relationship is being read, not as a bottom-sheet tool panel.
-   The outer edge is pure mist; the visible line sits inside it like a second glass/paper layer. */
-.response-layer[hidden]{display:none!important}
-.response-layer{position:fixed;inset:0;z-index:40;display:grid;place-items:center;padding:24px;animation:responseLayerIn .18s ease-out}
-.response-dismiss{position:absolute;inset:0;width:100%;height:100%;border:0;background:rgba(250,247,248,.22);backdrop-filter:blur(2px);cursor:default}
-.response-mist{position:relative;z-index:1;width:min(82vw,340px);padding:26px 25px 22px;border:0;border-radius:29px;background:color-mix(in srgb,var(--panel) 80%,transparent);box-shadow:0 18px 54px rgba(83,62,76,.085),0 0 34px color-mix(in srgb,var(--mist) 58%,transparent),inset 0 1px rgba(255,255,255,.72);backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px);animation:responseMistIn .24s ease-out}
-.response-mist:before{content:"";position:absolute;inset:9px;border:1px solid rgba(151,123,139,.13);border-radius:21px;pointer-events:none}
-.response-close{position:absolute;z-index:2;right:16px;top:14px;width:28px;height:28px;border:0;background:transparent;color:var(--muted);font:300 19px/1 system-ui,sans-serif;cursor:pointer}
-.response-mist>small{position:relative;z-index:1;display:block;color:#a5969f;font:600 7px/1 system-ui,sans-serif;letter-spacing:.13em;text-transform:uppercase}
-.response-mist h2{position:relative;z-index:1;margin:10px 0 17px;font-size:18px;font-weight:400}
-.response-quick{position:relative;z-index:1;display:flex;flex-wrap:wrap;gap:7px}
-.response-quick button{border:1px solid rgba(143,112,130,.11);border-radius:999px;background:rgba(255,255,255,.36);padding:7px 10px;font-size:9px;color:#786a73;cursor:pointer}
-.response-note{position:relative;z-index:1;display:block;margin-top:17px}
-.response-note>span{display:block;margin-bottom:7px;font-size:9px;color:#9a8d95}
-.response-note textarea{display:block;width:100%;resize:none;border:0;border-bottom:1px solid rgba(143,112,130,.14);border-radius:0;background:transparent;padding:6px 2px 8px;outline:0;color:var(--ink);font:400 11px/1.55 "Noto Serif SC","Songti SC",serif}
-.response-note textarea::placeholder{color:#b7abb2}
-.response-send{position:relative;z-index:1;display:block;margin:14px 0 0 auto;border:0;border-radius:999px;background:color-mix(in srgb,var(--mist) 68%,white);padding:7px 13px;font-size:9px;color:var(--ink);cursor:pointer}
-@keyframes responseLayerIn{from{opacity:0}to{opacity:1}}
-@keyframes responseMistIn{from{opacity:0;transform:translateY(7px) scale(.985)}to{opacity:1;transform:none}}
-body.response-open{overflow:hidden}
+/* The Chinese title is enough here; NOW was duplicate information. */
+.now-title small{display:none}.now-title span{font-weight:400}
 
-@media(max-width:360px){
- .mind-visual{height:416px;width:calc(100% + 8px);margin-left:-4px}
- .mind-touches{width:84%}
- .mind-touches b{font-size:9.5px}
- .room-door{right:2px}
-}
+/* Gates are visual windows. Text becomes a quiet English label; future elements get the space and emphasis. */
+.mind-gates strong{display:none}.mind-gates small{margin-top:7px;font:400 9px/1.1 system-ui,sans-serif;letter-spacing:.14em;color:var(--gate-text);opacity:.78}.gate-mark{margin-bottom:8px;opacity:.48}
+
+/* Recent trace copy must remain readable on a phone. */
+.trace{padding-bottom:16px}.trace-chart{height:76px;margin-top:3px}.trace-chart svg{height:76px}.trace-tag{display:none}
+.trace-summary{margin:7px 1px 0;padding-top:11px;border-top:1px solid rgba(143,112,130,.055)}
+.trace-summary p{position:relative;margin:0;padding-left:18px;color:#83757e;font:400 11px/1.65 "Noto Serif SC","Songti SC",serif;letter-spacing:.005em}
+.trace-summary p:before{content:"✦";position:absolute;left:0;top:-.03em;color:var(--apricot);font:400 14px/1.45 Georgia,serif;text-shadow:0 0 9px color-mix(in srgb,var(--apricot) 58%,transparent);opacity:1}
+.trace-summary p+p{margin-top:2px}.trace-summary p+p:before{font-size:11px;left:2px;top:.08em;opacity:.58;text-shadow:0 0 7px color-mix(in srgb,var(--apricot) 40%,transparent)}
+
+/* Response remains true mist because it is an intangible relational layer. */
+.response-layer[hidden]{display:none!important}.response-layer{position:fixed;inset:0;z-index:40;display:grid;place-items:center;padding:24px;animation:responseLayerIn .18s ease-out}.response-dismiss{position:absolute;inset:0;width:100%;height:100%;border:0;background:rgba(250,247,248,.22);backdrop-filter:blur(2px);cursor:default}
+.response-mist{position:relative;z-index:1;width:min(82vw,340px);padding:26px 25px 22px;border:0;border-radius:29px;background:color-mix(in srgb,var(--panel) 80%,transparent);box-shadow:0 18px 54px rgba(83,62,76,.085),0 0 34px color-mix(in srgb,var(--mist) 58%,transparent),inset 0 1px rgba(255,255,255,.72);backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px);animation:responseMistIn .24s ease-out}.response-mist:before{content:"";position:absolute;inset:9px;border:1px solid rgba(151,123,139,.13);border-radius:21px;pointer-events:none}.response-close{position:absolute;z-index:2;right:16px;top:14px;width:28px;height:28px;border:0;background:transparent;color:var(--muted);font:300 19px/1 system-ui,sans-serif;cursor:pointer}.response-mist>small{position:relative;z-index:1;display:block;color:#a5969f;font:600 7px/1 system-ui,sans-serif;letter-spacing:.13em;text-transform:uppercase}.response-mist h2{position:relative;z-index:1;margin:10px 0 17px;font-size:18px;font-weight:400}.response-quick{position:relative;z-index:1;display:flex;flex-wrap:wrap;gap:7px}.response-quick button{border:1px solid rgba(143,112,130,.11);border-radius:999px;background:rgba(255,255,255,.36);padding:7px 10px;font-size:9px;color:#786a73;cursor:pointer}.response-note{position:relative;z-index:1;display:block;margin-top:17px}.response-note>span{display:block;margin-bottom:7px;font-size:9px;color:#9a8d95}.response-note textarea{display:block;width:100%;resize:none;border:0;border-bottom:1px solid rgba(143,112,130,.14);border-radius:0;background:transparent;padding:6px 2px 8px;outline:0;color:var(--ink);font:400 11px/1.55 "Noto Serif SC","Songti SC",serif}.response-note textarea::placeholder{color:#b7abb2}.response-send{position:relative;z-index:1;display:block;margin:14px 0 0 auto;border:0;border-radius:999px;background:color-mix(in srgb,var(--mist) 68%,white);padding:7px 13px;font-size:9px;color:var(--ink);cursor:pointer}
+@keyframes responseLayerIn{from{opacity:0}to{opacity:1}}@keyframes responseMistIn{from{opacity:0;transform:translateY(7px) scale(.985)}to{opacity:1;transform:none}}body.response-open{overflow:hidden}
+
+@media(max-width:360px){.mind-visual{height:416px;width:calc(100% + 8px);margin-left:-4px}.mind-touches{width:84%}.mind-touches b{font-size:9.5px}.room-door{right:2px}}
 @media(prefers-reduced-motion:reduce){.drive-readout,.response-layer,.response-mist{animation:none!important}}
