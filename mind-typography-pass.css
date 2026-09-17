@@ -1,0 +1,130 @@
+/* 2026-09-18 Mind surface + typography pass.
+   Adds a stable coffee-plum text skeleton, theme-colour accents, feathered card atmosphere,
+   restrained edge definition, and Asteria four-point title marks without changing layout. */
+
+:root{
+  --ink-structure:#674b56;
+  --ink-body:#846d76;
+  --ink-soft:#aa929c;
+  --ink-faint:#c1adb5;
+  --accent-deep:#c87391;
+  --accent-soft:#d89ab0;
+  --surface-outline:rgba(174,118,139,.16);
+  --surface-outline-light:rgba(255,255,255,.86);
+  --haze-a:rgba(233,153,180,.10);
+  --haze-b:rgba(242,194,207,.07);
+}
+body.theme-2{
+  --ink-structure:#694853;
+  --ink-body:#896a74;
+  --ink-soft:#ad8c98;
+  --ink-faint:#c4a9b3;
+  --accent-deep:#cf668d;
+  --accent-soft:#df91ad;
+  --surface-outline:rgba(191,111,143,.17);
+  --haze-a:rgba(236,128,170,.115);
+  --haze-b:rgba(247,181,204,.075);
+}
+body.theme-3{
+  --ink-structure:#5f5069;
+  --ink-body:#786b80;
+  --ink-soft:#9c8ca7;
+  --ink-faint:#b8a9c0;
+  --accent-deep:#9273b1;
+  --accent-soft:#b193c9;
+  --surface-outline:rgba(139,112,169,.16);
+  --haze-a:rgba(174,145,214,.105);
+  --haze-b:rgba(211,190,232,.07);
+}
+
+/* Keep the raised paper feeling, but give the pale surfaces a readable perimeter.
+   The upper edge is still light; the tinted outline is intentionally quiet. */
+.now,.mind-gates button,.trace{
+  border-color:var(--surface-outline);
+  box-shadow:
+    inset 0 1px 0 var(--surface-outline-light),
+    inset 1px 0 0 rgba(255,255,255,.34),
+    0 3px 5px var(--contact-shadow),
+    0 14px 30px var(--ambient-shadow);
+}
+
+/* Replace the visible top-right colour patch with several broad, offset veils.
+   No single veil owns a hard centre, so the eye reads coloured air rather than a blob. */
+.now{
+  background:
+    radial-gradient(88% 125% at 116% -10%,var(--haze-a) 0 18%,transparent 64%),
+    radial-gradient(105% 92% at 94% 18%,var(--haze-b) 0 12%,transparent 68%),
+    linear-gradient(145deg,rgba(255,255,255,.82),var(--card-warm));
+}
+.trace{
+  background:
+    radial-gradient(100% 90% at 115% -4%,var(--haze-a) 0 17%,transparent 66%),
+    radial-gradient(88% 110% at 91% 7%,var(--haze-b) 0 10%,transparent 70%),
+    linear-gradient(145deg,rgba(255,255,255,.86),var(--card-warm));
+}
+.now:after,.trace:after{
+  width:68%;height:78%;right:-28%;top:-30%;
+  background:radial-gradient(ellipse at center,var(--haze-a),transparent 70%);
+  filter:blur(27px);opacity:.56;
+}
+
+/* Stable text skeleton: titles do not become a monochrome copy of each theme. */
+.mind-heading p,.now-title span,.trace header span{
+  color:var(--ink-structure);
+  font-family:"Noto Serif SC","Songti SC","STSong",Georgia,serif;
+  font-weight:400;
+}
+.mind-heading span{
+  color:var(--ink-soft);
+  font-family:Georgia,"Times New Roman",serif;
+  font-style:italic;
+}
+.now>p,.trace-summary p{color:var(--ink-body)}
+.visual-note,.prototype-note{color:var(--ink-faint)}
+
+/* Asteria four-point title signature. */
+.title-spark{
+  display:inline-block;margin-right:8px;vertical-align:.08em;
+  color:var(--accent-deep);font:400 .78em/1 Georgia,"Times New Roman",serif;
+  text-shadow:0 0 10px color-mix(in srgb,var(--accent-soft) 48%,transparent);
+}
+.trace .title-spark{font-size:.72em;margin-right:7px;color:var(--accent-soft)}
+
+/* Gate labels are structural; colour lives in marks and the emotional subtitles. */
+.mind-gates small{
+  color:var(--ink-structure);opacity:.94;
+  font-family:Georgia,"Times New Roman",serif;
+  font-size:9px;letter-spacing:.16em;
+}
+.gate-copy{
+  position:relative;z-index:1;display:block;margin-top:6px;
+  color:var(--ink-soft);
+  font:italic 400 8px/1.15 Georgia,"Times New Roman",serif;
+  letter-spacing:.015em;
+}
+.mind-gates button:nth-child(1) .gate-mark{color:#cf7d91}
+.mind-gates button:nth-child(2) .gate-mark{color:#9a84c8}
+.mind-gates button:nth-child(3) .gate-mark{color:#c77fa5}
+.mind-gates button:nth-child(1) .gate-copy{color:#bd8394}
+.mind-gates button:nth-child(2) .gate-copy{color:#9585b1}
+.mind-gates button:nth-child(3) .gate-copy{color:#b6819b}
+.gate-mark i{border-color:currentColor!important}
+
+/* Metadata recedes; actual state accents come forward. */
+.trace header small{
+  color:var(--accent-deep);opacity:.78;
+  font-family:system-ui,sans-serif;font-weight:500;letter-spacing:.16em;
+}
+.trace header button{color:var(--ink-body)}
+.feelings i{
+  color:var(--accent-deep);
+  border-color:color-mix(in srgb,var(--accent-soft) 22%,transparent);
+  background:rgba(255,255,255,.55);
+}
+.trace-line{stroke:color-mix(in srgb,var(--accent-deep) 72%,var(--ink-structure))}
+.trace-chart circle{stroke:var(--accent-deep)}
+
+/* The three tiles keep their individual atmosphere even when the global day theme changes. */
+.mind-gates button:nth-child(1):before{background:radial-gradient(ellipse,rgba(239,157,178,.19),transparent 70%)}
+.mind-gates button:nth-child(2):before{background:radial-gradient(ellipse,rgba(175,156,220,.18),transparent 70%)}
+.mind-gates button:nth-child(3):before{background:radial-gradient(ellipse,rgba(226,151,190,.17),transparent 70%)}
