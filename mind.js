@@ -3,7 +3,7 @@
  let timer;
  function show(message){clearTimeout(timer);toast.textContent=message;toast.classList.add('show');timer=setTimeout(()=>toast.classList.remove('show'),1300)}
 
- const detailRoutes={'四个驱动力':'mind-drives.html','即时状态':'mind-states.html','我们之间':'mind-between.html'};
+ const detailRoutes={'四个驱动力':'mind-drives.html','即时状态':'mind-states.html','我们之间':'mind-between.html','完整变化':'mind-trace.html'};
  document.querySelectorAll('[data-gate]').forEach(button=>button.addEventListener('click',()=>{
    const route=detailRoutes[button.dataset.gate];
    if(route){window.location.href=route;return}
