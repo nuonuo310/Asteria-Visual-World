@@ -140,7 +140,6 @@
   calendarToggle.addEventListener('click', () => setCalendar(monthPanel.hidden));
   calendarClose.addEventListener('click', () => setCalendar(false));
 
-
   const footprintCards = root.querySelectorAll('[data-footprint]');
   const footprintsBoard = root.querySelector('.footprints-board');
   footprintCards.forEach((card) => {
@@ -148,12 +147,9 @@
       const wasActive = card.classList.contains('is-active');
       footprintCards.forEach((item) => item.classList.remove('is-active'));
       if (!wasActive) card.classList.add('is-active');
-      if (footprintsBoard) {
-        footprintsBoard.classList.toggle('has-selection', !wasActive);
-      }
+      if (footprintsBoard) footprintsBoard.classList.toggle('has-selection', !wasActive);
     });
   });
-
 
   root.querySelectorAll('[data-room]').forEach((button) => {
     button.addEventListener('click', () => showToast(`${button.dataset.room} 尚未接入`));
@@ -173,11 +169,18 @@
   setTheme(savedTheme);
   themeButtons.forEach((button) => button.addEventListener('click', () => setTheme(button.dataset.themeChoice)));
 
+  const navRoutes = { Home: 'index.html', Mind: 'mind.html' };
   root.querySelectorAll('[data-nav]').forEach((button) => {
     button.addEventListener('click', () => {
+      const target = button.dataset.nav;
+      const route = navRoutes[target];
+      if (route) {
+        if (target !== 'Home') window.location.href = route;
+        return;
+      }
       root.querySelectorAll('[data-nav]').forEach((item) => item.classList.remove('active'));
       button.classList.add('active');
-      if (button.dataset.nav !== 'Home') showToast(`${button.dataset.nav} 仍在装修`);
+      showToast(`${target} 仍在装修`);
     });
   });
 })();
