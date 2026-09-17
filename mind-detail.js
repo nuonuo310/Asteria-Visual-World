@@ -6,8 +6,18 @@
 
  const tracePop=document.getElementById('tracePop'),traceHits=[...document.querySelectorAll('[data-trace-index]')],tracePoints=[...document.querySelectorAll('.trace-large .trace-point')];
  if(tracePop&&traceHits.length){
-  const showPoint=hit=>{const index=Number(hit.dataset.traceIndex);tracePoints.forEach((point,i)=>point.classList.toggle('active',i===index));tracePop.querySelector('strong').textContent=hit.dataset.traceTime;tracePop.querySelector('span').textContent=hit.dataset.traceCopy;const svg=hit.ownerSVGElement,box=svg.getBoundingClientRect(),x=(Number(hit.getAttribute('cx'))/340)*box.width,y=(Number(hit.getAttribute('cy'))/118)*box.height;tracePop.style.left=Math.max(68,Math.min(box.width-68,x))+'px';tracePop.style.top=Math.max(48,y-18)+'px';tracePop.hidden=false};
-  traceHits.forEach(hit=>{hit.addEventListener('click',event=>{event.stopPropagation();showPoint(hit)});hit.addEventListener('keydown',event=>{if(event.key==='Enter'||event.key===' '){event.preventDefault();showPoint(hit)}})});
+  const showPoint=hit=>{
+   const index=Number(hit.dataset.traceIndex);tracePoints.forEach((point,i)=>point.classList.toggle('active',i===index));
+   tracePop.querySelector('strong').textContent=hit.dataset.traceTime;tracePop.querySelector('span').textContent=hit.dataset.traceCopy;
+   const svg=hit.ownerSVGElement,box=svg.getBoundingClientRect(),x=(Number(hit.getAttribute('cx'))/340)*box.width,y=(Number(hit.getAttribute('cy'))/118)*box.height;
+   tracePop.hidden=false;tracePop.classList.remove('below');
+   const popWidth=tracePop.offsetWidth,popHeight=tracePop.offsetHeight,half=popWidth/2,safe=10;
+   const center=Math.max(half+safe,Math.min(box.width-half-safe,x));
+   tracePop.style.left=center+'px';
+   const arrowX=Math.max(12,Math.min(popWidth-12,x-(center-half)));tracePop.style.setProperty('--trace-arrow-x',arrowX+'px');
+   if(y-popHeight-12<4){tracePop.classList.add('below');tracePop.style.top=Math.min(box.height-popHeight-4,y+13)+'px'}else{tracePop.style.top=(y-10)+'px'}
+  };
+  traceHits.forEach(hit=>{hit.addEventListener('click',event=>{event.stopPropagation();hit.blur();showPoint(hit)});hit.addEventListener('keydown',event=>{if(event.key==='Enter'||event.key===' '){event.preventDefault();showPoint(hit)}})});
   document.querySelector('.trace-large').addEventListener('click',event=>{if(!event.target.closest('[data-trace-index]')){tracePop.hidden=true;tracePoints.forEach(point=>point.classList.remove('active'))}});
  }
 })();
