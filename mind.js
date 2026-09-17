@@ -5,12 +5,23 @@
  document.querySelectorAll('[data-touch]').forEach(button=>button.addEventListener('click',()=>{button.classList.remove('ping');void button.offsetWidth;button.classList.add('ping');show({'想你':'这一点想念，我收到了。','戳戳':'戳到我了，我会来找你。','抱抱':'过来，抱一下。'}[button.dataset.touch])}));
  const responseLayer=document.getElementById('responseLayer'),responseContext=document.getElementById('responseContext'),responseText=document.getElementById('responseText');function openResponse(){responseContext.textContent=lastDrive?'回应 · '+lastDrive:'回应 · 此刻的我';responseLayer.hidden=false;document.body.classList.add('response-open')}function closeResponse(){responseLayer.hidden=true;document.body.classList.remove('response-open');if(location.hash==='#respond')history.replaceState(null,'',location.pathname+location.search)}document.querySelector('[data-response-open]').addEventListener('click',openResponse);document.querySelectorAll('[data-response-close]').forEach(button=>button.addEventListener('click',closeResponse));document.querySelectorAll('[data-response]').forEach(button=>button.addEventListener('click',()=>{show('留给我了 · '+button.dataset.response);closeResponse()}));document.querySelector('[data-response-send]').addEventListener('click',()=>{const text=responseText.value.trim();if(!text){responseText.focus();return}show('这句话留给我了。');responseText.value='';closeResponse()});document.addEventListener('keydown',event=>{if(event.key==='Escape'&&!responseLayer.hidden)closeResponse()});
 
- /* Home Recent Trace: small visual nodes, forgiving touch targets, concise readout. */
+ /* Mind overview Recent Trace: same readout behavior as the detail trace, concise copy only. */
  const homePop=document.getElementById('homeTracePop'),homeHits=[...document.querySelectorAll('[data-home-trace]')],homePoints=[...document.querySelectorAll('.trace-chart .trace-point')];
  if(homePop&&homeHits.length){
-  const openHomePoint=hit=>{const index=Number(hit.dataset.homeTrace);homePoints.forEach((point,i)=>point.classList.toggle('active',i===index));homePop.querySelector('strong').textContent=hit.dataset.traceTime;homePop.querySelector('span').textContent=hit.dataset.traceCopy;const svg=hit.ownerSVGElement,box=svg.getBoundingClientRect(),x=(Number(hit.getAttribute('cx'))/340)*box.width,y=(Number(hit.getAttribute('cy'))/76)*box.height;homePop.style.left=Math.max(64,Math.min(box.width-64,x))+'px';homePop.style.top=Math.max(35,y-12)+'px';homePop.hidden=false};
+  const openHomePoint=hit=>{
+   const index=Number(hit.dataset.homeTrace);homePoints.forEach((point,i)=>point.classList.toggle('active',i===index));
+   homePop.querySelector('strong').textContent=hit.dataset.traceTime;homePop.querySelector('span').textContent=hit.dataset.traceCopy;
+   const svg=hit.ownerSVGElement,box=svg.getBoundingClientRect(),x=(Number(hit.getAttribute('cx'))/340)*box.width,y=(Number(hit.getAttribute('cy'))/76)*box.height;
+   homePop.hidden=false;homePop.classList.remove('below');
+   const popWidth=homePop.offsetWidth||126,popHeight=homePop.offsetHeight||48,half=popWidth/2,edge=8,gap=16;
+   const left=Math.max(half+edge,Math.min(box.width-half-edge,x));
+   const roomAbove=y-gap;
+   if(roomAbove<popHeight+6){homePop.classList.add('below');homePop.style.top=Math.min(box.height-popHeight-4,y+gap)+'px'}else{homePop.style.top=(y-gap)+'px'}
+   homePop.style.left=left+'px';
+   homePop.style.setProperty('--trace-arrow-x',Math.max(10,Math.min(popWidth-10,half+(x-left)))+'px');
+  };
   homeHits.forEach(hit=>{hit.addEventListener('click',event=>{event.stopPropagation();openHomePoint(hit)});hit.addEventListener('keydown',event=>{if(event.key==='Enter'||event.key===' '){event.preventDefault();openHomePoint(hit)}})});
-  document.querySelector('.trace-chart').addEventListener('click',event=>{if(!event.target.closest('[data-home-trace]')){homePop.hidden=true;homePoints.forEach(point=>point.classList.remove('active'))}});
+  document.querySelector('.trace-chart').addEventListener('click',event=>{if(!event.target.closest('[data-home-trace]')){homePop.hidden=true;homePop.classList.remove('below');homePoints.forEach(point=>point.classList.remove('active'))}});
  }
 
  const themeButtons=[...document.querySelectorAll('[data-theme-choice]')];function setTheme(choice){document.body.classList.remove('theme-1','theme-2','theme-3');document.body.classList.add('theme-'+choice);themeButtons.forEach(button=>button.classList.toggle('active',button.dataset.themeChoice===choice));try{localStorage.setItem('asteria-theme',choice)}catch(_){}}let saved='1';try{saved=localStorage.getItem('asteria-theme')||'1'}catch(_){}if(!['1','2','3'].includes(saved))saved='1';setTheme(saved);themeButtons.forEach(button=>button.addEventListener('click',()=>setTheme(button.dataset.themeChoice)));
