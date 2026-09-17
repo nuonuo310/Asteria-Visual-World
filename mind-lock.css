@@ -1,9 +1,8 @@
 /* 2026-09-18 Mind lock candidate.
-   Final polish from mobile review: deliberate emphasis, one centered meteor divider,
+   Final polish from mobile review: deliberate emphasis, a centered breathing meteor divider,
    and comfortable trace interaction without browser focus artifacts. */
 
-/* Passive relation chips stay quiet. Current-state chips carry a tinted text accent
-   so the card does not collapse into one flat brown/grey layer. */
+/* Current-state chips use the deeper tint of their own surface family so the card keeps depth. */
 .feelings i{
   color:var(--asteria-pink)!important;
   border-color:color-mix(in srgb,var(--asteria-pink) 20%,transparent)!important;
@@ -42,8 +41,8 @@ body.theme-3 .feelings i{color:#9673ad!important}
 .drive-meter{height:3px!important;background:color-mix(in srgb,var(--detail-edge) 54%,transparent)!important;border-radius:999px;overflow:hidden}
 .drive-meter i{border-radius:inherit;box-shadow:0 0 9px color-mix(in srgb,var(--asteria-pink) 20%,transparent)}
 
-/* Response: the sparkle is intentionally larger than the tiny metadata marks.
-   Divider geometry is one centered construction: equal continuous arms + exact center diamond. */
+/* Response: one larger contextual sparkle. The divider has equal arms and deliberate air
+   around the exact-centre diamond; the line never visually touches the crystal. */
 .response-mist>small{
   font-size:9px!important;
   line-height:1.25!important;
@@ -71,9 +70,9 @@ body.theme-3 .feelings i{color:#9673ad!important}
   background:linear-gradient(90deg,
     transparent 0%,
     color-mix(in srgb,var(--asteria-pink) 18%,transparent) 10%,
-    color-mix(in srgb,var(--asteria-pink) 72%,transparent) 45.5%,
-    transparent 46% 54%,
-    color-mix(in srgb,var(--asteria-pink) 72%,transparent) 54.5%,
+    color-mix(in srgb,var(--asteria-pink) 72%,transparent) 42.5%,
+    transparent 43% 57%,
+    color-mix(in srgb,var(--asteria-pink) 72%,transparent) 57.5%,
     color-mix(in srgb,var(--asteria-pink) 18%,transparent) 90%,
     transparent 100%);
   filter:drop-shadow(0 0 4px color-mix(in srgb,var(--asteria-pink) 18%,transparent));
@@ -90,8 +89,8 @@ body.theme-3 .feelings i{color:#9673ad!important}
 }
 .response-send{margin-top:13px!important}
 
-/* Trace interaction. Visual nodes stay tiny; invisible hit areas are finger-sized.
-   Safari's SVG focus ring is explicitly suppressed; selection is represented by our own node. */
+/* Trace interaction. Main-card and detail-card traces share the same readout language.
+   Visual nodes stay tiny; invisible hit areas are finger-sized. */
 .trace-chart,.trace-large{position:relative}
 .trace-hit{
   fill:transparent!important;stroke:transparent!important;stroke-width:0!important;
