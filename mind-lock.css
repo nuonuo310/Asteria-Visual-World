@@ -1,0 +1,88 @@
+/* 2026-09-18 Mind lock candidate.
+   Final polish from mobile review: softer passive text, deliberate emphasis,
+   one meteor divider, and comfortable trace interaction. */
+
+/* Passive chips are readable but never compete with headings or real actions. */
+.feelings i{
+  color:color-mix(in srgb,var(--asteria-body) 66%,white)!important;
+  border-color:color-mix(in srgb,var(--detail-edge) 72%,transparent)!important;
+  background:rgba(255,255,255,.46)!important;
+  font-size:9.5px!important;
+  font-weight:500!important;
+}
+.us-signals span{
+  color:color-mix(in srgb,var(--asteria-body) 70%,white)!important;
+  border-color:color-mix(in srgb,var(--detail-edge) 72%,transparent)!important;
+  background:rgba(255,255,255,.42)!important;
+  font-size:9.5px!important;
+  font-weight:500!important;
+}
+
+/* States: result words recede; bars carry the visual information. */
+.state-row small{
+  font-size:9px!important;
+  color:color-mix(in srgb,var(--asteria-body) 68%,white)!important;
+  font-weight:500!important;
+}
+.state-line{height:3px!important;background:color-mix(in srgb,var(--detail-edge) 52%,transparent)!important}
+.state-line i{opacity:.86!important;box-shadow:0 0 8px color-mix(in srgb,var(--asteria-pink) 12%,transparent)}
+.state-row:nth-child(1) .state-line i{background:linear-gradient(90deg,#e6a6b8,#c96f91)!important}
+.state-row:nth-child(2) .state-line i{background:linear-gradient(90deg,#c5addd,#9878bd)!important}
+.state-row:nth-child(3) .state-line i{background:linear-gradient(90deg,#e5adc2,#ca789a)!important}
+.state-row:nth-child(4) .state-line i{background:linear-gradient(90deg,#b9a4bf,#8e7699)!important}
+.state-summary strong:before{font-size:.72em!important;opacity:.88}
+
+/* Drives: the meter is the colour anchor; delta/trend stay secondary. */
+.drive-focus header i{color:color-mix(in srgb,var(--asteria-body) 68%,white)!important;font-size:7.5px!important;font-weight:500!important}
+.drive-focus>p{color:color-mix(in srgb,var(--asteria-body) 78%,white)!important;font-size:9.5px!important}
+.drive-meter{height:3px!important;background:color-mix(in srgb,var(--detail-edge) 54%,transparent)!important;border-radius:999px;overflow:hidden}
+.drive-meter i{border-radius:inherit;box-shadow:0 0 9px color-mix(in srgb,var(--asteria-pink) 20%,transparent)}
+
+/* Response: one contextual sparkle, larger label, soft quick replies, one meteor divider. */
+.response-mist>small{
+  font-size:9px!important;
+  line-height:1.2!important;
+  color:var(--asteria-muted)!important;
+  letter-spacing:.11em!important;
+}
+.response-mist>small:before{font-size:1.05em;vertical-align:.02em}
+.response-quick button{
+  color:color-mix(in srgb,var(--asteria-body) 76%,white)!important;
+  border-color:color-mix(in srgb,var(--asteria-pink) 22%,transparent)!important;
+  background:color-mix(in srgb,var(--action-soft) 62%,white)!important;
+  font-weight:500!important;
+}
+.response-note textarea{border-bottom:0!important;padding-bottom:6px!important}
+.response-note{padding-bottom:24px!important}
+.response-note:before{
+  content:"";position:absolute;left:16%;right:16%;bottom:4px;height:1px;
+  background:
+    linear-gradient(90deg,transparent 0%,color-mix(in srgb,var(--asteria-pink) 18%,transparent) 18%,color-mix(in srgb,var(--asteria-pink) 72%,transparent) 47%,transparent 47%) left center/50% 1px no-repeat,
+    linear-gradient(90deg,transparent 0%,color-mix(in srgb,var(--asteria-pink) 72%,transparent) 6%,color-mix(in srgb,var(--asteria-pink) 18%,transparent) 78%,transparent 100%) right center/50% 1px no-repeat;
+  filter:drop-shadow(0 0 4px color-mix(in srgb,var(--asteria-pink) 18%,transparent));
+  pointer-events:none;
+}
+.response-note:after{
+  content:""!important;position:absolute!important;left:50%!important;bottom:1px!important;width:7px!important;height:7px!important;margin:0!important;
+  transform:translateX(-50%) rotate(45deg)!important;border:1px solid color-mix(in srgb,var(--asteria-pink) 62%,transparent)!important;
+  background:color-mix(in srgb,var(--panel) 76%,white)!important;clip-path:none!important;filter:drop-shadow(0 0 5px color-mix(in srgb,var(--asteria-pink) 24%,transparent))!important;
+}
+.response-send{margin-top:13px!important}
+
+/* Trace interaction. Visual nodes stay tiny; invisible hit areas are finger-sized. */
+.trace-chart,.trace-large{position:relative}
+.trace-hit{fill:transparent!important;stroke:transparent!important;stroke-width:0!important;cursor:pointer;pointer-events:all;-webkit-tap-highlight-color:transparent}
+.trace-point{pointer-events:none;transition:r .16s ease,fill .16s ease,filter .16s ease}
+.trace-point.active{fill:var(--asteria-pink)!important;stroke:var(--asteria-pink)!important;filter:drop-shadow(0 0 5px color-mix(in srgb,var(--asteria-pink) 42%,transparent))}
+.trace-chart .trace-point.active{r:4.5}
+.trace-large .trace-point.active{r:5}
+.trace-pop{
+  z-index:4;min-width:112px;max-width:150px!important;padding:7px 9px!important;
+  transform:translate(-50%,-100%)!important;
+}
+.trace-pop:after{
+  content:"";position:absolute;left:50%;bottom:-4px;width:7px;height:7px;transform:translateX(-50%) rotate(45deg);
+  background:rgba(255,255,255,.84);border-right:1px solid var(--detail-edge);border-bottom:1px solid var(--detail-edge)
+}
+.trace-chart .trace-pop{position:absolute;border:1px solid var(--detail-edge);border-radius:11px;background:rgba(255,255,255,.88);box-shadow:0 7px 18px var(--detail-ambient);backdrop-filter:blur(10px);pointer-events:none}
+.trace-chart .trace-pop[hidden]{display:none}.trace-chart .trace-pop strong{display:block;color:var(--asteria-ink);font:500 8.5px/1.2 system-ui,sans-serif}.trace-chart .trace-pop span{display:block;margin-top:3px;color:var(--asteria-body);font-size:7.5px;line-height:1.35}
