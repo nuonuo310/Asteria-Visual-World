@@ -1,0 +1,76 @@
+/* 2026-09-17 Mind refinement pass.
+   This file intentionally overrides the layout prototype without disturbing the locked base palette. */
+
+/* Bring the presence state down into the Asteria/Mind composition. */
+.presence{padding-top:23px}
+
+/* Keep the room entrance outside the Mind card. It is only a visual/interaction placeholder
+   until the Shen room itself is implemented. */
+.mind-room-row{position:relative;height:0;z-index:9}
+.room-door{position:absolute;right:8px;top:-8px;display:flex;align-items:center;gap:5px;border:0;background:transparent;padding:3px 4px;color:var(--muted);cursor:pointer;-webkit-tap-highlight-color:transparent}
+.room-door i{position:relative;width:13px;height:17px;border:1px solid color-mix(in srgb,var(--ink) 38%,transparent);border-radius:7px 7px 2px 2px;display:block;opacity:.72}
+.room-door i:after{content:"";position:absolute;right:2px;top:8px;width:2px;height:2px;border-radius:50%;background:color-mix(in srgb,var(--ink) 48%,transparent)}
+.room-door small{font:500 8px/1 system-ui,sans-serif;letter-spacing:.08em;text-transform:uppercase}
+
+/* Give the final flower a little more breathing room without returning to the oversized card. */
+.mind-visual{height:432px}
+
+/* Flower-region selection: no selection ring. The selected colour only breathes a little brighter. */
+.drive-hit:after,.drive-hit.selected:after{content:none!important;border:0!important;box-shadow:none!important;background:transparent!important}
+.mind-visual:has(.hit-connection.selected) .p1,
+.mind-visual:has(.hit-creation.selected) .p4,
+.mind-visual:has(.hit-reflection.selected) .p3,
+.mind-visual:has(.hit-exploration.selected) .p2{opacity:.78;filter:blur(8px) brightness(1.08)}
+
+/* Read the flower in place. No card, no border, no shadow: only text on a very faint mist. */
+.drive-readout{left:50%;top:55%;width:184px;transform:translate(-50%,-42%);padding:8px 10px;border:0;border-radius:0;background:radial-gradient(ellipse at center,rgba(255,253,251,.66) 0%,rgba(255,253,251,.34) 48%,transparent 76%);box-shadow:none;backdrop-filter:none;text-shadow:0 1px 8px rgba(255,255,255,.92);animation:mindReadIn .22s ease-out}
+.drive-readout>div{gap:7px;justify-content:center}
+.drive-readout strong{font-size:10px;font-weight:500}
+.drive-readout span{font-size:15px}
+.drive-readout i{margin-left:4px;font-size:8px}
+.drive-readout p{margin:5px 0 0;text-align:center;font-size:8px;line-height:1.45;color:#94868e}
+@keyframes mindReadIn{from{opacity:0;transform:translate(-50%,calc(-42% + 5px))}to{opacity:1;transform:translate(-50%,-42%)}}
+
+/* Four relationship actions share one quiet row between Mind and Now. */
+.mind-touches{grid-template-columns:repeat(4,1fr);width:78%;margin:7px auto 9px;gap:0}
+.mind-touches button{gap:4px;padding:3px 1px}
+.mind-touches b{font-size:10px}
+.touch-symbol{width:18px;height:18px}
+.touch-symbol.reply:before{content:"";position:absolute;left:3px;top:4px;width:11px;height:8px;border:1px solid #b39eaa;border-radius:7px 7px 7px 2px;opacity:.8}
+.touch-symbol.reply:after{content:"";position:absolute;left:7px;top:7px;width:3px;height:1px;border-radius:2px;background:#b39eaa;box-shadow:4px 0 #b39eaa;opacity:.65}
+
+/* Recent trace: the line remains visual; two natural-language lines carry meaning. */
+.trace{padding-bottom:14px}
+.trace-chart{height:76px;margin-top:3px}
+.trace-chart svg{height:76px}
+.trace-tag{display:none}
+.trace-summary{margin:5px 1px 0;padding-top:9px;border-top:1px solid rgba(143,112,130,.07)}
+.trace-summary p{margin:0;color:#8f818a;font:400 9px/1.65 "Noto Serif SC","Songti SC",serif;letter-spacing:.01em}
+.trace-summary p+p{margin-top:1px}
+
+/* Response appears where the relationship is being read, not as a bottom-sheet tool panel. */
+.response-layer[hidden]{display:none!important}
+.response-layer{position:fixed;inset:0;z-index:40;display:grid;place-items:center;padding:24px;animation:responseLayerIn .18s ease-out}
+.response-dismiss{position:absolute;inset:0;width:100%;height:100%;border:0;background:rgba(250,247,248,.22);backdrop-filter:blur(2px);cursor:default}
+.response-mist{position:relative;z-index:1;width:min(82vw,340px);padding:22px 20px 18px;border:1px solid rgba(151,123,139,.12);border-radius:25px;background:color-mix(in srgb,var(--panel) 86%,transparent);box-shadow:0 22px 60px rgba(83,62,76,.10),inset 0 1px rgba(255,255,255,.78);backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px);animation:responseMistIn .24s ease-out}
+.response-close{position:absolute;right:13px;top:11px;width:28px;height:28px;border:0;background:transparent;color:var(--muted);font:300 19px/1 system-ui,sans-serif;cursor:pointer}
+.response-mist>small{display:block;color:#a5969f;font:600 7px/1 system-ui,sans-serif;letter-spacing:.13em;text-transform:uppercase}
+.response-mist h2{margin:10px 0 17px;font-size:18px;font-weight:400}
+.response-quick{display:flex;flex-wrap:wrap;gap:7px}
+.response-quick button{border:1px solid rgba(143,112,130,.11);border-radius:999px;background:rgba(255,255,255,.36);padding:7px 10px;font-size:9px;color:#786a73;cursor:pointer}
+.response-note{display:block;margin-top:17px}
+.response-note>span{display:block;margin-bottom:7px;font-size:9px;color:#9a8d95}
+.response-note textarea{display:block;width:100%;resize:none;border:0;border-bottom:1px solid rgba(143,112,130,.14);border-radius:0;background:transparent;padding:6px 2px 8px;outline:0;color:var(--ink);font:400 11px/1.55 "Noto Serif SC","Songti SC",serif}
+.response-note textarea::placeholder{color:#b7abb2}
+.response-send{display:block;margin:14px 0 0 auto;border:0;border-radius:999px;background:color-mix(in srgb,var(--mist) 68%,white);padding:7px 13px;font-size:9px;color:var(--ink);cursor:pointer}
+@keyframes responseLayerIn{from{opacity:0}to{opacity:1}}
+@keyframes responseMistIn{from{opacity:0;transform:translateY(7px) scale(.985)}to{opacity:1;transform:none}}
+body.response-open{overflow:hidden}
+
+@media(max-width:360px){
+ .mind-visual{height:416px}
+ .mind-touches{width:84%}
+ .mind-touches b{font-size:9.5px}
+ .room-door{right:6px}
+}
+@media(prefers-reduced-motion:reduce){.drive-readout,.response-layer,.response-mist{animation:none!important}}
