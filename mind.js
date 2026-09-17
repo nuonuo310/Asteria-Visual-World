@@ -3,7 +3,10 @@
  let timer;
  function show(message){clearTimeout(timer);toast.textContent=message;toast.classList.add('show');timer=setTimeout(()=>toast.classList.remove('show'),1300)}
 
+ const detailRoutes={'四个驱动力':'mind-drives.html','即时状态':'mind-states.html','我们之间':'mind-between.html'};
  document.querySelectorAll('[data-gate]').forEach(button=>button.addEventListener('click',()=>{
+   const route=detailRoutes[button.dataset.gate];
+   if(route){window.location.href=route;return}
    const message=button.dataset.gate==='Shen 房间'?'Shen 房间 · 入口已占位，房间装修后直达':button.dataset.gate+' · 详情页下一轮装修';
    show(message);
  }));
@@ -55,6 +58,7 @@
  function closeResponse(){
    responseLayer.hidden=true;
    document.body.classList.remove('response-open');
+   if(location.hash==='#respond')history.replaceState(null,'',location.pathname+location.search);
  }
  document.querySelector('[data-response-open]').addEventListener('click',openResponse);
  document.querySelectorAll('[data-response-close]').forEach(button=>button.addEventListener('click',closeResponse));
@@ -83,4 +87,5 @@
  if(!['1','2','3'].includes(saved))saved='1';
  setTheme(saved);
  themeButtons.forEach(button=>button.addEventListener('click',()=>setTheme(button.dataset.themeChoice)));
+ if(location.hash==='#respond')openResponse();
 })();
