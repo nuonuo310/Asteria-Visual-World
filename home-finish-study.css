@@ -1,0 +1,130 @@
+/* Asteria Home finish study v0.1
+   Surface language only: preserve the locked Home structure. */
+
+:root{
+  --asteria-card:rgba(255,253,251,.82);
+  --asteria-card-solid:#fffaf8;
+  --asteria-card-soft:rgba(255,250,249,.64);
+  --asteria-text:#604e56;
+  --asteria-text-2:#7f7078;
+  --asteria-text-3:#a2949b;
+  --asteria-hairline:rgba(151,112,130,.10);
+  --asteria-soft-shadow:0 10px 28px rgba(112,72,90,.045);
+}
+body.theme-b{
+  --asteria-card:rgba(255,250,253,.82);
+  --asteria-card-solid:#fff9fc;
+  --asteria-card-soft:rgba(255,248,252,.65);
+  --asteria-text:#604b57;
+  --asteria-text-2:#806d77;
+  --asteria-text-3:#a28d98;
+  --asteria-hairline:rgba(177,112,142,.10);
+}
+body.theme-c{
+  --asteria-card:rgba(252,250,253,.84);
+  --asteria-card-solid:#fcf9fd;
+  --asteria-card-soft:rgba(250,247,252,.68);
+  --asteria-text:#554e60;
+  --asteria-text-2:#766e80;
+  --asteria-text-3:#968e9f;
+  --asteria-hairline:rgba(132,113,157,.10);
+}
+
+body{color:var(--asteria-text)}
+.weather,.caption-sign{color:var(--asteria-text-2)}
+.caption-days,.footprints-count,.v1-timeline small,.mini-panel small{color:var(--asteria-text-3)}
+
+/* Ordinary life surfaces are milk-white, not glass. */
+.relationship{
+  border-color:var(--asteria-hairline);
+  background:var(--asteria-card);
+  box-shadow:var(--asteria-soft-shadow);
+}
+.month-panel{
+  border-top-color:var(--asteria-hairline);
+  background:var(--asteria-card-soft);
+}
+.mini-panel{
+  border-color:var(--asteria-hairline)!important;
+  background:var(--asteria-card)!important;
+  box-shadow:var(--asteria-soft-shadow)!important;
+}
+
+/* The note keeps a paper identity, but belongs to the same light family. */
+.review-note{
+  background:
+    radial-gradient(34% 28% at 4% 6%,color-mix(in srgb,var(--accent-soft) 52%,transparent),transparent 74%),
+    radial-gradient(30% 24% at 96% 92%,color-mix(in srgb,var(--warm) 38%,transparent),transparent 76%),
+    var(--asteria-card-solid)!important;
+  border-color:var(--asteria-hairline)!important;
+  box-shadow:0 12px 30px rgba(112,72,90,.055)!important;
+}
+.note-title,.reply strong{color:color-mix(in srgb,var(--asteria-text) 84%,var(--accent) 16%)}
+
+/* Entries stay quiet; color is reserved for state and meaning. */
+.life-strip .room-icon{
+  background:var(--asteria-card)!important;
+  border:1px solid var(--asteria-hairline)!important;
+  box-shadow:0 6px 18px rgba(112,72,90,.035)!important;
+}
+.life-strip button{color:var(--asteria-text-2)}
+.life-strip .notice{box-shadow:0 0 0 3px color-mix(in srgb,var(--accent-soft) 70%,transparent)}
+
+/* Footprints: almost no container, just a soft living surface. */
+.footprints{
+  background:linear-gradient(180deg,var(--asteria-card-soft),color-mix(in srgb,var(--asteria-card-soft) 72%,transparent))!important;
+  border-color:var(--asteria-hairline)!important;
+  box-shadow:var(--asteria-soft-shadow)!important;
+}
+.footprints-kicker{color:var(--asteria-text)}
+.v1-timeline article>i{
+  background:color-mix(in srgb,var(--accent) 62%,white 38%)!important;
+  box-shadow:0 0 0 4px color-mix(in srgb,var(--accent-soft) 56%,transparent)!important;
+}
+.v1-timeline article:before{background:var(--asteria-hairline)!important}
+.trace-copy em{color:color-mix(in srgb,var(--asteria-text-2) 78%,var(--accent) 22%)}
+
+/* Relationship whisper is intangible: this is where mist is allowed. */
+.relation-whisper{
+  position:relative;
+  isolation:isolate;
+  color:var(--asteria-text-2);
+}
+.relation-whisper:before{
+  content:"";
+  position:absolute;
+  z-index:-1;
+  inset:-10px -8px;
+  border-radius:999px;
+  background:radial-gradient(ellipse at 42% 50%,color-mix(in srgb,var(--accent-soft) 50%,transparent),transparent 72%);
+  filter:blur(8px);
+  opacity:.56;
+  pointer-events:none;
+}
+.relation-glow{
+  background:color-mix(in srgb,var(--accent) 54%,white 46%)!important;
+  box-shadow:0 0 10px color-mix(in srgb,var(--accent) 26%,transparent)!important;
+}
+
+/* Navigation is a quiet milk-white floating object. */
+.dock{
+  background:color-mix(in srgb,var(--asteria-card-solid) 88%,transparent)!important;
+  border-color:var(--asteria-hairline)!important;
+  box-shadow:0 12px 32px rgba(92,65,82,.075)!important;
+  backdrop-filter:blur(18px) saturate(108%);
+  -webkit-backdrop-filter:blur(18px) saturate(108%);
+}
+.dock button{color:var(--asteria-text-3)}
+.dock button.active{color:var(--asteria-text)}
+
+/* Tiny Asteria punctuation: decorative, not a new icon system. */
+.footprints-kicker:before{
+  content:"✦";
+  display:inline-block;
+  margin-right:7px;
+  color:color-mix(in srgb,var(--accent) 72%,white 28%);
+  font-size:.72em;
+  transform:translateY(-1px);
+}
+
+@media (prefers-reduced-motion:reduce){*{scroll-behavior:auto!important}}
