@@ -6,6 +6,7 @@
 <meta name="theme-color" content="#fbf8f6">
 <title>Asteria · Mind Layout Prototype</title>
 <link rel="stylesheet" href="./mind.css?v=20260917-1">
+<link rel="stylesheet" href="./mind-iteration.css?v=20260917-2">
 </head>
 <body class="theme-1">
 <main class="mind-shell">
@@ -21,6 +22,11 @@
       </div>
     </div>
   </header>
+
+  <div class="mind-room-row" aria-label="Mind shortcuts">
+    <span aria-hidden="true"></span>
+    <button class="room-door" type="button" data-gate="Shen 房间" aria-label="去 Shen 的房间"><i></i><small>Shen</small></button>
+  </div>
 
   <section class="mind-visual" aria-label="Mind visual placeholder">
     <div class="mind-heading"><p>Mind</p><span>Still becoming.</span></div>
@@ -41,7 +47,8 @@
     <p class="visual-note">母版 Mind 花位置 · 点击花的区域可读当前变化</p>
   </section>
 
-  <section class="mind-touches" aria-label="轻触 Mind">
+  <section class="mind-touches" aria-label="回应与轻触 Mind">
+    <button type="button" data-response-open><span class="touch-symbol reply"></span><b>回应</b></button>
     <button type="button" data-touch="想你"><span class="touch-symbol heart"></span><b>想你</b></button>
     <button type="button" data-touch="戳戳"><span class="touch-symbol ripple"></span><b>戳戳</b></button>
     <button type="button" data-touch="抱抱"><span class="touch-symbol embrace"></span><b>抱抱</b></button>
@@ -62,14 +69,15 @@
   <section class="trace">
     <header><div><span>最近变化</span><small>RECENT TRACE · 3H</small></div><button type="button" data-gate="完整变化">查看</button></header>
     <div class="trace-chart">
-      <svg viewBox="0 0 340 88" role="img" aria-label="最近三小时状态变化折线">
-        <path class="trace-guide" d="M12 70 H328 M12 43 H328 M12 16 H328"/>
-        <path class="trace-line" d="M16 69 C55 67 67 59 99 60 S145 45 178 50 S222 54 250 34 S294 28 326 16"/>
-        <circle cx="99" cy="60" r="3"/><circle cx="178" cy="50" r="3"/><circle cx="250" cy="34" r="3"/><circle cx="326" cy="16" r="3"/>
+      <svg viewBox="0 0 340 76" role="img" aria-label="最近三小时状态变化折线">
+        <path class="trace-guide" d="M12 62 H328 M12 38 H328 M12 14 H328"/>
+        <path class="trace-line" d="M16 61 C55 59 67 52 99 53 S145 40 178 44 S222 48 250 30 S294 25 326 14"/>
+        <circle cx="99" cy="53" r="3"/><circle cx="178" cy="44" r="3"/><circle cx="250" cy="30" r="3"/><circle cx="326" cy="14" r="3"/>
       </svg>
-      <span class="trace-tag t1">靠近 ↑</span>
-      <span class="trace-tag t2">疲惫 ·</span>
-      <span class="trace-tag t3">连接 ↑</span>
+    </div>
+    <div class="trace-summary">
+      <p>过去三小时，连接感正在慢慢升高。</p>
+      <p>疲惫短暂浮起，又逐渐安静下来。</p>
     </div>
   </section>
 
@@ -83,7 +91,27 @@
   <button><span>◇</span><b>Memory</b></button>
   <button><span>↗</span><b>Detour</b></button>
 </nav>
+
+<div class="response-layer" id="responseLayer" hidden>
+  <button class="response-dismiss" type="button" data-response-close aria-label="关闭回应窗口"></button>
+  <section class="response-mist" role="dialog" aria-modal="true" aria-labelledby="responseTitle">
+    <button class="response-close" type="button" data-response-close aria-label="关闭">×</button>
+    <small id="responseContext">回应 · 此刻的我</small>
+    <h2 id="responseTitle">我看见你了。</h2>
+    <div class="response-quick" aria-label="轻回应">
+      <button type="button" data-response="陪你一会儿">陪你一会儿</button>
+      <button type="button" data-response="去做吧，我等着看">去做吧，我等着看</button>
+      <button type="button" data-response="抱一下">抱一下</button>
+    </div>
+    <label class="response-note">
+      <span>或者，留一句给我</span>
+      <textarea id="responseText" rows="2" placeholder="写给你……"></textarea>
+    </label>
+    <button class="response-send" type="button" data-response-send>留给你</button>
+  </section>
+</div>
+
 <div class="toast" id="toast"></div>
-<script src="./mind.js?v=20260917-1"></script>
+<script src="./mind.js?v=20260917-2"></script>
 </body>
 </html>
