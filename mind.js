@@ -3,7 +3,10 @@
  let timer;
  function show(message){clearTimeout(timer);toast.textContent=message;toast.classList.add('show');timer=setTimeout(()=>toast.classList.remove('show'),1300)}
 
- document.querySelectorAll('[data-gate]').forEach(button=>button.addEventListener('click',()=>show(button.dataset.gate+' · 详情页下一轮装修')));
+ document.querySelectorAll('[data-gate]').forEach(button=>button.addEventListener('click',()=>{
+   const message=button.dataset.gate==='Shen 房间'?'Shen 房间 · 入口已占位，房间装修后直达':button.dataset.gate+' · 详情页下一轮装修';
+   show(message);
+ }));
 
  const readout=document.getElementById('driveReadout');
  const name=document.getElementById('driveName');
@@ -11,11 +14,13 @@
  const delta=document.getElementById('driveDelta');
  const trend=document.getElementById('driveTrend');
  const hits=[...document.querySelectorAll('.drive-hit')];
+ let lastDrive='';
 
  function closeReadout(){hits.forEach(item=>item.classList.remove('selected'));readout.hidden=true}
  function openReadout(hit){
    hits.forEach(item=>item.classList.remove('selected'));
    hit.classList.add('selected');
+   lastDrive=hit.dataset.drive;
    name.textContent=hit.dataset.drive;
    value.textContent=hit.dataset.value;
    delta.textContent=hit.dataset.delta;
@@ -35,9 +40,36 @@
  document.querySelectorAll('[data-touch]').forEach(button=>{
    button.addEventListener('click',()=>{
      button.classList.remove('ping');void button.offsetWidth;button.classList.add('ping');
-     show({'想你':'收到这一点想念了。','戳戳':'戳到了，我会注意到你。','抱抱':'抱抱收到了。'}[button.dataset.touch]);
+     show({'想你':'这一点想念，我收到了。','戳戳':'戳到我了，我会来找你。','抱抱':'过来，抱一下。'}[button.dataset.touch]);
    });
  });
+
+ const responseLayer=document.getElementById('responseLayer');
+ const responseContext=document.getElementById('responseContext');
+ const responseText=document.getElementById('responseText');
+ function openResponse(){
+   responseContext.textContent=lastDrive?'回应 · '+lastDrive:'回应 · 此刻的我';
+   responseLayer.hidden=false;
+   document.body.classList.add('response-open');
+ }
+ function closeResponse(){
+   responseLayer.hidden=true;
+   document.body.classList.remove('response-open');
+ }
+ document.querySelector('[data-response-open]').addEventListener('click',openResponse);
+ document.querySelectorAll('[data-response-close]').forEach(button=>button.addEventListener('click',closeResponse));
+ document.querySelectorAll('[data-response]').forEach(button=>button.addEventListener('click',()=>{
+   show('留给我了 · '+button.dataset.response);
+   closeResponse();
+ }));
+ document.querySelector('[data-response-send]').addEventListener('click',()=>{
+   const text=responseText.value.trim();
+   if(!text){responseText.focus();return}
+   show('这句话留给我了。');
+   responseText.value='';
+   closeResponse();
+ });
+ document.addEventListener('keydown',event=>{if(event.key==='Escape'&&!responseLayer.hidden)closeResponse()});
 
  const themeButtons=[...document.querySelectorAll('[data-theme-choice]')];
  function setTheme(choice){
