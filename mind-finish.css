@@ -1,0 +1,44 @@
+/* 2026-09-18 Mind finish layer — typography, stable ink hierarchy, detail surfaces and response polish. */
+:root{
+ --asteria-ink:#65434f;--asteria-body:#80636e;--asteria-muted:#aa8f99;--asteria-faint:#c4adb5;
+ --asteria-pink:#c86489;--asteria-rose:#d77899;--asteria-lav:#8f75b7;--asteria-apricot:#d7aa70;
+ --detail-edge:rgba(151,101,120,.13);--detail-contact:rgba(126,76,94,.07);--detail-ambient:rgba(155,93,115,.085)
+}
+body.theme-2{--asteria-ink:#65434f;--asteria-body:#80636e;--asteria-muted:#ad8e99;--asteria-faint:#c7acb5;--asteria-pink:#c85b87;--detail-edge:rgba(176,99,130,.14)}
+body.theme-3{--asteria-ink:#62505c;--asteria-body:#7d6975;--asteria-muted:#9f8b9d;--asteria-faint:#bbaabd;--asteria-pink:#a26da3;--detail-edge:rgba(133,107,153,.13);--detail-contact:rgba(93,74,111,.065);--detail-ambient:rgba(118,93,142,.08)}
+
+/* Stable coffee-plum ink keeps the page readable while theme colour stays atmospheric. */
+.brand-wrap strong,.mind-heading p,.now-title span,.trace header span{color:var(--asteria-ink)}
+.mind-heading span{color:var(--asteria-muted)}
+.now>p,.trace-summary p{color:var(--asteria-body)}
+.prototype-note,.visual-note{color:var(--asteria-faint)}
+.now-title span,.trace header span{font-family:"Noto Serif SC","Songti SC","STSong",Georgia,serif;font-weight:400;letter-spacing:.01em}
+.now-title span:before,.trace header span:before{content:"✦";display:inline-block;margin-right:7px;vertical-align:.09em;font-family:Georgia,serif;font-size:.72em;color:var(--asteria-pink);text-shadow:0 0 9px color-mix(in srgb,var(--asteria-pink) 38%,transparent)}
+.trace header small{color:var(--asteria-rose);font-weight:600;letter-spacing:.16em}
+.feelings i{color:var(--asteria-pink)}
+
+/* Gate typography: serif identity + intimate italic translation. */
+.mind-gates small{font-family:Georgia,"Times New Roman",serif;font-size:9.5px;letter-spacing:.16em;color:var(--asteria-ink);opacity:1}
+.mind-gates .gate-sub{display:block;position:relative;z-index:1;margin-top:6px;font:italic 400 8px/1.15 Georgia,"Times New Roman",serif;letter-spacing:.01em}
+.mind-gates button:nth-child(1) .gate-sub{color:#c47c91}.mind-gates button:nth-child(2) .gate-sub{color:#927bb4}.mind-gates button:nth-child(3) .gate-sub{color:#b8799a}
+
+/* Response is mist, but its type now belongs to the same family. */
+.response-mist>small{color:var(--asteria-muted);letter-spacing:.16em}.response-mist h2{font-family:"Noto Serif SC","Songti SC","STSong",Georgia,serif;color:var(--asteria-ink);font-weight:400;font-size:20px}
+.response-quick button{color:var(--asteria-body);border-color:var(--detail-edge)}.response-note>span{color:var(--asteria-muted)}.response-note textarea{color:var(--asteria-ink);font-family:"Noto Serif SC","Songti SC",serif}.response-send{color:var(--asteria-ink)}
+
+/* Detail pages inherit the raised paper material instead of the old outline-only prototype. */
+.detail-brand strong,.detail-hero h1,.detail-section-title h2,.drive-focus header strong,.drive-focus header b,.state-summary strong,.us-copy strong,.relation-event strong,.unanswered strong{color:var(--asteria-ink);font-family:"Noto Serif SC","Songti SC","STSong",Georgia,serif;font-weight:400}
+.detail-kicker,.detail-section-title small,.drive-reason small,.us-copy small,.relation-event time{color:var(--asteria-muted)}
+.detail-hero>p,.drive-focus>p,.drive-reason p,.state-summary p,.state-note p,.us-copy p,.relation-event p,.unanswered p{color:var(--asteria-body)}
+.detail-card{position:relative;isolation:isolate;overflow:hidden;border:1px solid var(--detail-edge);background:radial-gradient(82% 100% at 96% 6%,color-mix(in srgb,var(--card-accent,rgba(239,180,197,.14)) 70%,transparent),transparent 62%),linear-gradient(145deg,rgba(255,255,255,.78),var(--card-warm,#fdf4f4));box-shadow:inset 0 1px 0 rgba(255,255,255,.88),0 3px 5px var(--detail-contact),0 14px 30px var(--detail-ambient)}
+.detail-card:after{content:"";position:absolute;z-index:-1;right:-13%;top:-20%;width:52%;height:60%;border-radius:50%;background:color-mix(in srgb,var(--card-accent,rgba(239,180,197,.14)) 62%,transparent);filter:blur(25px);opacity:.42;pointer-events:none}
+.drive-focus{border:1px solid color-mix(in srgb,var(--detail-edge) 65%,transparent);background:rgba(255,255,255,.28)}
+.drive-focus:after{opacity:.32;filter:blur(18px)}.drive-tabs button.active{color:var(--asteria-ink)}
+.state-line,.drive-meter{background:color-mix(in srgb,var(--detail-edge) 58%,transparent)}
+.state-line i{background:linear-gradient(90deg,#d7bdca,#bfa9cc)}
+.us-signals span{color:var(--asteria-body);border-color:var(--detail-edge)}
+.detail-note{color:var(--asteria-faint)}
+
+/* Recent Trace detail */
+.trace-overview{padding:19px}.trace-overview .trace-large{height:118px;margin:4px 0 10px}.trace-large svg{display:block;width:100%;height:118px}.trace-large .guide{fill:none;stroke:color-mix(in srgb,var(--detail-edge) 58%,transparent);stroke-dasharray:2 6}.trace-large .line{fill:none;stroke:var(--asteria-pink);stroke-width:1.6;stroke-linecap:round}.trace-large circle{fill:var(--card-base,#fff);stroke:var(--asteria-pink);stroke-width:1.4}.trace-window{display:flex;justify-content:space-between;align-items:center}.trace-window strong{font:400 18px/1.2 "Noto Serif SC","Songti SC",serif;color:var(--asteria-ink)}.trace-window small{font:600 7px/1 system-ui,sans-serif;letter-spacing:.14em;color:var(--asteria-muted)}
+.trace-events{margin-top:14px;padding:18px}.trace-event{display:grid;grid-template-columns:42px 10px 1fr;gap:9px;padding:0 0 16px}.trace-event:last-child{padding-bottom:0}.trace-event time{font:500 8px/1.5 system-ui,sans-serif;color:var(--asteria-muted)}.trace-event i{width:7px;height:7px;margin-top:2px;border-radius:50%;background:var(--asteria-pink);box-shadow:0 0 12px color-mix(in srgb,var(--asteria-pink) 45%,transparent)}.trace-event strong{display:block;font:400 11px/1.3 "Noto Serif SC","Songti SC",serif;color:var(--asteria-ink)}.trace-event p{margin:4px 0 0;font-size:9px;line-height:1.55;color:var(--asteria-body)}
