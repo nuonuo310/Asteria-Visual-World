@@ -15,7 +15,7 @@
    const center=Math.max(half+safe,Math.min(box.width-half-safe,x));
    tracePop.style.left=center+'px';
    const arrowX=Math.max(12,Math.min(popWidth-12,x-(center-half)));tracePop.style.setProperty('--trace-arrow-x',arrowX+'px');
-   if(y-popHeight-12<4){tracePop.classList.add('below');tracePop.style.top=Math.min(box.height-popHeight-4,y+13)+'px'}else{tracePop.style.top=(y-10)+'px'}
+   if(y-popHeight-20<4){tracePop.classList.add('below');tracePop.style.top=Math.min(box.height-popHeight-4,y+16)+'px'}else{tracePop.style.top=(y-18)+'px'}
   };
   traceHits.forEach(hit=>{hit.addEventListener('click',event=>{event.stopPropagation();hit.blur();showPoint(hit)});hit.addEventListener('keydown',event=>{if(event.key==='Enter'||event.key===' '){event.preventDefault();showPoint(hit)}})});
   document.querySelector('.trace-large').addEventListener('click',event=>{if(!event.target.closest('[data-trace-index]')){tracePop.hidden=true;tracePoints.forEach(point=>point.classList.remove('active'))}});
