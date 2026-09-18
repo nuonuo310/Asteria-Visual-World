@@ -6,23 +6,6 @@
   const toast = document.getElementById('toast');
   let toastTimer;
 
-  async function loadHomeHeroAsset() {
-    const img = root.querySelector('.home-hero-art img');
-    if (!img) return;
-    try {
-      const parts = await Promise.all(
-        [1, 2, 3, 4, 5].map(async (part) => {
-          const response = await fetch(`./assets/hero-data/part-${part}.txt?v=20260918-5`, { cache: 'no-store' });
-          if (!response.ok) throw new Error(`hero-part-${part}: ${response.status}`);
-          return response.text();
-        })
-      );
-      img.src = `data:image/webp;base64,${parts.join('').replace(/\\s+/g, '')}`;
-    } catch (error) {
-      console.error('Home hero asset load failed', error);
-    }
-  }
-  loadHomeHeroAsset();
 
   function showToast(message) {
     clearTimeout(toastTimer);

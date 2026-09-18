@@ -494,3 +494,89 @@ body{background-attachment:scroll!important}
   .home-hero-art{left:-5px;width:74%}
   .home-hero-copy{width:45%;padding-right:12px}
 }
+
+
+/* 2026-09-18 hero integration pass v2.
+   Keep the hero as its own rounded card; calendar expands as a separate soft sheet. */
+.relationship{
+  overflow:visible!important;
+  border:0!important;
+  border-radius:0!important;
+  padding:0!important;
+  background:transparent!important;
+  box-shadow:none!important;
+}
+.home-hero{
+  height:186px!important;
+  overflow:hidden!important;
+  border:1px solid color-mix(in srgb,var(--home-edge) 100%,transparent)!important;
+  border-radius:26px 26px 0 0!important;
+  background:
+    radial-gradient(74% 118% at 15% 62%,color-mix(in srgb,var(--home-card-accent) 52%,transparent),transparent 70%),
+    linear-gradient(145deg,rgba(255,255,255,.78),color-mix(in srgb,var(--home-card-warm) 94%,white))!important;
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,.9),
+    0 3px 5px color-mix(in srgb,var(--home-contact) 50%,transparent),
+    0 14px 28px color-mix(in srgb,var(--home-ambient) 42%,transparent)!important;
+}
+.home-hero-art{
+  left:5px!important;
+  bottom:-2px!important;
+  width:58%!important;
+  height:174px!important;
+  overflow:visible!important;
+  align-items:flex-end!important;
+}
+.home-hero-art img{
+  display:block!important;
+  width:100%!important;
+  height:100%!important;
+  max-width:100%!important;
+  object-fit:contain!important;
+  object-position:left bottom!important;
+  opacity:.94!important;
+  visibility:visible!important;
+  filter:saturate(.88) contrast(.96) brightness(1.015)!important;
+}
+.home-hero:after{
+  background:
+    linear-gradient(90deg,
+      transparent 0 44%,
+      color-mix(in srgb,var(--home-card) 10%,transparent) 54%,
+      color-mix(in srgb,var(--home-card) 62%,transparent) 75%,
+      color-mix(in srgb,var(--home-card) 86%,transparent) 100%)!important;
+}
+.home-hero-copy{
+  width:46%!important;
+  padding:25px 18px 22px 5px!important;
+  justify-content:center!important;
+}
+.relationship-caption{
+  height:42px!important;
+  margin:0!important;
+  padding:0 16px!important;
+  border:1px solid color-mix(in srgb,var(--home-edge) 100%,transparent)!important;
+  border-top:1px solid color-mix(in srgb,var(--home-edge) 118%,transparent)!important;
+  border-radius:0 0 26px 26px!important;
+  background:
+    linear-gradient(180deg,rgba(255,255,255,.13),color-mix(in srgb,var(--home-card-warm) 50%,transparent))!important;
+  box-shadow:
+    0 12px 24px color-mix(in srgb,var(--home-ambient) 36%,transparent)!important;
+}
+.month-panel{
+  margin:10px 0 0!important;
+  padding:14px 14px 16px!important;
+  border:1px solid color-mix(in srgb,var(--home-edge) 92%,transparent)!important;
+  border-radius:24px!important;
+  background:
+    radial-gradient(70% 110% at 14% 12%,color-mix(in srgb,var(--home-card-accent) 42%,transparent),transparent 70%),
+    linear-gradient(145deg,rgba(255,255,255,.72),color-mix(in srgb,var(--home-card-warm) 86%,white))!important;
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,.84),
+    0 10px 24px color-mix(in srgb,var(--home-ambient) 38%,transparent)!important;
+}
+@media(max-width:370px){
+  .home-hero{height:178px!important}
+  .home-hero-art{left:3px!important;width:60%!important;height:168px!important}
+  .home-hero-copy{width:45%!important;padding-right:12px!important}
+}
