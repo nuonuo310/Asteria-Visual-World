@@ -118,3 +118,21 @@ body.theme-3 .feelings i{color:#9673ad!important}
 }
 .trace-chart .trace-pop{position:absolute;border:1px solid var(--detail-edge);border-radius:11px;background:rgba(255,255,255,.88);box-shadow:0 7px 18px var(--detail-ambient);backdrop-filter:blur(10px);pointer-events:none}
 .trace-chart .trace-pop[hidden]{display:none}.trace-chart .trace-pop strong{display:block;color:var(--asteria-ink);font:500 8.5px/1.2 system-ui,sans-serif}.trace-chart .trace-pop span{display:block;margin-top:3px;color:var(--asteria-body);font-size:7.5px;line-height:1.35}
+
+/* Locked overview trace: the compact card gets its own readout band.
+   The graph sits lower so the readout can hover above it like the detail view,
+   instead of chasing each node vertically. */
+.trace-chart{height:96px!important}
+.trace-chart svg{
+  position:absolute!important;
+  left:0!important;
+  right:0!important;
+  bottom:0!important;
+  height:72px!important;
+}
+.trace-chart .trace-pop{
+  max-width:138px!important;
+  padding:6px 9px!important;
+}
+.trace-chart .trace-pop strong{font-size:8.5px!important}
+.trace-chart .trace-pop span{font-size:7.5px!important;line-height:1.32!important}
