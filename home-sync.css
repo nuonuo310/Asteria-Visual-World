@@ -424,3 +424,73 @@ body{background-attachment:scroll!important}
   .hero-days strong{font-size:24px}
   .hero-line{font-size:10px}
 }
+
+
+/* 2026-09-18 unified Home relationship card.
+   One rounded container for hero, caption and expanded calendar. */
+.relationship{
+  overflow:hidden;
+  border:1px solid color-mix(in srgb,var(--home-edge) 100%,transparent)!important;
+  border-radius:26px!important;
+  padding:0!important;
+  background:
+    radial-gradient(72% 120% at 12% 10%,color-mix(in srgb,var(--home-card-accent) 58%,transparent),transparent 66%),
+    linear-gradient(145deg,rgba(255,255,255,.76),color-mix(in srgb,var(--home-card-warm) 92%,white))!important;
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,.88),
+    0 3px 5px color-mix(in srgb,var(--home-contact) 56%,transparent),
+    0 14px 28px color-mix(in srgb,var(--home-ambient) 50%,transparent)!important;
+}
+.home-hero{
+  height:176px;
+  border:0!important;
+  border-radius:0!important;
+  background:transparent!important;
+  box-shadow:none!important;
+}
+.home-hero-art{
+  left:-3px;
+  bottom:0;
+  width:72%;
+  height:100%;
+  overflow:visible;
+}
+.home-hero-art img{
+  display:block!important;
+  width:100%;
+  height:100%;
+  max-width:100%;
+  object-fit:contain;
+  object-position:left bottom;
+  filter:none;
+  opacity:1!important;
+  visibility:visible!important;
+}
+.home-hero:after{
+  background:linear-gradient(90deg,transparent 0 43%,color-mix(in srgb,var(--home-card) 10%,transparent) 54%,color-mix(in srgb,var(--home-card) 66%,transparent) 75%,color-mix(in srgb,var(--home-card) 86%,transparent) 100%);
+}
+.home-hero-copy{
+  width:47%;
+  padding:24px 18px 22px 7px;
+}
+.relationship-caption{
+  height:42px!important;
+  padding:0 15px 0 16px!important;
+  border:0!important;
+  border-top:1px solid color-mix(in srgb,var(--home-edge) 118%,transparent)!important;
+  border-radius:0!important;
+  background:rgba(255,255,255,.13)!important;
+}
+.month-panel{
+  margin:0!important;
+  border:0!important;
+  border-top:1px solid color-mix(in srgb,var(--home-edge) 108%,transparent)!important;
+  border-radius:0!important;
+  background:rgba(255,255,255,.18)!important;
+  box-shadow:none!important;
+}
+@media(max-width:370px){
+  .home-hero{height:170px}
+  .home-hero-art{left:-5px;width:74%}
+  .home-hero-copy{width:45%;padding-right:12px}
+}
