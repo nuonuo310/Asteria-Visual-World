@@ -11,12 +11,20 @@
   const openHomePoint=hit=>{
    const index=Number(hit.dataset.homeTrace);homePoints.forEach((point,i)=>point.classList.toggle('active',i===index));
    homePop.querySelector('strong').textContent=hit.dataset.traceTime;homePop.querySelector('span').textContent=hit.dataset.traceCopy;
-   const svg=hit.ownerSVGElement,box=svg.getBoundingClientRect(),x=(Number(hit.getAttribute('cx'))/340)*box.width,y=(Number(hit.getAttribute('cy'))/76)*box.height;
+   const svg=hit.ownerSVGElement,svgBox=svg.getBoundingClientRect(),chart=svg.closest('.trace-chart'),chartBox=chart.getBoundingClientRect();
+   const x=(Number(hit.getAttribute('cx'))/340)*svgBox.width+(svgBox.left-chartBox.left);
+   const y=(Number(hit.getAttribute('cy'))/76)*svgBox.height+(svgBox.top-chartBox.top);
    homePop.hidden=false;homePop.classList.remove('below');
-   const popWidth=homePop.offsetWidth||126,popHeight=homePop.offsetHeight||48,half=popWidth/2,edge=8,gap=16;
-   const left=Math.max(half+edge,Math.min(box.width-half-edge,x));
-   const roomAbove=y-gap;
-   if(roomAbove<popHeight+6){homePop.classList.add('below');homePop.style.top=Math.min(box.height-popHeight-4,y+gap)+'px'}else{homePop.style.top=(y-gap)+'px'}
+   const popWidth=homePop.offsetWidth||126,popHeight=homePop.offsetHeight||38,half=popWidth/2,edge=8;
+   const left=Math.max(half+edge,Math.min(chartBox.width-half-edge,x));
+   /* First three points share one calm readout band. The final high point alone
+      drops below because there is genuinely no safe room above it in the compact card. */
+   if(index===3){
+    homePop.classList.add('below');
+    homePop.style.top=Math.min(chartBox.height-popHeight-3,y+12)+'px';
+   }else{
+    homePop.style.top='40px';
+   }
    homePop.style.left=left+'px';
    homePop.style.setProperty('--trace-arrow-x',Math.max(10,Math.min(popWidth-10,half+(x-left)))+'px');
   };
