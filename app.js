@@ -140,14 +140,27 @@
   calendarToggle.addEventListener('click', () => setCalendar(monthPanel.hidden));
   calendarClose.addEventListener('click', () => setCalendar(false));
 
-  const footprintCards = root.querySelectorAll('[data-footprint]');
-  const footprintsBoard = root.querySelector('.footprints-board');
+  const footprintCards = [...root.querySelectorAll('[data-footprint]')];
+  const footprints = root.querySelector('.footprint-v1');
+  function toggleFootprint(card) {
+    const wasActive = card.classList.contains('is-active');
+    footprintCards.forEach((item) => {
+      item.classList.remove('is-active');
+      item.setAttribute('aria-pressed', 'false');
+    });
+    if (!wasActive) {
+      card.classList.add('is-active');
+      card.setAttribute('aria-pressed', 'true');
+    }
+    if (footprints) footprints.classList.toggle('has-selection', !wasActive);
+  }
   footprintCards.forEach((card) => {
-    card.addEventListener('click', () => {
-      const wasActive = card.classList.contains('is-active');
-      footprintCards.forEach((item) => item.classList.remove('is-active'));
-      if (!wasActive) card.classList.add('is-active');
-      if (footprintsBoard) footprintsBoard.classList.toggle('has-selection', !wasActive);
+    card.addEventListener('click', () => toggleFootprint(card));
+    card.addEventListener('keydown', (event) => {
+      if (event.key === 'Enter' || event.key === ' ') {
+        event.preventDefault();
+        toggleFootprint(card);
+      }
     });
   });
 
