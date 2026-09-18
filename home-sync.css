@@ -331,3 +331,96 @@ body{background-attachment:scroll!important}
   background:color-mix(in srgb,var(--home-accent) 11%,white)!important;
   color:var(--home-ink)!important;
 }
+
+
+/* 2026-09-18 Home hero asset pass: illustrated vignette + open copy field. */
+.home-hero{
+  position:relative;
+  height:164px;
+  overflow:hidden;
+  border-radius:16px;
+  border:1px solid color-mix(in srgb,var(--home-edge) 74%,transparent);
+  background:
+    radial-gradient(66% 110% at 18% 70%,color-mix(in srgb,var(--home-card-accent) 66%,transparent),transparent 68%),
+    linear-gradient(135deg,color-mix(in srgb,var(--home-card-warm) 88%,white),color-mix(in srgb,var(--home-card-accent-2) 62%,white));
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,.76),
+    0 3px 5px color-mix(in srgb,var(--home-contact) 58%,transparent),
+    0 14px 28px color-mix(in srgb,var(--home-ambient) 48%,transparent);
+}
+.home-hero:after{
+  content:"";
+  position:absolute;
+  inset:0;
+  pointer-events:none;
+  background:linear-gradient(90deg,transparent 0 46%,color-mix(in srgb,var(--home-card) 26%,transparent) 58%,color-mix(in srgb,var(--home-card) 72%,transparent) 77%,color-mix(in srgb,var(--home-card) 88%,transparent) 100%);
+}
+.home-hero-art{
+  position:absolute;
+  z-index:1;
+  left:-8px;
+  bottom:-11px;
+  width:61%;
+  height:178px;
+  display:flex;
+  align-items:flex-end;
+  justify-content:flex-start;
+  pointer-events:none;
+}
+.home-hero-art img{
+  display:block;
+  width:auto;
+  height:100%;
+  max-width:none;
+  object-fit:contain;
+  object-position:left bottom;
+  filter:drop-shadow(0 9px 14px color-mix(in srgb,var(--home-ambient) 60%,transparent));
+}
+.home-hero-copy{
+  position:absolute;
+  z-index:2;
+  top:0;
+  right:0;
+  width:48%;
+  height:100%;
+  padding:24px 18px 21px 8px;
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+  align-items:flex-start;
+  text-align:left;
+}
+.hero-kicker{
+  margin:0 0 12px;
+  color:var(--home-ink);
+  font-size:15px;
+  letter-spacing:.035em;
+}
+.hero-days{
+  display:flex;
+  align-items:baseline;
+  gap:5px;
+  margin:0;
+  color:var(--home-body);
+  font-size:11px;
+}
+.hero-days strong{
+  color:var(--home-ink);
+  font-size:27px;
+  font-weight:400;
+  line-height:1;
+}
+.hero-line{
+  max-width:145px;
+  margin:12px 0 0;
+  color:var(--home-muted);
+  font-size:10.5px;
+  line-height:1.55;
+}
+@media (max-width:370px){
+  .home-hero-art{left:-14px;width:63%}
+  .home-hero-copy{width:46%;padding-right:12px}
+  .hero-kicker{font-size:14px}
+  .hero-days strong{font-size:24px}
+  .hero-line{font-size:10px}
+}
