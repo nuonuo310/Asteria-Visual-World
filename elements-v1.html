@@ -1,0 +1,45 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Asteria · Elements v1</title>
+<link rel="stylesheet" href="./asteria-elements.css?v=20260918-1">
+<style>
+*{box-sizing:border-box}html{background:#fbf8f6;color:#65434f;font-family:Georgia,"Times New Roman","Noto Serif SC","Songti SC",serif}
+body{margin:0;background:radial-gradient(70% 34% at 12% 8%,rgba(253,239,243,.72),transparent 74%),linear-gradient(180deg,#fdfaf8,#fbf8f6 58%,#fdfaf9);min-height:100vh}
+main{width:min(100%,430px);margin:0 auto;padding:24px 16px 60px}.head{display:flex;justify-content:space-between;align-items:end;margin-bottom:24px}.head h1{margin:0;font-size:26px;font-weight:400}.head small{font:600 8px/1 system-ui,sans-serif;letter-spacing:.14em;color:#aa8f99}.sheet{display:grid;gap:12px}.group{padding:16px;border-radius:22px}.group h2{margin:0 0 13px;font-size:13px;font-weight:400}.row{display:flex;align-items:center;gap:16px;min-height:58px}.item{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:7px;min-width:52px}.item small{font:500 8px/1 system-ui,sans-serif;color:#aa8f99}.traces{position:relative;width:96px;height:40px}.traces .asteria-element{position:absolute;left:0;top:4px}.traces .nuo{top:9px;left:16px}.flowers{display:flex;gap:7px}.state-demo{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}.state-demo div{min-height:54px;border-radius:15px;display:grid;place-items:center;font:500 9px/1 system-ui,sans-serif;color:#80636e}.note{margin:18px 2px 0;font-size:10px;line-height:1.65;color:#80636e}
+</style>
+</head>
+<body>
+<main>
+<header class="head"><div><small>ASTERIA ELEMENTS · V1</small><h1>Reusable language</h1></div><svg class="asteria-icon el-spark"><use href="./assets/asteria-elements-v1.svg#spark-4"/></svg></header>
+<section class="sheet">
+  <article class="group asteria-surface"><h2>Meaningful marks</h2><div class="row">
+    <div class="item"><svg class="asteria-icon asteria-element el-spark" data-state="accent"><use href="./assets/asteria-elements-v1.svg#spark-4"/></svg><small>current</small></div>
+    <div class="item"><svg class="asteria-icon asteria-element el-door" data-state="default"><use href="./assets/asteria-elements-v1.svg#room-door"/></svg><small>room</small></div>
+    <div class="item"><svg class="asteria-icon asteria-element el-moon" data-state="accent"><use href="./assets/asteria-elements-v1.svg#moon-phase"/></svg><small>cycle</small></div>
+    <div class="item"><svg class="asteria-icon asteria-element el-bow" data-state="default"><use href="./assets/asteria-elements-v1.svg#soft-bow"/></svg><small>keepsake</small></div>
+    <div class="item"><svg class="asteria-icon asteria-element el-paper" data-state="quiet"><use href="./assets/asteria-elements-v1.svg#paper-corner"/></svg><small>note</small></div>
+  </div></article>
+
+  <article class="group asteria-surface"><h2>Four drives · separated</h2><div class="flowers">
+    <svg class="asteria-icon asteria-element el-flower" data-drive="connection"><use href="./assets/asteria-elements-v1.svg#mist-flower"/></svg>
+    <svg class="asteria-icon asteria-element el-flower" data-drive="creation"><use href="./assets/asteria-elements-v1.svg#mist-flower"/></svg>
+    <svg class="asteria-icon asteria-element el-flower" data-drive="reflection"><use href="./assets/asteria-elements-v1.svg#mist-flower"/></svg>
+    <svg class="asteria-icon asteria-element el-flower" data-drive="exploration"><use href="./assets/asteria-elements-v1.svg#mist-flower"/></svg>
+  </div></article>
+
+  <article class="group asteria-surface"><h2>Between us · paired trace</h2><div class="traces">
+    <svg class="asteria-icon asteria-element el-relation" data-layer="shen"><use href="./assets/asteria-elements-v1.svg#relation-trace"/></svg>
+    <svg class="asteria-icon asteria-element el-relation nuo" data-layer="nuo"><use href="./assets/asteria-elements-v1.svg#relation-trace"/></svg>
+  </div></article>
+
+  <article class="group asteria-surface"><h2>Code-owned states</h2><div class="state-demo">
+    <div class="asteria-surface">default</div>
+    <div class="asteria-surface" data-state="selected">selected</div>
+    <div class="asteria-surface"><svg class="asteria-icon asteria-element el-spark" data-state="accent"><use href="./assets/asteria-elements-v1.svg#spark-4"/></svg></div>
+  </div></article>
+</section>
+<p class="note">Frames, lines, shadows and gradients remain code-owned. The SVG layer only carries silhouettes that benefit from a consistent hand.</p>
+</main>
+</body></html>

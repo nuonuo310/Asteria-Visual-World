@@ -1,0 +1,82 @@
+/* Asteria reusable element language v1.
+   Code owns frames, shadows and state. SVG owns only shapes that benefit from a consistent hand. */
+:root{
+  --el-ink:#65434f;
+  --el-body:#80636e;
+  --el-muted:#aa8f99;
+  --el-faint:#c4adb5;
+  --el-accent:#c86489;
+  --el-accent-strong:#9c4f72;
+  --el-lav:#8f75b7;
+  --el-apricot:#d7aa70;
+  --el-blue:#87afc8;
+  --el-line:rgba(151,101,120,.13);
+  --el-soft:rgba(255,255,255,.72);
+}
+body.theme-b{
+  --el-ink:#65434f;--el-body:#80636e;--el-muted:#ad8e99;--el-faint:#c7acb5;
+  --el-accent:#c85b87;--el-accent-strong:#a84672;--el-line:rgba(176,99,130,.14);
+}
+body.theme-c{
+  --el-ink:#62505c;--el-body:#7d6975;--el-muted:#9f8b9d;--el-faint:#bbaabd;
+  --el-accent:#9b6daf;--el-accent-strong:#74538f;--el-line:rgba(133,107,153,.13);
+}
+
+.asteria-icon{display:inline-block;width:1em;height:1em;overflow:visible;color:var(--el-muted)}
+.asteria-icon svg{display:block;width:100%;height:100%;overflow:visible}
+
+.asteria-element{
+  --element-color:var(--el-muted);
+  color:var(--element-color);
+  transition:color .18s ease,opacity .18s ease,filter .18s ease;
+}
+.asteria-element[data-state="quiet"]{--element-color:var(--el-faint);opacity:.72}
+.asteria-element[data-state="default"]{--element-color:var(--el-muted);opacity:.9}
+.asteria-element[data-state="selected"]{--element-color:var(--el-accent-strong);opacity:1;filter:drop-shadow(0 0 5px color-mix(in srgb,var(--el-accent) 18%,transparent))}
+.asteria-element[data-state="accent"]{--element-color:var(--el-accent);opacity:1}
+
+/* Four-point spark is semantic, never filler. */
+.el-spark{width:14px;height:14px;color:var(--el-accent)}
+.el-spark[data-size="tiny"]{width:9px;height:9px}
+.el-spark[data-size="large"]{width:18px;height:18px}
+
+/* Doors are entrances, not generic buttons. */
+.el-door{width:20px;height:25px}
+.el-door[data-state="selected"]{color:var(--el-accent-strong)}
+
+/* Time/cycle marks stay secondary unless current. */
+.el-moon{width:28px;height:19px}
+.el-moon[data-state="accent"]{color:var(--el-lav)}
+
+/* Ribbon/bow is a tactile detail: use sparsely around gifts, notes, or room keepsakes. */
+.el-bow{width:32px;height:25px}
+.el-bow[data-state="accent"]{color:color-mix(in srgb,var(--el-accent) 70%,var(--el-apricot) 30%)}
+
+/* Paper corner belongs to notes only; it should not become a universal card icon. */
+.el-paper{width:25px;height:25px}
+
+/* Mini flower represents a separated drive; colour should come from the drive, not theme chrome. */
+.el-flower{width:32px;height:32px}
+.el-flower[data-drive="connection"]{color:#d77b98}
+.el-flower[data-drive="creation"]{color:#d9ae72}
+.el-flower[data-drive="reflection"]{color:#9f84c2}
+.el-flower[data-drive="exploration"]{color:#87afc8}
+
+/* Relationship traces are paired and translucent. */
+.el-relation{width:66px;height:31px}
+.el-relation[data-layer="shen"]{color:color-mix(in srgb,var(--el-blue) 72%,var(--el-lav) 28%);opacity:.58}
+.el-relation[data-layer="nuo"]{color:color-mix(in srgb,var(--el-accent) 70%,var(--el-lav) 30%);opacity:.5}
+.el-relation[data-state="selected"]{opacity:.82;filter:drop-shadow(0 0 6px color-mix(in srgb,var(--el-accent) 18%,transparent))}
+
+/* Shared code-owned surface language. */
+.asteria-surface{
+  border:1px solid var(--el-line);
+  background:
+    radial-gradient(76% 96% at 94% 7%,color-mix(in srgb,var(--el-accent) 7%,transparent),transparent 61%),
+    linear-gradient(145deg,rgba(255,255,255,.84),rgba(255,250,250,.72));
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.9),0 3px 5px rgba(126,76,94,.07),0 14px 30px rgba(155,93,115,.08);
+}
+.asteria-surface[data-state="selected"]{
+  border-color:color-mix(in srgb,var(--el-accent-strong) 30%,transparent);
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.92),0 3px 5px rgba(126,76,94,.08),0 14px 30px rgba(155,93,115,.10);
+}
