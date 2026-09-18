@@ -7,6 +7,7 @@
   --home-muted:#aa8f99;
   --home-faint:#c4adb5;
   --home-accent:#c86489;
+  --home-accent-strong:#9c4f72;
   --home-rose:#d77899;
   --home-card:#fff9f8;
   --home-card-warm:#fdf4f4;
@@ -22,6 +23,7 @@ body.theme-b{
   --home-muted:#ad8e99;
   --home-faint:#c7acb5;
   --home-accent:#c85b87;
+  --home-accent-strong:#a84672;
   --home-rose:#d9789a;
   --home-card:#fff8fb;
   --home-card-warm:#fff1f6;
@@ -37,6 +39,7 @@ body.theme-c{
   --home-muted:#9f8b9d;
   --home-faint:#bbaabd;
   --home-accent:#9b6daf;
+  --home-accent-strong:#74538f;
   --home-rose:#ad79b4;
   --home-card:#fbf9ff;
   --home-card-warm:#f7f2fc;
@@ -180,4 +183,151 @@ body{color:var(--home-ink)}
 .dock button.active{
   color:var(--home-ink)!important;
   background:color-mix(in srgb,var(--home-accent) 9%,white)!important;
+}
+
+
+/* 2026-09-18 review pass: hierarchy, footprint selection, and mobile compositing cleanup. */
+
+/* Home note should read as a lived-in message, not a headline block. */
+.review-note .note-title{
+  margin-bottom:14px!important;
+  font-size:18px!important;
+  line-height:1.15!important;
+}
+.review-note .note-copy{
+  max-width:92%!important;
+  font-size:13px!important;
+  line-height:1.72!important;
+}
+.review-note .reply strong{
+  font-size:11px!important;
+  color:color-mix(in srgb,var(--home-ink) 82%,var(--home-accent) 18%)!important;
+}
+.review-note .reply p{
+  font-size:10.5px!important;
+  line-height:1.58!important;
+}
+.review-note .reply-line{width:30px!important}
+
+/* Small stat cells use Mind's emphasis logic: quiet labels, vivid meaningful number. */
+.mini-panel strong{
+  color:var(--home-accent-strong)!important;
+  font-size:27px!important;
+}
+.placeholder-panel strong{color:var(--home-muted)!important}
+
+/* Entry row stays clean: no ornamental underline after labels. */
+.life-strip button>i:not(.notice){display:none!important}
+
+/* Explicit spark owns the mark so no pseudo-element box/paint artifact can wrap it. */
+.footprints-kicker:before{content:none!important}
+.footprints-kicker{
+  display:flex;
+  align-items:center;
+  gap:7px;
+  color:var(--home-ink)!important;
+}
+.footprints-spark{
+  display:inline-block;
+  flex:none;
+  color:var(--home-accent);
+  font:400 .78em/1 Georgia,serif;
+  text-shadow:0 0 9px color-mix(in srgb,var(--home-accent) 34%,transparent);
+}
+
+/* Footprint hierarchy: title first, event second, time tertiary and inline. */
+.v1-timeline article{
+  cursor:pointer;
+  outline:none;
+  -webkit-tap-highlight-color:transparent;
+  transition:border-color .2s ease,box-shadow .2s ease,background .2s ease,transform .2s ease;
+}
+.v1-timeline article:focus-visible{
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,.88),
+    0 0 0 2px color-mix(in srgb,var(--home-accent) 12%,transparent),
+    0 10px 22px color-mix(in srgb,var(--home-ambient) 72%,transparent)!important;
+}
+.v1-timeline em{
+  color:var(--home-accent)!important;
+  font-size:12.5px!important;
+  font-weight:600!important;
+  letter-spacing:.035em!important;
+}
+.v1-timeline p{
+  margin:9px 0 0!important;
+  font-size:11.5px!important;
+  line-height:1.62!important;
+  color:var(--home-body)!important;
+}
+.v1-timeline p time{
+  margin-right:7px;
+  color:var(--home-muted);
+  font:500 8.5px/1.3 system-ui,sans-serif;
+  letter-spacing:.02em;
+}
+.v1-timeline p time:after{content:"·";margin-left:7px;color:var(--home-faint)}
+.v1-timeline p span{color:var(--home-body)}
+.v1-timeline article>small{display:none!important}
+
+/* Default rail and dots recede. The selected item deepens only its local segment and node. */
+.v1-timeline:before{
+  opacity:.62;
+  transition:opacity .2s ease,background .2s ease;
+}
+.v1-timeline article:before{
+  content:"";
+  position:absolute;
+  left:-20px;
+  top:16px;
+  width:2px;
+  height:34px;
+  border-radius:999px;
+  background:transparent!important;
+  pointer-events:none;
+  transition:background .2s ease,box-shadow .2s ease;
+}
+.v1-timeline article>i{
+  opacity:.72;
+  transition:background .2s ease,border-color .2s ease,box-shadow .2s ease,opacity .2s ease;
+}
+.v1-timeline article.is-active{
+  border-color:color-mix(in srgb,var(--home-accent-strong) 32%,transparent)!important;
+  background:
+    radial-gradient(74% 100% at 95% 8%,color-mix(in srgb,var(--home-card-accent) 86%,transparent),transparent 60%),
+    linear-gradient(145deg,rgba(255,255,255,.84),color-mix(in srgb,var(--home-card-warm) 90%,white))!important;
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,.9),
+    0 3px 5px var(--home-contact),
+    0 14px 28px color-mix(in srgb,var(--home-ambient) 92%,transparent)!important;
+}
+.v1-timeline article.is-active:before{
+  background:var(--home-accent-strong)!important;
+  box-shadow:0 0 8px color-mix(in srgb,var(--home-accent-strong) 22%,transparent);
+}
+.v1-timeline article.is-active>i{
+  opacity:1;
+  background:var(--home-accent-strong)!important;
+  border-color:var(--home-accent-strong)!important;
+  box-shadow:0 0 0 4px color-mix(in srgb,var(--home-accent-strong) 10%,transparent),0 0 12px color-mix(in srgb,var(--home-accent-strong) 28%,transparent)!important;
+}
+.v1-timeline article.is-active em{color:var(--home-accent-strong)!important}
+
+/* Preserve the soft right-top colour 'pat' on all four cards; selected state only deepens it. */
+.v1-timeline article{
+  background:
+    radial-gradient(58% 76% at 96% 5%,color-mix(in srgb,var(--home-card-accent) 66%,transparent),transparent 62%),
+    linear-gradient(145deg,rgba(255,255,255,.79),color-mix(in srgb,var(--home-card-warm) 86%,white))!important;
+}
+
+/* iOS Safari can show compositor seams with fixed page backgrounds + multiple blurred layers.
+   Home is a long scrolling page, so keep its background scroll-bound and isolate the dock blur. */
+body{background-attachment:scroll!important}
+.app-shell{overflow:clip}
+.dock{isolation:isolate}
+
+/* Keep the active Home pill vivid enough to match Mind without making the whole page pink. */
+.dock button.active{
+  background:color-mix(in srgb,var(--home-accent) 11%,white)!important;
+  color:var(--home-ink)!important;
 }
