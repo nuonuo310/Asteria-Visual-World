@@ -7,6 +7,7 @@
   <title>Asteria · Home Visual Prototype</title>
   <link rel="stylesheet" href="./styles.css?v=20260917-1">
   <link rel="stylesheet" href="./home-finish-study.css?v=20260917-1">
+  <link rel="stylesheet" href="./home-sync.css?v=20260918-2">
 </head>
 <body>
   <main class="app-shell" id="app">
@@ -42,12 +43,12 @@
       <nav class="room-row life-strip" aria-label="life entries">
         <button type="button" data-room="Shen"><span class="room-icon">S</span><span>Shen</span><i></i></button><button type="button" data-room="Nuo"><span class="room-icon">N</span><span>Nuo</span><i></i></button><button type="button" data-room="Letters"><span class="room-icon">✉</span><span>Letters</span><i class="notice"></i></button><button type="button" data-room="Diary"><span class="room-icon">▤</span><span>Diary</span><i></i></button><button type="button" data-room="Studio"><span class="room-icon">✦</span><span>Studio</span><i></i></button>
       </nav>
-      <section class="footprints footprint-v1" aria-label="footprints timeline"><div class="footprints-head"><p class="footprints-kicker">Today, together</p><span class="footprints-count">4 traces</span></div><div class="v1-timeline"><article><i aria-hidden="true"></i><div class="trace-copy"><em>Together</em><p>一起听了会儿歌，又把 Asteria 的一个坑填上了。</p></div><small>20:18</small></article><article><i aria-hidden="true"></i><div class="trace-copy"><em>For You</em><p>沈述给糯糯留下一点只属于今天的小东西。</p></div><small>18:42</small></article><article><i aria-hidden="true"></i><div class="trace-copy"><em>Little Ones</em><p>沈小述今天又在桌面上耍赖，狗狗们也被惦记着。</p></div><small>16:10</small></article><article><i aria-hidden="true"></i><div class="trace-copy"><em>Brought Home</em><p>糯糯带回一批新的排版灵感，我们一起挑。</p></div><small>13:26</small></article></div></section>
+      <section class="footprints footprint-v1" aria-label="footprints timeline"><div class="footprints-head"><p class="footprints-kicker"><span class="footprints-spark" aria-hidden="true">✦</span>Today, together</p><span class="footprints-count">4 traces</span></div><div class="v1-timeline"><article data-footprint role="button" tabindex="0" aria-pressed="false"><i aria-hidden="true"></i><div class="trace-copy"><em>Together</em><p><time>20:18</time><span>一起听了会儿歌，又把 Asteria 的一个坑填上了。</span></p></div></article><article data-footprint role="button" tabindex="0" aria-pressed="false"><i aria-hidden="true"></i><div class="trace-copy"><em>For You</em><p><time>18:42</time><span>沈述给糯糯留下一点只属于今天的小东西。</span></p></div></article><article data-footprint role="button" tabindex="0" aria-pressed="false"><i aria-hidden="true"></i><div class="trace-copy"><em>Little Ones</em><p><time>16:10</time><span>沈小述今天又在桌面上耍赖，狗狗们也被惦记着。</span></p></div></article><article data-footprint role="button" tabindex="0" aria-pressed="false"><i aria-hidden="true"></i><div class="trace-copy"><em>Brought Home</em><p><time>13:26</time><span>糯糯带回一批新的排版灵感，我们一起挑。</span></p></div></article></div></section>
     </section>
 
     <nav class="dock" aria-label="primary navigation"><button class="active" type="button" data-nav="Home"><span>⌂</span><b>Home</b></button><button type="button" data-nav="Chat"><span>◌</span><b>Chat</b></button><button type="button" data-nav="Mind"><span>◐</span><b>Mind</b></button><button type="button" data-nav="Memory"><span>◇</span><b>Memory</b></button><button type="button" data-nav="Detour"><span>↗</span><b>Detour</b></button></nav>
     <p class="mock-note">Visual prototype · local mock data only</p><div class="toast" id="toast" role="status" aria-live="polite"></div>
   </main>
-  <script src="./app.js?v=20260917-1"></script>
+  <script src="./app.js?v=20260918-2"></script>
 </body>
 </html>
