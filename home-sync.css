@@ -580,3 +580,55 @@ body{background-attachment:scroll!important}
   .home-hero-art{left:3px!important;width:60%!important;height:168px!important}
   .home-hero-copy{width:45%!important;padding-right:12px!important}
 }
+
+
+/* 2026-09-19 overnight Home hero repair.
+   Keep hero + caption as one card, but use a short inset rule rather than a second material layer. */
+.home-hero{
+  border-bottom:0!important;
+  border-radius:26px 26px 0 0!important;
+}
+.relationship-caption{
+  position:relative!important;
+  height:44px!important;
+  margin:0!important;
+  padding:0 17px!important;
+  border-top:0!important;
+  border-left:1px solid color-mix(in srgb,var(--home-edge) 100%,transparent)!important;
+  border-right:1px solid color-mix(in srgb,var(--home-edge) 100%,transparent)!important;
+  border-bottom:1px solid color-mix(in srgb,var(--home-edge) 100%,transparent)!important;
+  border-radius:0 0 26px 26px!important;
+  background:
+    linear-gradient(145deg,rgba(255,255,255,.76),color-mix(in srgb,var(--home-card-warm) 92%,white))!important;
+  box-shadow:0 14px 28px color-mix(in srgb,var(--home-ambient) 36%,transparent)!important;
+}
+.relationship-caption::before{
+  content:""!important;
+  position:absolute!important;
+  top:0!important;
+  left:17px!important;
+  right:17px!important;
+  height:1px!important;
+  background:color-mix(in srgb,var(--home-edge) 92%,transparent)!important;
+  pointer-events:none!important;
+}
+.home-hero-art{
+  left:2px!important;
+  bottom:-2px!important;
+  width:61%!important;
+  height:178px!important;
+}
+.home-hero-art img{
+  width:100%!important;
+  height:100%!important;
+  object-fit:contain!important;
+  object-position:left bottom!important;
+  opacity:.96!important;
+  filter:saturate(.88) contrast(.96) brightness(1.02)!important;
+}
+.month-panel{
+  margin-top:10px!important;
+}
+@media(max-width:370px){
+  .home-hero-art{left:1px!important;width:63%!important;height:171px!important}
+}
