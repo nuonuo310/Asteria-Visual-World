@@ -632,3 +632,20 @@ body{background-attachment:scroll!important}
 @media(max-width:370px){
   .home-hero-art{left:1px!important;width:63%!important;height:171px!important}
 }
+
+/* Unified hero surface: a short inset rule, not a second material band. */
+.home-hero{border-bottom:0!important;box-shadow:none!important}
+.relationship-caption{
+  position:relative!important;
+  height:44px!important;
+  border-top:0!important;
+  background:linear-gradient(145deg,rgba(255,255,255,.78),color-mix(in srgb,var(--home-card-warm) 94%,white))!important;
+  box-shadow:0 12px 23px color-mix(in srgb,var(--home-ambient) 34%,transparent)!important;
+}
+.relationship-caption::before{
+  content:""!important;position:absolute!important;
+  top:0!important;left:18px!important;right:18px!important;height:1px!important;
+  background:color-mix(in srgb,var(--home-edge) 110%,transparent)!important;
+  pointer-events:none!important;
+}
+.month-panel{margin-top:10px!important}

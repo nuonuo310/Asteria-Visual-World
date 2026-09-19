@@ -6,6 +6,27 @@
   const toast = document.getElementById('toast');
   let toastTimer;
 
+  // The approved new WebP currently has an incomplete binary upload.
+  // Keep the earlier verified preview visible instead of leaving an empty hero.
+  const heroImage = root.querySelector('.home-hero-art img');
+  if (heroImage) {
+    heroImage.addEventListener('error', async () => {
+      try {
+        const fragments = await Promise.all([1, 2, 3, 4, 5].map(async (part) => {
+          const response = await fetch(`./assets/hero-data/part-${part}.txt?v=20260919-2`);
+          if (!response.ok) throw new Error(`Hero fragment ${part}: ${response.status}`);
+          return response.text();
+        }));
+        const base64 = fragments.join('').replace(/\s+/g, '');
+        if (base64.length !== 27312) throw new Error('Incomplete fallback hero');
+        heroImage.src = `data:image/webp;base64,${base64}`;
+      } catch (error) {
+        console.error('Home hero fallback unavailable', error);
+      }
+    }, { once: true });
+  }
+
+
 
   function showToast(message) {
     clearTimeout(toastTimer);
