@@ -1,42 +1,42 @@
 /* Home hero balance pass: compact horizontal card inspired by the reference composition. */
 .home-hero{
-  height:184px;
+  height:184px !important;
 }
 
 .home-hero-art{
-  left:8px;
-  right:auto;
-  top:10px;
-  bottom:12px;
-  width:54%;
-  height:auto;
-  align-items:center;
+  left:8px !important;
+  right:auto !important;
+  top:10px !important;
+  bottom:12px !important;
+  width:54% !important;
+  height:auto !important;
+  align-items:center !important;
 }
 
 .home-hero-art img{
-  width:100%;
-  height:100%;
-  object-fit:contain;
-  object-position:left center;
+  width:100% !important;
+  height:100% !important;
+  object-fit:contain !important;
+  object-position:left center !important;
 }
 
 .home-hero-copy{
-  left:auto;
-  right:0;
-  width:44%;
-  height:100%;
-  padding:10px 12px 10px 8px;
+  left:auto !important;
+  right:0 !important;
+  width:44% !important;
+  height:100% !important;
+  padding:10px 12px 10px 8px !important;
 }
 
 .relationship-caption{
-  height:44px;
-  padding:4px 18px 0;
+  height:44px !important;
+  padding:4px 18px 0 !important;
 }
 
 @media (max-width:370px){
-  .home-hero{height:176px}
-  .home-hero-art{top:12px;bottom:12px;width:53%}
-  .home-hero-copy{width:46%;padding:9px 10px 9px 8px}
-  .hero-kicker{font-size:14px;margin-bottom:10px}
-  .hero-line{margin-top:9px;font-size:10px}
+  .home-hero{height:176px !important}
+  .home-hero-art{top:12px !important;bottom:12px !important;width:53% !important}
+  .home-hero-copy{width:46% !important;padding:9px 10px 9px 8px !important}
+  .hero-kicker{font-size:14px !important;margin-bottom:10px !important}
+  .hero-line{margin-top:9px !important;font-size:10px !important}
 }
