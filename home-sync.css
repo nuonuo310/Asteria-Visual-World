@@ -684,3 +684,12 @@ body{background-attachment:scroll!important}
   .home-hero{height:198px!important}
   .home-hero-art{bottom:18px!important;height:165px!important}
 }
+
+/* Final illustration layout: preserve the arched top and a true inset hairline.
+   The illustration's native white background needs a transparent export before deployment. */
+.home-hero-art{left:4px!important;width:59%!important;height:178px!important;bottom:24px!important;overflow:visible!important}
+.home-hero-art img{width:100%!important;height:100%!important;object-fit:contain!important;object-position:left bottom!important;filter:none!important;opacity:1!important}
+.home-hero{height:220px!important}
+.relationship-caption{height:49px!important;padding:8px 18px 0!important}
+.relationship-caption::before{left:22px!important;right:22px!important;top:0!important;height:1px!important;background:rgba(135,93,110,.34)!important}
+@media(max-width:370px){.home-hero{height:207px!important}.home-hero-art{left:2px!important;width:60%!important;height:164px!important;bottom:23px!important}}
