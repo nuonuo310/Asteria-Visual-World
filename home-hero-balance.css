@@ -14,11 +14,15 @@
 }
 
 .home-hero-art img{
-  width:100% !important;
+  /* Widen the PNG within its left-side slot: its transparent right half
+     previously made the actual door and figures appear thumbnail-sized. */
+  width:150% !important;
+  max-width:none !important;
   height:100% !important;
   object-fit:contain !important;
   object-position:left center !important;
 }
+
 
 .home-hero-copy{
   left:auto !important;
