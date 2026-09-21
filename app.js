@@ -198,6 +198,20 @@
     button.addEventListener('click', () => showToast(`${button.dataset.room} 尚未接入`));
   });
 
+  // Wish entry is a read-only glimpse; editing belongs to the independent page.
+  const activeWish = document.getElementById('activeWish');
+  function renderActiveWish() {
+    if (!activeWish || !window.AsteriaWishes) return;
+    const active = window.AsteriaWishes.list().filter(w => w.status === 'active')
+      .sort((a, b) => b.updatedAt.localeCompare(a.updatedAt))[0];
+    activeWish.textContent = active ? `正在进行 · ${active.title}` : '暂时没有正在进行的愿望';
+  }
+  renderActiveWish();
+  window.addEventListener('storage', (event) => {
+    if (event.key === window.AsteriaWishes?.storageKey) renderActiveWish();
+  });
+  window.addEventListener('pageshow', renderActiveWish);
+
   const themeButtons = [...root.querySelectorAll('[data-theme-choice]')];
   function setTheme(choice) {
     document.body.classList.remove('theme-b','theme-c');

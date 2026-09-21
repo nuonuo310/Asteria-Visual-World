@@ -1,0 +1,23 @@
+<!doctype html>
+<html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#fcf8f8"><title>Asteria · Our little wishes</title>
+<link rel="stylesheet" href="./wishes.css?v=20260921-1"></head>
+<body><main class="wishes-shell">
+<header class="top"><a href="./index.html" aria-label="返回大厅">←</a><span>ASTERIA · OUR LITTLE PLANS</span><button id="addWish" type="button" aria-label="新增愿望">＋</button></header>
+<section id="listPage"><div class="heading"><h1>Our little wishes.</h1><p>把想一起做的事，慢慢变成真的。</p></div>
+<div class="filters" id="filters" aria-label="按愿望状态筛选"><button class="selected" data-filter="all">全部</button><button data-filter="active">进行中</button><button data-filter="not-started">未开始</button><button data-filter="planning">规划中</button><button data-filter="completed">已完成</button><button data-filter="paused">暂时搁置</button></div>
+<div id="wishList" class="wish-list" aria-live="polite"></div><button id="addBottom" class="add-bottom" type="button">＋ 再许一个小愿望</button></section>
+<section id="detailPage" hidden><button id="backList" class="back-link" type="button">← 返回清单</button><div id="wishDetail"></div></section>
+<dialog id="wishDialog" aria-labelledby="formTitle"><form id="wishForm"><h2 id="formTitle">留下一个愿望</h2>
+<label>愿望名称<input name="title" maxlength="90" required placeholder="我们想一起做的事"></label>
+<label>提出者<select name="proposer"><option value="">暂不确定</option><option value="Together">共同</option><option value="Nuo">Nuo</option><option value="Shen">Shen</option></select></label>
+<label>第一次提出日期（不确定可留空）<input name="proposedOn" type="date"></label>
+<label>当前状态<select name="status"><option value="not-started">未开始</option><option value="planning">规划中</option><option value="active">进行中</option><option value="completed">已完成</option><option value="paused">暂时搁置</option></select></label>
+<label>最初的愿望<textarea name="idea" maxlength="3000" rows="3" placeholder="最初为什么想做这件事"></textarea></label>
+<label>初步想法 / 实现方案<textarea name="plan" maxlength="5000" rows="3" placeholder="准备怎么实现"></textarea></label>
+<p class="hint">仅保存在当前浏览器，尚未跨设备同步。最初的愿望和提出日期创建后保留，不随进展覆盖。</p>
+<div class="actions"><button type="button" data-close>取消</button><button type="submit">保存</button></div></form></dialog>
+<dialog id="progressDialog" aria-labelledby="progressTitle"><form id="progressForm"><h2 id="progressTitle">留下一条进展</h2><label>进展内容<textarea name="text" maxlength="1000" rows="3" required></textarea></label><div class="actions"><button type="button" data-close>取消</button><button type="submit">保存进展</button></div></form></dialog>
+<dialog id="linkDialog" aria-labelledby="linkTitle"><form id="linkForm"><h2 id="linkTitle">添加参考资料</h2><label>名称<input name="title" maxlength="100" required placeholder="参考资料名称"></label><label>链接（http / https）<input name="url" type="url" maxlength="1500" required placeholder="https://"></label><div class="actions"><button type="button" data-close>取消</button><button type="submit">添加链接</button></div></form></dialog>
+<p id="feedback" role="status" aria-live="polite"></p></main>
+<script src="./wishes-store.js?v=20260921-1"></script><script src="./wishes.js?v=20260921-1"></script></body></html>
