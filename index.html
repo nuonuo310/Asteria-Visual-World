@@ -9,7 +9,7 @@
   <link rel="stylesheet" href="./home-finish-study.css?v=20260917-1">
   <link rel="stylesheet" href="./home-sync.css?v=20260919-4">
   <link rel="stylesheet" href="./home-hero-balance.css?v=20260921-3">
-  <link rel="stylesheet" href="./home-behavior.css?v=20260921-3">
+  <link rel="stylesheet" href="./home-behavior.css?v=20260921-5">
 </head>
 <body>
   <main class="app-shell" id="app">
@@ -57,7 +57,7 @@
       <nav class="room-row life-strip" aria-label="life entries">
         <button type="button" data-room="Shen"><span class="room-icon">S</span><span>Shen</span><i></i></button><button type="button" data-room="Nuo"><span class="room-icon">N</span><span>Nuo</span><i></i></button><button type="button" data-room="Letters"><span class="room-icon">✉</span><span>Letters</span><i class="notice"></i></button><button type="button" data-room="Diary"><span class="room-icon">▤</span><span>Diary</span><i></i></button><button type="button" data-room="Studio"><span class="room-icon">✦</span><span>Studio</span><i></i></button>
       </nav>
-      <section class="footprints footprint-v1" aria-label="footprints timeline"><button class="footprints-head footprints-toggle" id="footprintsToggle" type="button" aria-expanded="false" aria-controls="footprintsTimeline"><span class="footprints-kicker"><span class="footprints-spark" aria-hidden="true">✦</span>Today, together</span><span class="footprints-count">0 traces <span class="footprints-chevron" aria-hidden="true">⌄</span></span></button><div class="v1-timeline" id="footprintsTimeline" hidden><p class="footprints-empty">今天还没有留下足迹。</p></div><div class="footprints-actions" id="footprintsActions" hidden><button type="button" id="footprintAdd">＋ 记录今天的小事</button></div></section>
+      <section class="footprints footprint-v1" aria-label="今日足迹"><button class="footprints-head footprints-toggle" id="footprintsToggle" type="button" aria-expanded="false" aria-controls="footprintsPanel"><span class="footprints-kicker"><span class="footprints-spark" aria-hidden="true">✦</span>Today, together</span><span class="footprints-count">待接入 <span class="footprints-chevron" aria-hidden="true">⌄</span></span></button><div id="footprintsPanel" hidden><div class="footprints-categories" aria-label="足迹四个分类"><span>Together · 我们</span><span>For You · 为你</span><span>Little Ones · 小家伙们</span><span>Brought Home · 带回家</span></div><div class="v1-timeline" id="footprintsTimeline" aria-live="polite"><p class="footprints-empty">真实生活数据尚未接入，接入后会自动整理今天的小事。</p></div></div></section>
     </section>
 
 
@@ -75,23 +75,10 @@
         </form>
       </section>
     </div>
-    <div class="footprint-dialog-backdrop" id="footprintDialog" hidden>
-      <section class="note-dialog" role="dialog" aria-modal="true" aria-labelledby="footprintDialogTitle">
-        <h2 id="footprintDialogTitle">记录今天的小事</h2>
-        <form id="footprintForm">
-          <label for="footprintLabel">小标题</label>
-          <input id="footprintLabel" maxlength="32" required placeholder="例如：一起装修">
-          <label for="footprintText">今天发生了什么</label>
-          <textarea id="footprintText" maxlength="180" rows="3" required placeholder="留下一件值得记住的小事……"></textarea>
-          <p class="note-dialog-hint">每天最多 3 件，仅保存在这台设备的浏览器中。</p>
-          <div class="note-dialog-actions"><button type="button" id="footprintCancel">取消</button><button type="submit">保存足迹</button></div>
-        </form>
-      </section>
-    </div>
     <p class="mock-note">Visual prototype · local mock data only</p><div class="toast" id="toast" role="status" aria-live="polite"></div>
   </main>
   <script src="./view-store.js?v=20260921-home-1"></script>
-  <script src="./home-view.js?v=20260921-home-3"></script>
-  <script src="./app.js?v=20260921-4"></script>
+  <script src="./home-view.js?v=20260921-home-5"></script>
+  <script src="./app.js?v=20260921-5"></script>
 </body>
 </html>

@@ -1,0 +1,7 @@
+# Home · Today footprints (four-category view contract)
+
+The four fixed display categories are Together / For You / Little Ones / Brought Home. Home starts collapsed. On expansion, category names remain visible; the timeline shows at most three **actual** events from the current local date. There is no manual add form, no generated placeholder event, and no inference from chat text in the browser.
+
+An authorized future event aggregator may publish a curated daily snapshot through `AsteriaViewStore.patch('home', { todayFeed: { date: 'YYYY-MM-DD', events: [{ category: 'together' | 'forYou' | 'littleOnes' | 'broughtHome', time: 'HH:mm', text: 'event summary', source: 'actual source identifier' }] } }, { source: 'authorized-aggregator' })`. It must independently verify the event, date, source and category; select no more than three representative events and exclude duplicate letter/diary notifications. The browser validates shape and current date, but **cannot verify the authenticity of a source string**. Until an authorized source is connected, Home displays “真实生活数据尚未接入”. Do not populate this feed with fabricated data.
+
+Legacy `footprints` and `footprintsDate` local entries are ignored by this view and left untouched in storage. No migration/deletion or cross-device sync is performed. This change leaves the approved Home hero, note editor, calendar, themes and Mind files unchanged.

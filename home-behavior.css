@@ -78,3 +78,21 @@
   border-radius:10px;padding:9px;background:rgba(255,255,255,.72);
   color:var(--home-ink);font:14px/1.5 system-ui,sans-serif
 }
+
+/* Restore the four-category Home footprint concept without mock or manual events. */
+#footprintsPanel[hidden]{display:none!important}
+.footprints-categories{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:6px 10px;margin:0 8px 13px 24px}
+.footprints-categories span{font:400 10px/1.35 system-ui,sans-serif;color:var(--home-body);border-bottom:1px solid var(--home-edge);padding:4px 0 6px}
+.footprint-v1 .v1-timeline{margin:0 7px 0 9px;padding-left:17px}
+.footprint-v1 .v1-timeline article{
+  min-height:0!important;margin:0 0 7px!important;padding:9px 8px 10px 12px!important;
+  border:0!important;border-radius:0!important;box-shadow:none!important;
+  background:transparent!important;
+}
+.footprint-v1 .v1-timeline article>i{left:-22px;top:15px;width:7px;height:7px}
+.footprint-v1 .v1-timeline article:before{display:none!important}
+.footprint-v1 .v1-timeline:before{top:13px;bottom:12px;opacity:.55}
+.footprint-v1 .v1-timeline .trace-copy{padding-right:0}
+.footprint-v1 .v1-timeline .trace-copy p{margin-top:5px!important}
+.footprint-v1 .v1-timeline article.is-active{background:color-mix(in srgb,var(--home-accent) 4%,transparent)!important}
+.footprint-v1 .footprints-empty{margin:5px 8px 8px;color:var(--home-muted)}
