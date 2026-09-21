@@ -190,8 +190,75 @@
     if (!document.hidden) {
       renderCurrentMonth();
       if (homeView && viewStore) homeView.render(viewStore.read('home'));
+      updateFootprintActions();
     }
   });
+
+  // Curated local Today traces: never synthesize life events or reuse yesterday's list.
+  const footprintActions = document.getElementById('footprintsActions');
+  const footprintAdd = document.getElementById('footprintAdd');
+  const footprintDialog = document.getElementById('footprintDialog');
+  const footprintForm = document.getElementById('footprintForm');
+  const footprintCancel = document.getElementById('footprintCancel');
+  const footprintLabel = document.getElementById('footprintLabel');
+  const footprintText = document.getElementById('footprintText');
+  const footprintDate = (date = new Date()) => [
+    date.getFullYear(), String(date.getMonth() + 1).padStart(2, '0'), String(date.getDate()).padStart(2, '0')
+  ].join('-');
+  function todayTraces() {
+    const data = viewStore?.read('home');
+    return data?.footprintsDate === footprintDate() && Array.isArray(data.footprints)
+      ? data.footprints.slice(0, 3) : [];
+  }
+  function updateFootprintActions() {
+    const open = footprintsToggle?.getAttribute('aria-expanded') === 'true';
+    if (footprintActions) footprintActions.hidden = !open;
+    if (footprintAdd) footprintAdd.disabled = todayTraces().length >= 3;
+  }
+  footprintsToggle?.addEventListener('click', updateFootprintActions);
+  viewStore?.subscribe('home', updateFootprintActions);
+  function closeFootprintDialog() {
+    footprintDialog.hidden = true;
+    footprintAdd?.focus();
+  }
+  footprintAdd?.addEventListener('click', () => {
+    if (todayTraces().length >= 3) return;
+    footprintForm.reset();
+    footprintDialog.hidden = false;
+    footprintLabel.focus();
+  });
+  footprintCancel?.addEventListener('click', closeFootprintDialog);
+  footprintDialog?.addEventListener('click', (event) => {
+    if (event.target === footprintDialog) closeFootprintDialog();
+  });
+  footprintDialog?.addEventListener('keydown', (event) => {
+    if (event.key === 'Escape') { event.preventDefault(); closeFootprintDialog(); }
+    if (event.key === 'Tab') {
+      const focusable = [...footprintDialog.querySelectorAll('input,textarea,button')];
+      const first = focusable[0], last = focusable[focusable.length - 1];
+      if (event.shiftKey && document.activeElement === first) { event.preventDefault(); last.focus(); }
+      else if (!event.shiftKey && document.activeElement === last) { event.preventDefault(); first.focus(); }
+    }
+  });
+  footprintForm?.addEventListener('submit', (event) => {
+    event.preventDefault();
+    const label = footprintLabel.value.trim(), text = footprintText.value.trim();
+    if (!label || label.length > 32 || !text || text.length > 180) {
+      showToast('请填写标题和内容'); return;
+    }
+    if (!viewStore) { showToast('本地存储暂不可用'); return; }
+    const now = new Date(), current = todayTraces();
+    if (current.length >= 3) { showToast('今天最多记录 3 件小事'); return; }
+    const time = [now.getHours(), now.getMinutes()].map(n => String(n).padStart(2, '0')).join(':');
+    const result = viewStore.patch('home', {
+      footprintsDate: footprintDate(now),
+      footprints: [...current, { label, text, time }]
+    }, { source: 'home-local-footprints' });
+    if (!result.ok) { showToast('保存失败，请检查浏览器存储空间'); return; }
+    closeFootprintDialog();
+    showToast('今天的小事已经留下');
+  });
+  updateFootprintActions();
 
   root.querySelectorAll('[data-room]').forEach((button) => {
     button.addEventListener('click', () => showToast(`${button.dataset.room} 尚未接入`));

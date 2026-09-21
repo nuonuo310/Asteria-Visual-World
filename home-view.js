@@ -25,7 +25,7 @@
   fallback.replyFrom = nodes.replyFrom?.textContent || '';
   fallback.replyText = nodes.replyText?.lastChild?.textContent || '';
   fallback.traceCount = nodes.traceCount?.firstChild?.textContent || '';
-  const originalTraces = nodes.timeline ? [...nodes.timeline.children].map((item) => item.cloneNode(true)) : [];
+  const localDate = (date = new Date()) => [date.getFullYear(), String(date.getMonth() + 1).padStart(2, '0'), String(date.getDate()).padStart(2, '0')].join('-');
   const validText = (value, max = 300) => typeof value === 'string' && value.trim().length > 0 && value.length <= max;
   const textOr = (value, defaultValue, max) => validText(value, max) ? value : defaultValue;
   const plainObject = (value) => value !== null && typeof value === 'object' && !Array.isArray(value);
@@ -59,27 +59,44 @@
     // Chat aggregation is not wired; never show a fabricated total.
     if (nodes.chatCount) nodes.chatCount.textContent = '—';
     if (!nodes.timeline || !nodes.traceCount) return;
-    // An absent list means untouched prototype; an explicit [] means no traces.
-    const validTraces = Array.isArray(data.footprints) && data.footprints.length <= 3 &&
+    // Never present sample events as today's actual life. Older local events
+    // remain in storage but do not appear under Today on another date.
+    const validTraces = data.footprintsDate === localDate() &&
+      Array.isArray(data.footprints) && data.footprints.length <= 3 &&
       data.footprints.every((trace) => plainObject(trace) &&
-        validText(trace.label, 60) && validText(trace.time, 20) && validText(trace.text, 300));
-    if (!validTraces) {
-      nodes.timeline.replaceChildren(...originalTraces.map((item) => item.cloneNode(true)));
-      nodes.traceCount.firstChild.textContent = fallback.traceCount;
-    } else {
-      const fragment = document.createDocumentFragment();
-      for (const trace of data.footprints) {
-        const item = originalTraces[0].cloneNode(true);
-        item.classList.remove('is-active');
-        item.setAttribute('aria-pressed', 'false');
-        item.querySelector('em').textContent = trace.label;
-        item.querySelector('time').textContent = trace.time;
-        item.querySelector('.trace-copy p span').textContent = trace.text;
-        fragment.appendChild(item);
-      }
-      nodes.timeline.replaceChildren(fragment);
-      nodes.traceCount.firstChild.textContent = `${data.footprints.length} traces `;
+        validText(trace.label, 32) && validText(trace.time, 20) && validText(trace.text, 180));
+    const traces = validTraces ? data.footprints : [];
+    const fragment = document.createDocumentFragment();
+    for (const trace of traces) {
+      const item = document.createElement('article');
+      item.setAttribute('data-footprint', '');
+      item.setAttribute('role', 'button');
+      item.setAttribute('tabindex', '0');
+      item.setAttribute('aria-pressed', 'false');
+      const dot = document.createElement('i');
+      dot.setAttribute('aria-hidden', 'true');
+      const copy = document.createElement('div');
+      copy.className = 'trace-copy';
+      const label = document.createElement('em');
+      label.textContent = trace.label;
+      const detail = document.createElement('p');
+      const time = document.createElement('time');
+      time.textContent = trace.time;
+      const description = document.createElement('span');
+      description.textContent = trace.text;
+      detail.append(time, description);
+      copy.append(label, detail);
+      item.append(dot, copy);
+      fragment.appendChild(item);
     }
+    if (!traces.length) {
+      const empty = document.createElement('p');
+      empty.className = 'footprints-empty';
+      empty.textContent = '今天还没有留下足迹。';
+      fragment.appendChild(empty);
+    }
+    nodes.timeline.replaceChildren(fragment);
+    nodes.traceCount.firstChild.textContent = `${traces.length} traces `;
     nodes.footprints?.classList.remove('has-selection');
   }
 
