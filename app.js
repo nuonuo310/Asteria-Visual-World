@@ -98,11 +98,11 @@
     });
   }
 
-  const footprintCards = [...root.querySelectorAll('[data-footprint]')];
   const footprints = root.querySelector('.footprint-v1');
   function toggleFootprint(card) {
+    const cards = [...root.querySelectorAll('[data-footprint]')];
     const wasActive = card.classList.contains('is-active');
-    footprintCards.forEach((item) => {
+    cards.forEach((item) => {
       item.classList.remove('is-active');
       item.setAttribute('aria-pressed', 'false');
     });
@@ -112,15 +112,30 @@
     }
     if (footprints) footprints.classList.toggle('has-selection', !wasActive);
   }
-  footprintCards.forEach((card) => {
-    card.addEventListener('click', () => toggleFootprint(card));
-    card.addEventListener('keydown', (event) => {
-      if (event.key === 'Enter' || event.key === ' ') {
-        event.preventDefault();
-        toggleFootprint(card);
-      }
+  // Delegate so view-store updates can replace mock traces without losing tap/keyboard behavior.
+  if (footprintsTimeline) {
+    footprintsTimeline.addEventListener('click', (event) => {
+      const card = event.target.closest('[data-footprint]');
+      if (card && footprintsTimeline.contains(card)) toggleFootprint(card);
     });
-  });
+    footprintsTimeline.addEventListener('keydown', (event) => {
+      if (event.key !== 'Enter' && event.key !== ' ') return;
+      const card = event.target.closest('[data-footprint]');
+      if (!card || !footprintsTimeline.contains(card)) return;
+      event.preventDefault();
+      toggleFootprint(card);
+    });
+  }
+
+  // Home renders a validated, surface-owned snapshot. With no store data the
+  // locked mock remains pixel-identical; no Runtime or room schemas are assumed.
+  const homeView = window.AsteriaHomeView;
+  const viewStore = window.AsteriaViewStore;
+  if (homeView && viewStore) {
+    const renderHome = () => homeView.render(viewStore.read('home'));
+    renderHome();
+    viewStore.subscribe('home', renderHome);
+  }
 
   root.querySelectorAll('[data-room]').forEach((button) => {
     button.addEventListener('click', () => showToast(`${button.dataset.room} 尚未接入`));
