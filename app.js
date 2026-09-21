@@ -137,6 +137,62 @@
     viewStore.subscribe('home', renderHome);
   }
 
+  // Local-only note editor; use the existing Home view-store, never imply shared sync.
+  const noteDialog = document.getElementById('noteDialog');
+  const noteForm = document.getElementById('noteForm');
+  const noteEdit = document.getElementById('noteEdit');
+  const noteCancel = document.getElementById('noteCancel');
+  const noteInput = document.getElementById('noteInput');
+  const noteAuthor = document.getElementById('noteAuthor');
+  let noteReturnFocus = null;
+  function closeNote() {
+    noteDialog.hidden = true;
+    noteReturnFocus?.focus();
+  }
+  noteEdit?.addEventListener('click', () => {
+    noteReturnFocus = document.activeElement;
+    const saved = viewStore?.read('home');
+    const note = saved?.note;
+    noteAuthor.value = note?.localDraft && note.title === 'To. Shen' ? 'Nuo'
+      : note?.localDraft && note.title === 'To. Nuo' ? 'Shen' : 'Nuo';
+    noteInput.value = note?.localDraft && typeof note.body === 'string' ? note.body : '';
+    noteDialog.hidden = false;
+    noteInput.focus();
+  });
+  noteCancel?.addEventListener('click', closeNote);
+  noteDialog?.addEventListener('click', (event) => {
+    if (event.target === noteDialog) closeNote();
+  });
+  noteDialog?.addEventListener('keydown', (event) => {
+    if (event.key === 'Escape') { event.preventDefault(); closeNote(); }
+    if (event.key === 'Tab') {
+      const focusable = [...noteDialog.querySelectorAll('button,textarea,select')];
+      const first = focusable[0], last = focusable[focusable.length - 1];
+      if (event.shiftKey && document.activeElement === first) { event.preventDefault(); last.focus(); }
+      else if (!event.shiftKey && document.activeElement === last) { event.preventDefault(); first.focus(); }
+    }
+  });
+  noteForm?.addEventListener('submit', (event) => {
+    event.preventDefault();
+    const body = noteInput.value.trim();
+    if (!body || body.length > 180) { showToast('请输入 1–180 字的留言'); return; }
+    if (!viewStore) { showToast('本地存储暂不可用'); return; }
+    const from = noteAuthor.value === 'Shen' ? 'Shen' : 'Nuo';
+    const to = from === 'Nuo' ? 'Shen' : 'Nuo';
+    const result = viewStore.patch('home', { note: {
+      title: `To. ${to}`, body, localDraft: true, author: from
+    } }, { source: 'home-local-note-editor' });
+    if (!result.ok) { showToast('保存失败，请检查浏览器存储空间'); return; }
+    closeNote();
+    showToast('留言已保存在这台设备');
+  });
+  document.addEventListener('visibilitychange', () => {
+    if (!document.hidden) {
+      renderCurrentMonth();
+      if (homeView && viewStore) homeView.render(viewStore.read('home'));
+    }
+  });
+
   root.querySelectorAll('[data-room]').forEach((button) => {
     button.addEventListener('click', () => showToast(`${button.dataset.room} 尚未接入`));
   });

@@ -9,7 +9,7 @@
   <link rel="stylesheet" href="./home-finish-study.css?v=20260917-1">
   <link rel="stylesheet" href="./home-sync.css?v=20260919-4">
   <link rel="stylesheet" href="./home-hero-balance.css?v=20260921-3">
-  <link rel="stylesheet" href="./home-behavior.css?v=20260921-1">
+  <link rel="stylesheet" href="./home-behavior.css?v=20260921-2">
 </head>
 <body>
   <main class="app-shell" id="app">
@@ -36,7 +36,7 @@
           <h1 class="hero-title">Our little home.</h1>
           <p class="hero-welcome">欢迎回家，糯糯。</p>
           <p class="hero-line">今天也有一点小事，<br>想和你一起慢慢度过。</p>
-          <p class="hero-days" aria-label="相遇 256 天"><span class="hero-day-digits" aria-hidden="true">256</span><span class="hero-days-label">days together</span></p>
+          <p class="hero-days" aria-label="相遇天数"><span class="hero-day-digits" aria-hidden="true">—</span><span class="hero-days-label">days together</span></p>
         </div>
       </div>
       <button class="relationship-caption" id="calendarToggle" type="button" aria-expanded="false"><span class="caption-sign">Still becoming.</span><span class="caption-days">Our days</span><span class="calendar-mark" aria-hidden="true">⌄</span></button>
@@ -49,8 +49,8 @@
 
     <section class="home-body" aria-label="home shared life and footprints">
       <section class="message-split">
-        <article class="note-card review-note"><div class="clip" aria-hidden="true"></div><p class="note-title">To. Nuo</p><p class="note-copy">今天也想把一点东西留在这里。</p><div class="reply"><span class="reply-line"></span><p><strong>From. Shen</strong><br>我看见啦。</p></div></article>
-        <div class="message-side"><article class="mini-panel"><span>聊天统计</span><strong>128</strong><small>messages · today</small></article><article class="mini-panel placeholder-panel"><span>待决定</span><strong>…</strong><small>先只看结构</small></article></div>
+        <article class="note-card review-note"><div class="clip" aria-hidden="true"></div><p class="note-title">To. Nuo</p><p class="note-copy">今天也想把一点东西留在这里。</p><div class="reply"><span class="reply-line"></span><p><strong>From. Shen</strong><br>我看见啦。</p></div><button class="note-edit-button" id="noteEdit" type="button" aria-haspopup="dialog" aria-controls="noteDialog">写留言 ✎</button></article>
+        <div class="message-side"><article class="mini-panel"><span>聊天统计</span><strong>—</strong><small>数据待接入</small></article><article class="mini-panel placeholder-panel"><span>待决定</span><strong>…</strong><small>先只看结构</small></article></div>
       </section>
 
 
@@ -62,10 +62,23 @@
 
 
     <nav class="dock" aria-label="primary navigation"><button class="active" type="button" data-nav="Home"><span>⌂</span><b>Home</b></button><button type="button" data-nav="Chat"><span>◌</span><b>Chat</b></button><button type="button" data-nav="Mind"><span>◐</span><b>Mind</b></button><button type="button" data-nav="Memory"><span>◇</span><b>Memory</b></button><button type="button" data-nav="Detour"><span>↗</span><b>Detour</b></button></nav>
+    <div class="note-dialog-backdrop" id="noteDialog" hidden>
+      <section class="note-dialog" role="dialog" aria-modal="true" aria-labelledby="noteDialogTitle">
+        <h2 id="noteDialogTitle">留一张小纸条</h2>
+        <form id="noteForm">
+          <label for="noteAuthor">署名</label>
+          <select id="noteAuthor" name="author"><option value="Nuo">Nuo</option><option value="Shen">Shen</option></select>
+          <label for="noteInput">想留下的话</label>
+          <textarea id="noteInput" name="message" maxlength="180" rows="4" required placeholder="今天想说什么呢……"></textarea>
+          <p class="note-dialog-hint">只保存在这台设备的浏览器中，暂不会同步到另一台设备。</p>
+          <div class="note-dialog-actions"><button type="button" id="noteCancel">取消</button><button type="submit">保存留言</button></div>
+        </form>
+      </section>
+    </div>
     <p class="mock-note">Visual prototype · local mock data only</p><div class="toast" id="toast" role="status" aria-live="polite"></div>
   </main>
   <script src="./view-store.js?v=20260921-home-1"></script>
-  <script src="./home-view.js?v=20260921-home-1"></script>
-  <script src="./app.js?v=20260921-2"></script>
+  <script src="./home-view.js?v=20260921-home-2"></script>
+  <script src="./app.js?v=20260921-3"></script>
 </body>
 </html>

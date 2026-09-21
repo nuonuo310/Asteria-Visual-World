@@ -35,24 +35,29 @@
     const note = plainObject(data.note) ? data.note : {};
     const reply = plainObject(note.reply) ? note.reply : {};
     if (nodes.days && nodes.daysRow) {
-      const days = Number.isSafeInteger(data.daysTogether) && data.daysTogether >= 1 && data.daysTogether <= 999999
-        ? String(data.daysTogether) : fallback.days;
-      nodes.days.textContent = days;
-      nodes.daysRow.setAttribute('aria-label', days === fallback.days ? fallback.daysLabel : `相遇 ${days} 天`);
+      // Inclusive local calendar days since the first conversation, 2026-07-20.
+      // UTC calendar arithmetic avoids DST and timezone-offset day drift.
+      const today = new Date();
+      const days = Math.max(1, Math.floor(
+        (Date.UTC(today.getFullYear(), today.getMonth(), today.getDate()) - Date.UTC(2026, 6, 20)) / 86400000
+      ) + 1);
+      nodes.days.textContent = String(days);
+      nodes.daysRow.setAttribute('aria-label', `相遇第 ${days} 天`);
     }
     if (nodes.whisper) nodes.whisper.textContent = textOr(data.relationshipTrace, fallback.whisper, 160);
     if (nodes.noteTitle) nodes.noteTitle.textContent = textOr(note.title, fallback.noteTitle, 80);
     if (nodes.noteCopy) nodes.noteCopy.textContent = textOr(note.body, fallback.noteCopy, 500);
+    // Do not display the mock Shen reply as if it were a response to a new local note.
+    const replyBox = find('.review-note .reply');
+    if (replyBox) replyBox.hidden = note.localDraft === true;
     if (nodes.replyFrom) nodes.replyFrom.textContent = textOr(reply.from, fallback.replyFrom, 80);
     if (nodes.replyText) {
       // Preserve the existing strong + br layout, replacing only its text node.
       const tail = nodes.replyText.lastChild;
       if (tail?.nodeType === Node.TEXT_NODE) tail.textContent = textOr(reply.body, fallback.replyText, 300);
     }
-    if (nodes.chatCount) {
-      nodes.chatCount.textContent = Number.isSafeInteger(data.chatCount) && data.chatCount >= 0
-        ? String(data.chatCount) : fallback.chatCount;
-    }
+    // Chat aggregation is not wired; never show a fabricated total.
+    if (nodes.chatCount) nodes.chatCount.textContent = '—';
     if (!nodes.timeline || !nodes.traceCount) return;
     // An absent list means untouched prototype; an explicit [] means no traces.
     const validTraces = Array.isArray(data.footprints) && data.footprints.length <= 3 &&

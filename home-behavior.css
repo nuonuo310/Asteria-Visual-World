@@ -24,3 +24,37 @@
 .footprints-toggle[aria-expanded="false"]{margin-bottom:0}
 .footprint-v1:has(.v1-timeline[hidden]){padding-bottom:0!important}
 .v1-timeline[hidden]{display:none!important}
+
+/* Small functional affordance on the locked paper card; no hero or theme changes. */
+.review-note .note-edit-button{
+  position:absolute;left:18px;bottom:13px;z-index:2;
+  border:0;border-radius:14px;padding:5px 9px;
+  background:color-mix(in srgb,var(--home-card) 85%,transparent);
+  color:var(--home-ink);font:400 10px/1.2 system-ui,sans-serif;
+  cursor:pointer;
+}
+.review-note .reply[hidden]{display:none!important}
+.note-dialog-backdrop[hidden]{display:none!important}
+.note-dialog-backdrop{
+  position:fixed;inset:0;z-index:1000;display:grid;place-items:center;
+  padding:20px;background:rgba(33,25,34,.42);
+}
+.note-dialog{
+  width:min(100%,370px);max-height:90dvh;overflow:auto;
+  border:1px solid var(--home-edge);border-radius:19px;
+  background:var(--home-card-warm,#fffaf9);padding:22px;
+  box-shadow:0 20px 55px rgba(35,25,34,.18);color:var(--home-ink);
+}
+.note-dialog h2{margin:0 0 14px;font:400 20px/1.3 Georgia,serif}
+.note-dialog form{display:grid;gap:8px}
+.note-dialog label{font-size:12px}
+.note-dialog select,.note-dialog textarea{
+  width:100%;box-sizing:border-box;border:1px solid var(--home-edge);
+  border-radius:10px;padding:9px;background:rgba(255,255,255,.72);
+  color:var(--home-ink);font:14px/1.5 system-ui,sans-serif;
+}
+.note-dialog textarea{resize:vertical;min-height:100px}
+.note-dialog-hint{font:11px/1.5 system-ui,sans-serif;color:var(--home-body);margin:2px 0}
+.note-dialog-actions{display:flex;justify-content:flex-end;gap:10px;margin-top:5px}
+.note-dialog-actions button{border:1px solid var(--home-edge);border-radius:12px;padding:8px 12px;background:var(--home-card);color:var(--home-ink);font:12px system-ui,sans-serif}
+.note-dialog-actions button[type="submit"]{background:var(--home-accent);color:#fff}
