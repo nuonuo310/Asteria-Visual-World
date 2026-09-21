@@ -66,7 +66,7 @@
     const validEvents = !!(feed && feed.date === localDate() && Array.isArray(feed.events)
       && feed.events.length <= 3 && feed.events.every(event =>
         plainObject(event) && categories.includes(event.category)
-        && validText(event.time, 5) && /^([01]\\d|2[0-3]):[0-5]\\d$/.test(event.time)
+        && validText(event.time, 5) && /^([01]\d|2[0-3]):[0-5]\d$/.test(event.time)
         && validText(event.text, 180) && validText(event.source, 120)
         && event.source !== 'home-local-footprints'));
     const events = validEvents ? feed.events : [];
@@ -87,9 +87,16 @@
         description.textContent = event.text;
         copy.append(time, separator, description);
       } else {
+        const time = document.createElement('time');
+        time.textContent = '—:—';
+        time.setAttribute('aria-label', '暂无事件时间');
+        const separator = document.createElement('span');
+        separator.className = 'trace-separator';
+        separator.textContent = ' · ';
+        separator.setAttribute('aria-hidden', 'true');
         const placeholder = document.createElement('span');
         placeholder.textContent = '等待今天的真实记录';
-        copy.appendChild(placeholder);
+        copy.append(time, separator, placeholder);
       }
     }
     nodes.traceCount.firstChild.textContent = `${events.length} traces `;

@@ -72,5 +72,21 @@
 }
 .footprint-v1 .v1-timeline article>i{left:-25px;top:27px;width:10px;height:10px}
 .footprint-v1 .v1-timeline:before{top:17px;bottom:18px}
-.footprint-v1 .v1-timeline article.is-active{border-color:var(--home-accent)!important}
-.footprint-v1 .v1-timeline article.is-empty .trace-copy p{color:var(--home-muted);font-style:italic}
+/* Selected: subtle rosy edge, never a saturated outline. */
+.footprint-v1 .v1-timeline article.is-active{
+  border-color:color-mix(in srgb,var(--home-accent-strong) 25%,var(--home-edge) 75%)!important;
+}
+.footprint-v1 .v1-timeline article.is-empty .trace-copy p{
+  color:var(--home-body)!important;font-style:normal!important;
+}
+.footprint-v1 .v1-timeline .trace-copy p,
+.footprint-v1 .v1-timeline .trace-copy p span{
+  font-style:normal!important;
+}
+.footprint-v1 .v1-timeline .trace-copy p time{
+  color:var(--home-muted)!important;font:400 .76em/1.6 system-ui,sans-serif;
+  letter-spacing:0;white-space:nowrap;
+}
+.footprint-v1 .v1-timeline .trace-copy p .trace-separator{
+  color:var(--home-muted)!important;padding:0 .4em;font-style:normal!important;
+}
