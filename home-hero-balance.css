@@ -145,7 +145,7 @@
   padding:7px 5px 15px 14px!important;
   align-items:center!important;
   text-align:center!important;
-  transform:translateX(4px);
+  transform:translateX(-6px);
 }
 .hero-kicker{
   margin:0 0 8px!important;
@@ -174,7 +174,7 @@
   white-space:nowrap;
 }
 @media(max-width:370px){
-  .home-hero-copy{width:46%!important;padding:6px 4px 13px 11px!important;transform:translateX(2px)}
+  .home-hero-copy{width:46%!important;padding:6px 4px 13px 11px!important;transform:translateX(-7px)}
   .hero-kicker{font-size:11px!important}
   .hero-day-digits{font-size:18px!important}
   .hero-days{gap:5px!important}
