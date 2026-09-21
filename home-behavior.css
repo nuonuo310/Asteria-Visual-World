@@ -59,40 +59,18 @@
 .note-dialog-actions button{border:1px solid var(--home-edge);border-radius:12px;padding:8px 12px;background:var(--home-card);color:var(--home-ink);font:12px system-ui,sans-serif}
 .note-dialog-actions button[type="submit"]{background:var(--home-accent);color:#fff}
 
-/* Today footprints: controls only, retaining the locked timeline surface. */
-.footprints-actions[hidden],.footprint-dialog-backdrop[hidden]{display:none!important}
-.footprints-actions{padding:4px 15px 12px}
-.footprints-actions button{
-  border:1px solid var(--home-edge);border-radius:14px;
-  padding:7px 12px;background:var(--home-card);color:var(--home-ink);
-  font:400 11px/1.3 system-ui,sans-serif;cursor:pointer;
-}
-.footprints-actions button:disabled{opacity:.4;cursor:default}
-.footprints-empty{margin:8px 16px 12px;color:var(--home-body);font:12px/1.5 system-ui,sans-serif}
-.footprint-dialog-backdrop{
-  position:fixed;inset:0;z-index:1000;display:grid;place-items:center;
-  padding:20px;background:rgba(33,25,34,.42)
-}
-.footprint-dialog-backdrop .note-dialog input{
-  width:100%;box-sizing:border-box;border:1px solid var(--home-edge);
-  border-radius:10px;padding:9px;background:rgba(255,255,255,.72);
-  color:var(--home-ink);font:14px/1.5 system-ui,sans-serif
-}
 
-/* Restore the four-category Home footprint concept without mock or manual events. */
+/* Locked four-card Today timeline: four permanent paper cards and left dots. */
 #footprintsPanel[hidden]{display:none!important}
-.footprints-categories{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:6px 10px;margin:0 8px 13px 24px}
-.footprints-categories span{font:400 10px/1.35 system-ui,sans-serif;color:var(--home-body);border-bottom:1px solid var(--home-edge);padding:4px 0 6px}
-.footprint-v1 .v1-timeline{margin:0 7px 0 9px;padding-left:17px}
+.footprint-v1 .v1-timeline{margin:0;padding:0 0 2px 20px}
 .footprint-v1 .v1-timeline article{
-  min-height:0!important;margin:0 0 7px!important;padding:9px 8px 10px 12px!important;
-  border:0!important;border-radius:0!important;box-shadow:none!important;
-  background:transparent!important;
+  position:relative;min-height:92px!important;margin:0 0 12px!important;
+  padding:17px 17px 15px!important;border:1px solid var(--home-edge)!important;
+  border-radius:21px!important;
+  background:radial-gradient(74% 100% at 95% 8%,color-mix(in srgb,var(--home-card-accent) 54%,transparent),transparent 62%),linear-gradient(145deg,rgba(255,255,255,.78),color-mix(in srgb,var(--home-card-warm) 86%,white))!important;
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.86),0 2px 4px color-mix(in srgb,var(--home-contact) 72%,transparent),0 10px 22px color-mix(in srgb,var(--home-ambient) 72%,transparent)!important;
 }
-.footprint-v1 .v1-timeline article>i{left:-22px;top:15px;width:7px;height:7px}
-.footprint-v1 .v1-timeline article:before{display:none!important}
-.footprint-v1 .v1-timeline:before{top:13px;bottom:12px;opacity:.55}
-.footprint-v1 .v1-timeline .trace-copy{padding-right:0}
-.footprint-v1 .v1-timeline .trace-copy p{margin-top:5px!important}
-.footprint-v1 .v1-timeline article.is-active{background:color-mix(in srgb,var(--home-accent) 4%,transparent)!important}
-.footprint-v1 .footprints-empty{margin:5px 8px 8px;color:var(--home-muted)}
+.footprint-v1 .v1-timeline article>i{left:-25px;top:27px;width:10px;height:10px}
+.footprint-v1 .v1-timeline:before{top:17px;bottom:18px}
+.footprint-v1 .v1-timeline article.is-active{border-color:var(--home-accent)!important}
+.footprint-v1 .v1-timeline article.is-empty .trace-copy p{color:var(--home-muted);font-style:italic}

@@ -59,54 +59,40 @@
     // Chat aggregation is not wired; never show a fabricated total.
     if (nodes.chatCount) nodes.chatCount.textContent = '—';
     if (!nodes.timeline || !nodes.traceCount) return;
-    // Only show a dated, source-backed feed supplied by an authorized producer.
-    // Ignore legacy manually entered footprints without deleting their local data.
+    // Four permanent visual modules, one per category. Only verified dated
+    // feed events may replace the neutral placeholders; never invent daily life.
+    const categories = ['together', 'forYou', 'littleOnes', 'broughtHome'];
     const feed = plainObject(data.todayFeed) ? data.todayFeed : null;
-    const categories = Object.freeze({
-      together: 'Together · 我们',
-      forYou: 'For You · 为你',
-      littleOnes: 'Little Ones · 小家伙们',
-      broughtHome: 'Brought Home · 带回家'
-    });
-    const validEvents = feed && feed.date === localDate() && Array.isArray(feed.events)
+    const validEvents = !!(feed && feed.date === localDate() && Array.isArray(feed.events)
       && feed.events.length <= 3 && feed.events.every(event =>
-        plainObject(event) && Object.hasOwn(categories, event.category)
+        plainObject(event) && categories.includes(event.category)
         && validText(event.time, 5) && /^([01]\\d|2[0-3]):[0-5]\\d$/.test(event.time)
         && validText(event.text, 180) && validText(event.source, 120)
-        && event.source !== 'home-local-footprints');
+        && event.source !== 'home-local-footprints'));
     const events = validEvents ? feed.events : [];
-    const fragment = document.createDocumentFragment();
-    for (const event of events) {
-      const item = document.createElement('article');
-      item.setAttribute('data-footprint', '');
-      item.setAttribute('role', 'button');
-      item.setAttribute('tabindex', '0');
-      item.setAttribute('aria-pressed', 'false');
-      const dot = document.createElement('i');
-      dot.setAttribute('aria-hidden', 'true');
-      const copy = document.createElement('div');
-      copy.className = 'trace-copy';
-      const label = document.createElement('em');
-      label.textContent = categories[event.category];
-      const detail = document.createElement('p');
-      const time = document.createElement('time');
-      time.textContent = event.time;
-      const description = document.createElement('span');
-      description.textContent = event.text;
-      detail.append(time, description);
-      copy.append(label, detail);
-      item.append(dot, copy);
-      fragment.appendChild(item);
+    for (const category of categories) {
+      const card = nodes.timeline.querySelector(`[data-category="${category}"]`);
+      if (!card) continue;
+      const event = events.find(entry => entry.category === category);
+      const copy = card.querySelector('.trace-copy p');
+      if (!copy) continue;
+      copy.replaceChildren();
+      card.classList.toggle('is-empty', !event);
+      if (event) {
+        const time = document.createElement('time');
+        time.textContent = event.time;
+        const separator = document.createElement('span');
+        separator.textContent = ' · ';
+        const description = document.createElement('span');
+        description.textContent = event.text;
+        copy.append(time, separator, description);
+      } else {
+        const placeholder = document.createElement('span');
+        placeholder.textContent = '等待今天的真实记录';
+        copy.appendChild(placeholder);
+      }
     }
-    if (!events.length) {
-      const empty = document.createElement('p');
-      empty.className = 'footprints-empty';
-      empty.textContent = '真实生活数据尚未接入，接入后会自动整理今天的小事。';
-      fragment.appendChild(empty);
-    }
-    nodes.timeline.replaceChildren(fragment);
-    nodes.traceCount.firstChild.textContent = validEvents
-      ? `${events.length} traces ` : '待接入 ';
+    nodes.traceCount.firstChild.textContent = `${events.length} traces `;
     nodes.footprints?.classList.remove('has-selection');
   }
 
