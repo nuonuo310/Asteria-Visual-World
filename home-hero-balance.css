@@ -137,3 +137,46 @@
   .hero-line{font-size:9px!important}
   .hero-day-digits{font-size:17px!important}
 }
+
+/* 2026-09-21 Home hero type refinement: center the right-side copy, soften the
+   eyebrow, and use one naturally italic number instead of rotated glyphs. */
+.home-hero-copy{
+  width:45%!important;
+  padding:7px 5px 15px 14px!important;
+  align-items:center!important;
+  text-align:center!important;
+  transform:translateX(4px);
+}
+.hero-kicker{
+  margin:0 0 8px!important;
+  font:italic 400 12px/1.2 "Palatino Linotype",Palatino,"Book Antiqua",Georgia,serif!important;
+  letter-spacing:.015em!important;
+  text-transform:none!important;
+  color:var(--home-accent)!important;
+  transform:translateY(-3px);
+}
+.hero-title{
+  margin:0 0 10px!important;
+  font-family:"Palatino Linotype",Palatino,"Book Antiqua",Georgia,serif!important;
+  letter-spacing:-.025em!important;
+}
+.hero-welcome,.hero-line{width:100%;text-align:center!important}
+.hero-days{
+  width:100%;
+  justify-content:center!important;
+  gap:8px!important;
+}
+.hero-day-digits{
+  display:inline-block!important;
+  font:italic 400 20px/1.1 "Palatino Linotype",Palatino,"Book Antiqua",Georgia,serif!important;
+  letter-spacing:.065em!important;
+  transform:none!important;
+  white-space:nowrap;
+}
+@media(max-width:370px){
+  .home-hero-copy{width:46%!important;padding:6px 4px 13px 11px!important;transform:translateX(2px)}
+  .hero-kicker{font-size:11px!important}
+  .hero-day-digits{font-size:18px!important}
+  .hero-days{gap:5px!important}
+  .hero-days-label{font-size:8px!important}
+}
