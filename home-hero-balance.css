@@ -44,3 +44,96 @@
   .hero-kicker{font-size:14px !important;margin-bottom:10px !important}
   .hero-line{margin-top:9px !important;font-size:10px !important}
 }
+
+/* 2026-09-21 approved Home hero: leftward enlarged art, quiet copy and small staggered numerals.
+   Keep the approved image, calendar and inset divider unchanged. */
+.home-hero{height:206px!important}
+.home-hero-art{
+  left:0!important;
+  top:7px!important;
+  bottom:20px!important;
+  width:55%!important;
+  height:auto!important;
+  align-items:center!important;
+}
+.home-hero-art img{
+  width:166%!important;
+  max-width:none!important;
+  height:100%!important;
+  object-fit:contain!important;
+  object-position:left center!important;
+}
+.home-hero-copy{
+  right:0!important;
+  left:auto!important;
+  width:45%!important;
+  height:100%!important;
+  padding:13px 13px 16px 3px!important;
+  display:flex!important;
+  flex-direction:column!important;
+  align-items:flex-start!important;
+  justify-content:center!important;
+  text-align:left!important;
+  gap:0!important;
+}
+.hero-kicker{
+  margin:0 0 7px!important;
+  font:500 9px/1.2 Georgia,serif!important;
+  letter-spacing:.095em!important;
+  color:var(--home-accent)!important;
+}
+.hero-title{
+  margin:0 0 10px!important;
+  font:400 clamp(16px,4.6vw,21px)/1.13 Georgia,"Times New Roman",serif!important;
+  letter-spacing:-.035em!important;
+  white-space:nowrap;
+  color:var(--home-ink)!important;
+}
+.hero-welcome{
+  margin:0 0 6px!important;
+  font:400 11px/1.45 "Noto Serif SC","Songti SC",serif!important;
+  color:var(--home-body)!important;
+}
+.hero-line{
+  max-width:none!important;
+  margin:0 0 10px!important;
+  font:400 10px/1.55 "Noto Serif SC","Songti SC",serif!important;
+  color:var(--home-body)!important;
+}
+.hero-days{
+  display:flex!important;
+  align-items:baseline!important;
+  gap:6px!important;
+  margin:0!important;
+  color:var(--home-accent-strong)!important;
+}
+.hero-day-digits{
+  display:inline-flex;
+  align-items:baseline;
+  gap:0;
+  font-family:Georgia,"Times New Roman",serif;
+  font-size:19px;
+  font-weight:400;
+  line-height:1;
+  letter-spacing:-.09em;
+  color:var(--home-accent)!important;
+}
+.hero-day-digits span{display:inline-block;font-weight:400}
+.hero-day-digits span:nth-child(1){transform:translateY(-1px) rotate(-6deg)}
+.hero-day-digits span:nth-child(2){transform:translateY(2px) rotate(4deg)}
+.hero-day-digits span:nth-child(3){transform:translateY(-1px) rotate(-4deg)}
+.hero-days-label{
+  font:400 9px/1.2 Georgia,serif!important;
+  letter-spacing:.02em;
+  color:var(--home-muted)!important;
+}
+@media(max-width:370px){
+  .home-hero{height:198px!important}
+  .home-hero-art{left:-2px!important;top:9px!important;bottom:20px!important;width:55%!important;height:auto!important}
+  .home-hero-art img{width:164%!important}
+  .home-hero-copy{width:46%!important;padding:10px 9px 13px 1px!important}
+  .hero-title{font-size:16px!important}
+  .hero-welcome{font-size:10px!important}
+  .hero-line{font-size:9px!important}
+  .hero-day-digits{font-size:17px!important}
+}
