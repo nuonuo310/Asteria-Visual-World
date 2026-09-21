@@ -9,6 +9,7 @@
   <link rel="stylesheet" href="./home-finish-study.css?v=20260917-1">
   <link rel="stylesheet" href="./home-sync.css?v=20260919-4">
   <link rel="stylesheet" href="./home-hero-balance.css?v=20260921-3">
+  <link rel="stylesheet" href="./home-behavior.css?v=20260921-1">
 </head>
 <body>
   <main class="app-shell" id="app">
@@ -39,7 +40,7 @@
         </div>
       </div>
       <button class="relationship-caption" id="calendarToggle" type="button" aria-expanded="false"><span class="caption-sign">Still becoming.</span><span class="caption-days">Our days</span><span class="calendar-mark" aria-hidden="true">⌄</span></button>
-      <div class="month-panel" id="monthPanel" hidden><div class="month-panel-head"><strong>September 2026</strong><button type="button" id="calendarClose" aria-label="收起月历">收起</button></div><div class="month-grid" aria-label="month calendar mock"><span class="weekday">一</span><span class="weekday">二</span><span class="weekday">三</span><span class="weekday">四</span><span class="weekday">五</span><span class="weekday">六</span><span class="weekday">日</span><i class="muted">31</i><i>1</i><i>2</i><i>3</i><i>4</i><i>5</i><i>6</i><i>7</i><i>8</i><i>9</i><i>10</i><i>11</i><i>12</i><i>13</i><i>14</i><i class="selected">15</i><i>16</i><i>17</i><i>18</i><i>19</i><i>20</i><i>21</i><i>22</i><i>23</i><i>24</i><i>25</i><i>26</i><i>27</i><i>28</i><i>29</i><i>30</i><i class="muted">1</i><i class="muted">2</i><i class="muted">3</i><i class="muted">4</i></div></div>
+      <div class="month-panel" id="monthPanel" hidden><div class="month-panel-head"><strong id="calendarMonthLabel">September 2026</strong><button type="button" id="calendarClose" aria-label="收起月历">收起</button></div><div class="month-grid" aria-label="当前月份日历"><span class="weekday">一</span><span class="weekday">二</span><span class="weekday">三</span><span class="weekday">四</span><span class="weekday">五</span><span class="weekday">六</span><span class="weekday">日</span><i class="muted">31</i><i>1</i><i>2</i><i>3</i><i>4</i><i>5</i><i>6</i><i>7</i><i>8</i><i>9</i><i>10</i><i>11</i><i>12</i><i>13</i><i>14</i><i class="selected">15</i><i>16</i><i>17</i><i>18</i><i>19</i><i>20</i><i>21</i><i>22</i><i>23</i><i>24</i><i>25</i><i>26</i><i>27</i><i>28</i><i>29</i><i>30</i><i class="muted">1</i><i class="muted">2</i><i class="muted">3</i><i class="muted">4</i></div></div>
     </section>
 
 
@@ -56,13 +57,13 @@
       <nav class="room-row life-strip" aria-label="life entries">
         <button type="button" data-room="Shen"><span class="room-icon">S</span><span>Shen</span><i></i></button><button type="button" data-room="Nuo"><span class="room-icon">N</span><span>Nuo</span><i></i></button><button type="button" data-room="Letters"><span class="room-icon">✉</span><span>Letters</span><i class="notice"></i></button><button type="button" data-room="Diary"><span class="room-icon">▤</span><span>Diary</span><i></i></button><button type="button" data-room="Studio"><span class="room-icon">✦</span><span>Studio</span><i></i></button>
       </nav>
-      <section class="footprints footprint-v1" aria-label="footprints timeline"><div class="footprints-head"><p class="footprints-kicker"><span class="footprints-spark" aria-hidden="true">✦</span>Today, together</p><span class="footprints-count">4 traces</span></div><div class="v1-timeline"><article data-footprint role="button" tabindex="0" aria-pressed="false"><i aria-hidden="true"></i><div class="trace-copy"><em>Together</em><p><time>20:18</time><span>一起听了会儿歌，又把 Asteria 的一个坑填上了。</span></p></div></article><article data-footprint role="button" tabindex="0" aria-pressed="false"><i aria-hidden="true"></i><div class="trace-copy"><em>For You</em><p><time>18:42</time><span>沈述给糯糯留下一点只属于今天的小东西。</span></p></div></article><article data-footprint role="button" tabindex="0" aria-pressed="false"><i aria-hidden="true"></i><div class="trace-copy"><em>Little Ones</em><p><time>16:10</time><span>沈小述今天又在桌面上耍赖，狗狗们也被惦记着。</span></p></div></article><article data-footprint role="button" tabindex="0" aria-pressed="false"><i aria-hidden="true"></i><div class="trace-copy"><em>Brought Home</em><p><time>13:26</time><span>糯糯带回一批新的排版灵感，我们一起挑。</span></p></div></article></div></section>
+      <section class="footprints footprint-v1" aria-label="footprints timeline"><button class="footprints-head footprints-toggle" id="footprintsToggle" type="button" aria-expanded="false" aria-controls="footprintsTimeline"><span class="footprints-kicker"><span class="footprints-spark" aria-hidden="true">✦</span>Today, together</span><span class="footprints-count">4 traces <span class="footprints-chevron" aria-hidden="true">⌄</span></span></button><div class="v1-timeline" id="footprintsTimeline" hidden><article data-footprint role="button" tabindex="0" aria-pressed="false"><i aria-hidden="true"></i><div class="trace-copy"><em>Together</em><p><time>20:18</time><span>一起听了会儿歌，又把 Asteria 的一个坑填上了。</span></p></div></article><article data-footprint role="button" tabindex="0" aria-pressed="false"><i aria-hidden="true"></i><div class="trace-copy"><em>For You</em><p><time>18:42</time><span>沈述给糯糯留下一点只属于今天的小东西。</span></p></div></article><article data-footprint role="button" tabindex="0" aria-pressed="false"><i aria-hidden="true"></i><div class="trace-copy"><em>Little Ones</em><p><time>16:10</time><span>沈小述今天又在桌面上耍赖，狗狗们也被惦记着。</span></p></div></article><article data-footprint role="button" tabindex="0" aria-pressed="false"><i aria-hidden="true"></i><div class="trace-copy"><em>Brought Home</em><p><time>13:26</time><span>糯糯带回一批新的排版灵感，我们一起挑。</span></p></div></article></div></section>
     </section>
 
 
     <nav class="dock" aria-label="primary navigation"><button class="active" type="button" data-nav="Home"><span>⌂</span><b>Home</b></button><button type="button" data-nav="Chat"><span>◌</span><b>Chat</b></button><button type="button" data-nav="Mind"><span>◐</span><b>Mind</b></button><button type="button" data-nav="Memory"><span>◇</span><b>Memory</b></button><button type="button" data-nav="Detour"><span>↗</span><b>Detour</b></button></nav>
     <p class="mock-note">Visual prototype · local mock data only</p><div class="toast" id="toast" role="status" aria-live="polite"></div>
   </main>
-  <script src="./app.js?v=20260919-2"></script>
+  <script src="./app.js?v=20260921-1"></script>
 </body>
 </html>

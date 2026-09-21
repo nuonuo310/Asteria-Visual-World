@@ -1,0 +1,26 @@
+/* Home behavior only: preserve the locked card, typography and theme surfaces. */
+.footprints-toggle{
+  width:calc(100% - 14px);
+  border:0;
+  background:transparent;
+  color:inherit;
+  font:inherit;
+  cursor:pointer;
+  text-align:left;
+  -webkit-tap-highlight-color:transparent;
+}
+.footprints-toggle:focus-visible{
+  outline:2px solid var(--home-accent,var(--accent));
+  outline-offset:3px;
+  border-radius:8px;
+}
+.footprints-chevron{
+  display:inline-block;
+  margin-left:4px;
+  font-size:13px;
+  transition:transform .2s ease;
+}
+.footprints-toggle[aria-expanded="true"] .footprints-chevron{transform:rotate(180deg)}
+.footprints-toggle[aria-expanded="false"]{margin-bottom:0}
+.footprint-v1:has(.v1-timeline[hidden]){padding-bottom:0!important}
+.v1-timeline[hidden]{display:none!important}

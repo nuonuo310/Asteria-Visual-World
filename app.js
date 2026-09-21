@@ -42,6 +42,62 @@
   calendarToggle.addEventListener('click', () => setCalendar(monthPanel.hidden));
   calendarClose.addEventListener('click', () => setCalendar(false));
 
+  // Render the current local month without changing the approved calendar surface.
+  // The original September markup is a fallback if JavaScript is unavailable.
+  const monthLabel = document.getElementById('calendarMonthLabel');
+  const monthGrid = monthPanel.querySelector('.month-grid');
+  function renderCurrentMonth(now = new Date()) {
+    if (!monthLabel || !monthGrid) return;
+    const year = now.getFullYear();
+    const month = now.getMonth();
+    const firstWeekday = (new Date(year, month, 1).getDay() + 6) % 7;
+    const monthLength = new Date(year, month + 1, 0).getDate();
+    const previousLength = new Date(year, month, 0).getDate();
+    const monthName = new Intl.DateTimeFormat('en', { month: 'long' }).format(now);
+    monthLabel.textContent = `${monthName} ${year}`;
+    monthGrid.replaceChildren();
+    for (const day of ['一', '二', '三', '四', '五', '六', '日']) {
+      const weekday = document.createElement('span');
+      weekday.className = 'weekday';
+      weekday.textContent = day;
+      monthGrid.appendChild(weekday);
+    }
+    // Fixed six-week grid preserves the prototype's calendar height.
+    for (let cell = 0; cell < 42; cell += 1) {
+      const day = cell - firstWeekday + 1;
+      const dateCell = document.createElement('i');
+      if (day < 1) {
+        dateCell.textContent = String(previousLength + day);
+        dateCell.className = 'muted';
+      } else if (day > monthLength) {
+        dateCell.textContent = String(day - monthLength);
+        dateCell.className = 'muted';
+      } else {
+        dateCell.textContent = String(day);
+        if (day === now.getDate()) {
+          dateCell.className = 'selected';
+          dateCell.setAttribute('aria-current', 'date');
+        }
+      }
+      monthGrid.appendChild(dateCell);
+    }
+  }
+  renderCurrentMonth();
+  calendarToggle.addEventListener('click', () => {
+    if (!monthPanel.hidden) renderCurrentMonth();
+  });
+
+  // Only expand the agreed Today footprint section on demand.
+  const footprintsToggle = document.getElementById('footprintsToggle');
+  const footprintsTimeline = document.getElementById('footprintsTimeline');
+  if (footprintsToggle && footprintsTimeline) {
+    footprintsToggle.addEventListener('click', () => {
+      const open = footprintsTimeline.hidden;
+      footprintsTimeline.hidden = !open;
+      footprintsToggle.setAttribute('aria-expanded', String(open));
+    });
+  }
+
   const footprintCards = [...root.querySelectorAll('[data-footprint]')];
   const footprints = root.querySelector('.footprint-v1');
   function toggleFootprint(card) {
