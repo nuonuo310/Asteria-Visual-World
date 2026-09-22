@@ -221,55 +221,135 @@
     viewStore.subscribe('home', renderHome);
   }
 
-  // Local-only note editor; use the existing Home view-store, never imply shared sync.
+  // Local message cards are a visual draft, not a shared inbox or a Shen runtime action.
   const noteDialog = document.getElementById('noteDialog');
   const noteForm = document.getElementById('noteForm');
   const noteEdit = document.getElementById('noteEdit');
   const noteCancel = document.getElementById('noteCancel');
   const noteInput = document.getElementById('noteInput');
   const noteAuthor = document.getElementById('noteAuthor');
+  const noteRecipient = document.getElementById('noteRecipient');
+  const historyDialog = document.getElementById('noteHistoryDialog');
+  const historyList = document.getElementById('noteHistoryList');
+  const historyClose = document.getElementById('noteHistoryClose');
+  const noteHistory = document.getElementById('noteHistory');
+  const noteCard = root.querySelector('.review-note');
+  const noteTitle = noteCard?.querySelector('.note-title');
+  const noteCopy = noteCard?.querySelector('.note-copy');
+  const noteReply = noteCard?.querySelector('.reply');
+  const MAX_CARDS = 200;
   let noteReturnFocus = null;
+  const getCards = () => {
+    const cards = viewStore?.read('home')?.messageCards;
+    return Array.isArray(cards) ? cards.filter(card => card && typeof card.body === 'string' && ['Nuo','Shen','Us'].includes(card.to) && ['Nuo','Shen'].includes(card.author)) : [];
+  };
+  function renderCards() {
+    const cards = getCards();
+    if (!cards.length) return;
+    const latest = cards[cards.length - 1];
+    noteTitle.textContent = 'To. ' + latest.to;
+    noteCopy.textContent = latest.body;
+    const reply = Array.isArray(latest.replies) ? latest.replies[latest.replies.length - 1] : null;
+    noteReply.hidden = !reply;
+    if (reply) {
+      noteReply.querySelector('strong').textContent = 'From. ' + reply.author;
+      const tail = noteReply.querySelector('p').lastChild;
+      if (tail?.nodeType === Node.TEXT_NODE) tail.textContent = reply.body;
+    }
+  }
   function closeNote() {
     noteDialog.hidden = true;
     noteReturnFocus?.focus();
   }
   noteEdit?.addEventListener('click', () => {
     noteReturnFocus = document.activeElement;
-    const saved = viewStore?.read('home');
-    const note = saved?.note;
-    noteAuthor.value = note?.localDraft && note.title === 'To. Shen' ? 'Nuo'
-      : note?.localDraft && note.title === 'To. Nuo' ? 'Shen' : 'Nuo';
-    noteInput.value = note?.localDraft && typeof note.body === 'string' ? note.body : '';
+    noteAuthor.value = 'Nuo';
+    noteRecipient.value = 'Shen';
+    noteInput.value = '';
     noteDialog.hidden = false;
     noteInput.focus();
   });
   noteCancel?.addEventListener('click', closeNote);
-  noteDialog?.addEventListener('click', (event) => {
-    if (event.target === noteDialog) closeNote();
-  });
-  noteDialog?.addEventListener('keydown', (event) => {
-    if (event.key === 'Escape') { event.preventDefault(); closeNote(); }
-    if (event.key === 'Tab') {
-      const focusable = [...noteDialog.querySelectorAll('button,textarea,select')];
-      const first = focusable[0], last = focusable[focusable.length - 1];
-      if (event.shiftKey && document.activeElement === first) { event.preventDefault(); last.focus(); }
-      else if (!event.shiftKey && document.activeElement === last) { event.preventDefault(); first.focus(); }
-    }
-  });
-  noteForm?.addEventListener('submit', (event) => {
+  noteDialog?.addEventListener('click', event => { if (event.target === noteDialog) closeNote(); });
+  noteDialog?.addEventListener('keydown', event => { if (event.key === 'Escape') closeNote(); });
+  function saveCards(cards, source) {
+    if (!viewStore) return false;
+    const result = viewStore.patch('home', { messageCards: cards }, { source });
+    if (!result.ok) showToast('保存失败，请检查浏览器存储空间');
+    return result.ok;
+  }
+  noteForm?.addEventListener('submit', event => {
     event.preventDefault();
     const body = noteInput.value.trim();
     if (!body || body.length > 180) { showToast('请输入 1–180 字的留言'); return; }
-    if (!viewStore) { showToast('本地存储暂不可用'); return; }
-    const from = noteAuthor.value === 'Shen' ? 'Shen' : 'Nuo';
-    const to = from === 'Nuo' ? 'Shen' : 'Nuo';
-    const result = viewStore.patch('home', { note: {
-      title: `To. ${to}`, body, localDraft: true, author: from
-    } }, { source: 'home-local-note-editor' });
-    if (!result.ok) { showToast('保存失败，请检查浏览器存储空间'); return; }
+    const cards = getCards();
+    if (cards.length >= MAX_CARDS) { showToast('本地留言已达上限，请先备份，暂不覆盖旧留言'); return; }
+    const card = { id: crypto.randomUUID(), author: noteAuthor.value, to: noteRecipient.value, body, createdAt: new Date().toISOString(), replies: [], readAt: null, localDraft: true };
+    if (!saveCards([...cards, card], 'home-local-message-card')) return;
+    renderCards();
     closeNote();
-    showToast('留言已保存在这台设备');
+    showToast('已保存到本机，尚未同步给对方');
   });
+  function openHistory() {
+    if (!historyDialog || !historyList) return;
+    historyList.replaceChildren();
+    const cards = getCards();
+    if (!cards.length) {
+      const empty = document.createElement('p');
+      empty.textContent = '还没有保存的留言。';
+      historyList.appendChild(empty);
+    }
+    cards.slice().reverse().forEach(card => {
+      const article = document.createElement('article');
+      article.className = 'note-history-card';
+      const title = document.createElement('strong');
+      title.textContent = 'To. ' + card.to;
+      const meta = document.createElement('small');
+      meta.textContent = 'From. ' + card.author + ' · ' + new Date(card.createdAt).toLocaleString('zh-CN');
+      const body = document.createElement('p');
+      body.textContent = card.body;
+      article.append(title, meta, body);
+      (Array.isArray(card.replies) ? card.replies : []).forEach(reply => {
+        const line = document.createElement('p');
+        line.className = 'note-history-reply';
+        line.textContent = 'From. ' + reply.author + ' · ' + reply.body;
+        article.appendChild(line);
+      });
+      const replyForm = document.createElement('form');
+      replyForm.className = 'note-reply-form';
+      const author = document.createElement('select');
+      for (const name of ['Nuo', 'Shen']) {
+        const option = document.createElement('option');
+        option.value = name; option.textContent = 'From. ' + name;
+        author.appendChild(option);
+      }
+      const input = document.createElement('textarea');
+      input.maxLength = 180; input.required = true; input.rows = 2;
+      input.placeholder = '留一句回复……';
+      const submit = document.createElement('button');
+      submit.type = 'submit'; submit.textContent = '保存回复';
+      replyForm.append(author, input, submit);
+      replyForm.addEventListener('submit', event => {
+        event.preventDefault();
+        const body = input.value.trim();
+        if (!body || body.length > 180) return;
+        const current = getCards();
+        const target = current.find(item => item.id === card.id);
+        if (!target) return;
+        target.replies = [...(Array.isArray(target.replies) ? target.replies : []), { author: author.value, body, createdAt: new Date().toISOString(), localDraft: true }];
+        if (saveCards(current, 'home-local-message-reply')) { renderCards(); openHistory(); showToast('回复已保存在本机，尚未同步'); }
+      });
+      article.appendChild(replyForm);
+      historyList.appendChild(article);
+    });
+    historyDialog.hidden = false;
+  }
+  noteHistory?.addEventListener('click', openHistory);
+  historyClose?.addEventListener('click', () => { historyDialog.hidden = true; noteHistory?.focus(); });
+  historyDialog?.addEventListener('click', event => { if (event.target === historyDialog) historyDialog.hidden = true; });
+  historyDialog?.addEventListener('keydown', event => { if (event.key === 'Escape') historyDialog.hidden = true; });
+  viewStore?.subscribe('home', renderCards);
+  renderCards();
   document.addEventListener('visibilitychange', () => {
     if (!document.hidden) {
       renderCalendar();
