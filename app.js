@@ -100,7 +100,8 @@
     const firstWeekday = (new Date(year, month, 1).getDay() + 6) % 7;
     const monthLength = new Date(year, month + 1, 0).getDate();
     const previousLength = new Date(year, month, 0).getDate();
-    for (let cell = 0; cell < 42; cell += 1) {
+    const cellCount = Math.ceil((firstWeekday + monthLength) / 7) * 7;
+    for (let cell = 0; cell < cellCount; cell += 1) {
       const day = cell - firstWeekday + 1;
       if (day < 1 || day > monthLength) {
         const filler = document.createElement('span');
@@ -132,16 +133,16 @@
       }
       button.addEventListener('click', () => {
         monthGrid.querySelectorAll('.calendar-date.is-viewed').forEach(node => node.classList.remove('is-viewed'));
-        button.classList.add('is-viewed');
         calendarDetails.replaceChildren();
+        if (!matches.length) {
+          calendarDetails.hidden = true;
+          return;
+        }
+        button.classList.add('is-viewed');
         const heading = document.createElement('strong');
         heading.textContent = `${month + 1} 月 ${day} 日`;
         calendarDetails.appendChild(heading);
-        if (!matches.length) {
-          const empty = document.createElement('p');
-          empty.textContent = '这一天暂时没有已公开的特别记录。';
-          calendarDetails.appendChild(empty);
-        } else {
+        {
           matches.forEach(event => {
             const line = document.createElement('p');
             line.textContent = `${eventSymbols[event.type]} ${eventNames[event.type]} · ${event.title}`;
