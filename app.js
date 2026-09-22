@@ -133,12 +133,12 @@
       }
       button.addEventListener('click', () => {
         monthGrid.querySelectorAll('.calendar-date.is-viewed').forEach(node => node.classList.remove('is-viewed'));
+        button.classList.add('is-viewed');
         calendarDetails.replaceChildren();
         if (!matches.length) {
           calendarDetails.hidden = true;
           return;
         }
-        button.classList.add('is-viewed');
         const heading = document.createElement('strong');
         heading.textContent = `${month + 1} 月 ${day} 日`;
         calendarDetails.appendChild(heading);
