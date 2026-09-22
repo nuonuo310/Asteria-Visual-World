@@ -134,3 +134,17 @@
   outline:none!important;
 }
 .month-grid button.calendar-date.is-viewed:focus{background:color-mix(in srgb,var(--home-accent) 19%,white)!important}
+
+/* Home note: preserve the locked card and add a restrained paper-history layer. */
+.review-note .note-history-button{position:absolute;right:16px;bottom:13px;z-index:2;border:0;background:transparent;color:var(--home-accent-strong);font:11px/1.4 system-ui,sans-serif;cursor:pointer}
+.note-history-head{display:flex;align-items:center;justify-content:space-between;gap:12px}
+.note-history-head button{border:0;background:transparent;color:var(--home-ink);font:24px/1 system-ui,sans-serif;min-width:36px;min-height:36px}
+.note-history-list{display:grid;gap:12px;margin-top:15px}
+.note-history-card{padding:15px;border:1px solid var(--home-edge);border-radius:16px;background:linear-gradient(145deg,rgba(255,255,255,.88),var(--home-card-warm,#fffaf9));box-shadow:0 4px 12px rgba(70,38,50,.04)}
+.note-history-card>strong{display:block;font:italic 19px/1.4 Georgia,serif}
+.note-history-card>small{display:block;color:var(--home-body);font:10px/1.6 system-ui,sans-serif}
+.note-history-card>p{white-space:pre-wrap;overflow-wrap:anywhere;font:13px/1.65 system-ui,sans-serif}
+.note-history-card .note-history-reply{padding:8px 10px;border-left:2px solid var(--home-edge);background:rgba(255,255,255,.5)}
+.note-reply-form{display:grid;gap:7px;margin-top:12px}
+.note-reply-form select,.note-reply-form textarea{width:100%;box-sizing:border-box;border:1px solid var(--home-edge);border-radius:9px;padding:8px;background:rgba(255,255,255,.75);color:var(--home-ink);font:12px/1.5 system-ui,sans-serif}
+.note-reply-form button{justify-self:end;border:1px solid var(--home-edge);border-radius:9px;padding:7px 12px;background:var(--home-card);color:var(--home-ink);font:12px system-ui,sans-serif}
