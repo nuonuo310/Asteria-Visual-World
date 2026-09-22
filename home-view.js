@@ -32,8 +32,11 @@
 
   function render(payload) {
     const data = plainObject(payload) ? payload : {};
-    const note = plainObject(data.note) ? data.note : {};
-    const reply = plainObject(note.reply) ? note.reply : {};
+    const cards = Array.isArray(data.messageCards) ? data.messageCards : [];
+    const latest = cards.length ? cards[cards.length - 1] : null;
+    const note = latest ? { title: 'To. ' + latest.to, body: latest.body, localDraft: true } : plainObject(data.note) ? data.note : {};
+    const latestReply = latest && Array.isArray(latest.replies) ? latest.replies[latest.replies.length - 1] : null;
+    const reply = latestReply ? { from: 'From. ' + latestReply.author, body: latestReply.body } : plainObject(note.reply) ? note.reply : {};
     if (nodes.days && nodes.daysRow) {
       // Inclusive local calendar days since the first conversation, 2026-07-20.
       // UTC calendar arithmetic avoids DST and timezone-offset day drift.
@@ -48,7 +51,7 @@
     if (nodes.noteCopy) nodes.noteCopy.textContent = textOr(note.body, fallback.noteCopy, 500);
     // Do not display the mock Shen reply as if it were a response to a new local note.
     const replyBox = find('.review-note .reply');
-    if (replyBox) replyBox.hidden = note.localDraft === true || (Array.isArray(data.messageCards) && data.messageCards.length > 0);
+    if (replyBox) replyBox.hidden = latest ? !latestReply : note.localDraft === true;
     if (nodes.replyFrom) nodes.replyFrom.textContent = textOr(reply.from, fallback.replyFrom, 80);
     if (nodes.replyText) {
       // Preserve the existing strong + br layout, replacing only its text node.
