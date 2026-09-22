@@ -124,3 +124,13 @@
 .calendar-reminder{margin:5px 12px 0;color:var(--home-body);font:11px/1.5 system-ui,sans-serif}
 .calendar-reminder:empty{display:none}
 .hero-days.is-anniversary:after{content:'✦';display:inline-block;margin-left:5px;color:var(--home-accent);font-size:10px;filter:drop-shadow(0 0 4px var(--home-accent))}
+
+/* Persistent date selection: stronger than the legacy .selected rules. */
+.month-grid button.calendar-date.is-viewed,
+.month-grid button.calendar-date.is-viewed.selected{
+  background:color-mix(in srgb,var(--home-accent) 19%,white)!important;
+  color:var(--home-accent-strong,var(--home-accent))!important;
+  box-shadow:inset 0 0 0 1px color-mix(in srgb,var(--home-accent) 52%,transparent)!important;
+  outline:none!important;
+}
+.month-grid button.calendar-date.is-viewed:focus{background:color-mix(in srgb,var(--home-accent) 19%,white)!important}
