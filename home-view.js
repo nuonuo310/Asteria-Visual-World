@@ -37,10 +37,9 @@
     if (nodes.days && nodes.daysRow) {
       // Inclusive local calendar days since the first conversation, 2026-07-20.
       // UTC calendar arithmetic avoids DST and timezone-offset day drift.
-      const today = new Date();
-      const days = Math.max(1, Math.floor(
-        (Date.UTC(today.getFullYear(), today.getMonth(), today.getDate()) - Date.UTC(2026, 6, 20)) / 86400000
-      ) + 1);
+      const parts = new Intl.DateTimeFormat('en-CA', { timeZone: 'Asia/Shanghai', year: 'numeric', month: '2-digit', day: '2-digit' }).formatToParts(new Date());
+      const value = type => Number(parts.find(part => part.type === type).value);
+      const days = Math.max(1, Math.floor((Date.UTC(value('year'), value('month') - 1, value('day')) - Date.UTC(2026, 6, 20)) / 86400000) + 1);
       nodes.days.textContent = String(days);
       nodes.daysRow.setAttribute('aria-label', `相遇第 ${days} 天`);
     }
@@ -49,7 +48,7 @@
     if (nodes.noteCopy) nodes.noteCopy.textContent = textOr(note.body, fallback.noteCopy, 500);
     // Do not display the mock Shen reply as if it were a response to a new local note.
     const replyBox = find('.review-note .reply');
-    if (replyBox) replyBox.hidden = note.localDraft === true;
+    if (replyBox) replyBox.hidden = note.localDraft === true || (Array.isArray(data.messageCards) && data.messageCards.length > 0);
     if (nodes.replyFrom) nodes.replyFrom.textContent = textOr(reply.from, fallback.replyFrom, 80);
     if (nodes.replyText) {
       // Preserve the existing strong + br layout, replacing only its text node.
