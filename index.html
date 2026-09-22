@@ -9,7 +9,7 @@
   <link rel="stylesheet" href="./home-finish-study.css?v=20260917-1">
   <link rel="stylesheet" href="./home-sync.css?v=20260919-4">
   <link rel="stylesheet" href="./home-hero-balance.css?v=20260921-3">
-  <link rel="stylesheet" href="./home-behavior.css?v=20260922-calendar-3">
+  <link rel="stylesheet" href="./home-behavior.css?v=20260923-note-1">
 </head>
 <body>
   <main class="app-shell" id="app">
@@ -68,18 +68,19 @@
         <form id="noteForm">
           <label for="noteAuthor">署名</label>
           <select id="noteAuthor" name="author"><option value="Nuo">Nuo</option><option value="Shen">Shen</option></select>
-          <label for="noteInput">想留下的话</label>
+          <label for="noteRecipient">写给谁</label><select id="noteRecipient"><option value="Nuo">To. Nuo</option><option value="Shen">To. Shen</option><option value="Us">To. Us</option></select><label for="noteInput">想留下的话</label>
           <textarea id="noteInput" name="message" maxlength="180" rows="4" required placeholder="今天想说什么呢……"></textarea>
           <p class="note-dialog-hint">只保存在这台设备的浏览器中，暂不会同步到另一台设备。</p>
           <div class="note-dialog-actions"><button type="button" id="noteCancel">取消</button><button type="submit">保存留言</button></div>
         </form>
       </section>
     </div>
+    <div class="note-dialog-backdrop" id="noteHistoryDialog" hidden><section class="note-dialog note-history-dialog" role="dialog" aria-modal="true" aria-labelledby="noteHistoryTitle"><div class="note-history-head"><h2 id="noteHistoryTitle">我们的留言</h2><button id="noteHistoryClose" type="button" aria-label="关闭留言历史">×</button></div><p class="note-dialog-hint">当前仅保存在这台设备；尚未同步给对方，也不代表对方已读。</p><div id="noteHistoryList" class="note-history-list"></div></section></div>
     <p class="mock-note">Visual prototype · local mock data only</p><div class="toast" id="toast" role="status" aria-live="polite"></div>
   </main>
   <script src="./view-store.js?v=20260921-home-1"></script>
-  <script src="./home-view.js?v=20260921-home-7"></script>
+  <script src="./home-view.js?v=20260923-note-1"></script>
   <script src="./wishes-store.js?v=20260921-1"></script>
-  <script src="./app.js?v=20260922-calendar-2"></script>
+  <script src="./app.js?v=20260923-note-1"></script>
 </body>
 </html>
