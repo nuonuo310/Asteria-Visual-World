@@ -42,19 +42,54 @@
   calendarToggle.addEventListener('click', () => setCalendar(monthPanel.hidden));
   calendarClose.addEventListener('click', () => setCalendar(false));
 
-  // Render the current local month without changing the approved calendar surface.
-  // The original September markup is a fallback if JavaScript is unavailable.
+  // Calendar presentation only. Event sources must provide approved, public records.
   const monthLabel = document.getElementById('calendarMonthLabel');
   const monthGrid = monthPanel.querySelector('.month-grid');
-  function renderCurrentMonth(now = new Date()) {
+  const monthPrevious = document.getElementById('calendarPrevious');
+  const monthNext = document.getElementById('calendarNext');
+  const calendarDetails = document.getElementById('calendarDetails');
+  const calendarReminder = document.getElementById('calendarReminder');
+  const heroDays = root.querySelector('.hero-days');
+  const calendarToday = () => new Date();
+  let displayedMonth = new Date(calendarToday().getFullYear(), calendarToday().getMonth(), 1);
+  const pad = n => String(n).padStart(2, '0');
+  const dateKey = (year, month, day) => `${year}-${pad(month + 1)}-${pad(day)}`;
+  const dayDistance = (from, to) => Math.round((Date.UTC(to.getFullYear(), to.getMonth(), to.getDate()) - Date.UTC(from.getFullYear(), from.getMonth(), from.getDate())) / 86400000);
+  const validEvent = event => event && typeof event === 'object'
+    && /^\d{4}-\d{2}-\d{2}$/.test(event.date)
+    && Number.isFinite(Date.parse(event.date + 'T00:00:00'))
+    && typeof event.title === 'string' && event.title.trim()
+    && ['anniversary', 'birthday', 'letter', 'wish', 'special'].includes(event.type)
+    && event.public === true && event.available !== false;
+  // Other modules may publish approved event snapshots; never infer visibility from a title.
+  function approvedEvents() {
+    const source = window.AsteriaHomeCalendarEvents;
+    const records = typeof source?.list === 'function' ? source.list() : [];
+    return Array.isArray(records) ? records.filter(validEvent) : [];
+  }
+  const eventSymbols = { anniversary: '✦', birthday: '♡', letter: '✉', wish: '◇', special: '✧' };
+  const eventNames = { anniversary: '纪念日', birthday: '生日', letter: '信件', wish: '愿望', special: '特别内容' };
+  function renderReminder(events, today) {
+    if (!calendarReminder) return;
+    const upcoming = events.map(event => {
+      const [y, m, d] = event.date.split('-').map(Number);
+      return { event, distance: dayDistance(today, new Date(y, m - 1, d)) };
+    }).filter(item => item.distance >= 0 && item.distance <= 3)
+      .sort((a, b) => a.distance - b.distance);
+    const next = upcoming[0];
+    calendarReminder.textContent = next ? (next.distance === 0
+      ? `今天 · ${next.event.title}`
+      : `${next.distance} 天后 · ${next.event.title}`) : '';
+    if (heroDays) heroDays.classList.toggle('is-anniversary', events.some(event =>
+      event.type === 'anniversary' && event.date === dateKey(today.getFullYear(), today.getMonth(), today.getDate())));
+  }
+  function renderCalendar() {
     if (!monthLabel || !monthGrid) return;
-    const year = now.getFullYear();
-    const month = now.getMonth();
-    const firstWeekday = (new Date(year, month, 1).getDay() + 6) % 7;
-    const monthLength = new Date(year, month + 1, 0).getDate();
-    const previousLength = new Date(year, month, 0).getDate();
-    const monthName = new Intl.DateTimeFormat('en', { month: 'long' }).format(now);
-    monthLabel.textContent = `${monthName} ${year}`;
+    const today = calendarToday();
+    const year = displayedMonth.getFullYear();
+    const month = displayedMonth.getMonth();
+    const events = approvedEvents();
+    monthLabel.textContent = new Intl.DateTimeFormat('en', { month: 'long', year: 'numeric' }).format(displayedMonth);
     monthGrid.replaceChildren();
     for (const day of ['一', '二', '三', '四', '五', '六', '日']) {
       const weekday = document.createElement('span');
@@ -62,30 +97,77 @@
       weekday.textContent = day;
       monthGrid.appendChild(weekday);
     }
-    // Fixed six-week grid preserves the prototype's calendar height.
+    const firstWeekday = (new Date(year, month, 1).getDay() + 6) % 7;
+    const monthLength = new Date(year, month + 1, 0).getDate();
+    const previousLength = new Date(year, month, 0).getDate();
     for (let cell = 0; cell < 42; cell += 1) {
       const day = cell - firstWeekday + 1;
-      const dateCell = document.createElement('i');
-      if (day < 1) {
-        dateCell.textContent = String(previousLength + day);
-        dateCell.className = 'muted';
-      } else if (day > monthLength) {
-        dateCell.textContent = String(day - monthLength);
-        dateCell.className = 'muted';
-      } else {
-        dateCell.textContent = String(day);
-        if (day === now.getDate()) {
-          dateCell.className = 'selected';
-          dateCell.setAttribute('aria-current', 'date');
-        }
+      if (day < 1 || day > monthLength) {
+        const filler = document.createElement('span');
+        filler.className = 'muted calendar-filler';
+        filler.textContent = String(day < 1 ? previousLength + day : day - monthLength);
+        monthGrid.appendChild(filler);
+        continue;
       }
-      monthGrid.appendChild(dateCell);
+      const key = dateKey(year, month, day);
+      const matches = events.filter(event => event.date === key);
+      const button = document.createElement('button');
+      button.type = 'button';
+      button.className = 'calendar-date';
+      button.setAttribute('aria-label', `${key}，${matches.length} 件事件`);
+      if (year === today.getFullYear() && month === today.getMonth() && day === today.getDate()) {
+        button.classList.add('selected');
+        button.setAttribute('aria-current', 'date');
+      }
+      const number = document.createElement('span');
+      number.textContent = String(day);
+      button.appendChild(number);
+      if (matches.length) {
+        const icons = document.createElement('span');
+        icons.className = 'calendar-event-icons';
+        icons.setAttribute('aria-hidden', 'true');
+        icons.textContent = matches.slice(0, 2).map(event => eventSymbols[event.type]).join('');
+        button.appendChild(icons);
+        if (matches.length > 2) button.classList.add('has-more-events');
+      }
+      button.addEventListener('click', () => {
+        monthGrid.querySelectorAll('.calendar-date.is-viewed').forEach(node => node.classList.remove('is-viewed'));
+        button.classList.add('is-viewed');
+        calendarDetails.replaceChildren();
+        const heading = document.createElement('strong');
+        heading.textContent = `${month + 1} 月 ${day} 日`;
+        calendarDetails.appendChild(heading);
+        if (!matches.length) {
+          const empty = document.createElement('p');
+          empty.textContent = '这一天暂时没有已公开的特别记录。';
+          calendarDetails.appendChild(empty);
+        } else {
+          matches.forEach(event => {
+            const line = document.createElement('p');
+            line.textContent = `${eventSymbols[event.type]} ${eventNames[event.type]} · ${event.title}`;
+            calendarDetails.appendChild(line);
+          });
+        }
+        calendarDetails.hidden = false;
+      });
+      monthGrid.appendChild(button);
     }
+    calendarDetails.hidden = true;
+    renderReminder(events, today);
   }
-  renderCurrentMonth();
-  calendarToggle.addEventListener('click', () => {
-    if (!monthPanel.hidden) renderCurrentMonth();
+  monthPrevious?.addEventListener('click', () => {
+    displayedMonth = new Date(displayedMonth.getFullYear(), displayedMonth.getMonth() - 1, 1);
+    renderCalendar();
   });
+  monthNext?.addEventListener('click', () => {
+    displayedMonth = new Date(displayedMonth.getFullYear(), displayedMonth.getMonth() + 1, 1);
+    renderCalendar();
+  });
+  renderCalendar();
+  calendarToggle.addEventListener('click', () => {
+    if (!monthPanel.hidden) renderCalendar();
+  });
+  window.addEventListener('asteria:calendar-events-updated', renderCalendar);
 
   // Only expand the agreed Today footprint section on demand.
   const footprintsToggle = document.getElementById('footprintsToggle');
@@ -189,7 +271,7 @@
   });
   document.addEventListener('visibilitychange', () => {
     if (!document.hidden) {
-      renderCurrentMonth();
+      renderCalendar();
       if (homeView && viewStore) homeView.render(viewStore.read('home'));
     }
   });
