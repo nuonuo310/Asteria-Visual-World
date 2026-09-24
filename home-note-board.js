@@ -10,7 +10,7 @@
   const historyButton = board.querySelector('#noteHistory');
   const head = document.createElement('div');
   head.className = 'note-board-head';
-  head.innerHTML = '<strong>今天留下的纸</strong><small>最近 4 张</small>';
+  head.textContent = '✦ Our Notes';
   const surface = document.createElement('div');
   surface.className = 'note-board-surface';
   surface.setAttribute('aria-live', 'polite');
@@ -54,11 +54,12 @@
     return result >>> 0;
   };
   const jitter = (seed,shift,amplitude) => (((seed >>> shift) & 255) / 255 - .5) * amplitude;
-  const formatTime = value => {
+  const formatTime = (value,detailed = false) => {
     const date = new Date(value);
     if (Number.isNaN(date.getTime())) return '';
-    return new Intl.DateTimeFormat('zh-CN',{month:'2-digit',day:'2-digit',hour:'2-digit',minute:'2-digit',hour12:false})
-      .format(date).replace('/','.');
+    const pad = part => String(part).padStart(2,'0');
+    const time = `${pad(date.getHours())}:${pad(date.getMinutes())}`;
+    return detailed ? `${pad(date.getMonth() + 1)}.${pad(date.getDate())} ${time}` : time;
   };
   function place(article,card,slot,index,count) {
     const seed = hash(card.id || `${card.author}-${card.createdAt || index}`);
@@ -95,15 +96,14 @@
       copy.className = 'paper-note-copy';
       copy.textContent = card.body;
       article.append(to,copy);
-      if (!card.preview) {
+      if (!card.preview && card.createdAt) {
         const meta = document.createElement('small');
         meta.className = 'paper-note-meta';
-        meta.textContent = `From. ${card.author}${card.createdAt ? `\n${formatTime(card.createdAt)}` : ''}`;
+        meta.textContent = formatTime(card.createdAt,count === 1);
         article.appendChild(meta);
       }
       surface.appendChild(article);
     });
-    head.querySelector('small').textContent = saved.length ? `${saved.length} / 4` : '纸张样式预览';
   }
   render();
   store.subscribe('home',render);
