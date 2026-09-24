@@ -17,13 +17,13 @@ body.note-detail-open{overflow:hidden}
 .note-detail-count{justify-self:end;padding-right:4px;color:var(--home-muted,#aa8f99);font:600 10px/1 system-ui,sans-serif;letter-spacing:.08em}
 .note-detail-stage{position:relative;z-index:2;height:calc(100% - 116px);min-height:390px;display:grid;place-items:center;overflow:hidden;touch-action:pan-y}
 .note-detail-papers{position:absolute;inset:0}
-.note-detail-paper{position:absolute;left:50%;top:48%;width:min(76%,300px);aspect-ratio:1.05/1;box-sizing:border-box;padding:20% 15% 14%;background-position:center;background-repeat:no-repeat;background-size:100% 100%;color:#684f59;filter:drop-shadow(0 12px 13px rgba(88,57,72,.12));transform:translate(-50%,-50%) rotate(var(--detail-rotate,-.4deg));transition:transform .25s ease,opacity .25s ease,filter .25s ease}
+.note-detail-paper{position:absolute;z-index:2;left:50%;top:48%;width:min(76%,300px);aspect-ratio:1.05/1;box-sizing:border-box;padding:20% 15% 14%;background-position:center;background-repeat:no-repeat;background-size:100% 100%;color:#684f59;filter:drop-shadow(0 12px 13px rgba(88,57,72,.12));transform:translate(-50%,-50%) rotate(var(--detail-rotate,-.4deg));transition:transform .25s ease,opacity .25s ease,filter .25s ease}
 .note-detail-paper--nuo{background-image:url('./assets/note-paper-nuo-light.webp?v=20260924-3')}
 .note-detail-paper--nuo.has-flower{background-image:url('./assets/note-paper-nuo-light-flower.webp?v=20260924-3')}
 .note-detail-paper--nuo.is-mirrored{background-image:url('./assets/note-paper-nuo-light-mirror.webp?v=20260924-3')}
 .note-detail-paper--nuo.has-flower.is-mirrored{background-image:url('./assets/note-paper-nuo-light-flower-mirror.webp?v=20260924-3')}
 .note-detail-paper--shen{background-image:url('./assets/note-paper-shen-light-pin.webp?v=20260924-3');color:#55536b}
-.note-detail-paper.is-peek{width:min(65%,255px);opacity:.42;filter:drop-shadow(0 7px 8px rgba(88,57,72,.07));pointer-events:none}
+.note-detail-paper.is-peek{z-index:1;width:min(65%,255px);opacity:.42;filter:drop-shadow(0 7px 8px rgba(88,57,72,.07));pointer-events:none}
 .note-detail-paper.is-prev{transform:translate(-112%,-49%) rotate(-2.2deg)}
 .note-detail-paper.is-next{transform:translate(12%,-47%) rotate(2.2deg)}
 .note-detail-to{display:block;margin:0 0 12px;font:italic clamp(16px,5vw,21px)/1.15 Georgia,"Noto Serif SC",serif;letter-spacing:.01em}
