@@ -13,13 +13,13 @@
   overflow:hidden!important;
   border:1px solid var(--line)!important;
   border-radius:20px!important;
-  background:rgba(255,255,255,.36)!important;
+  background:rgba(255,255,255,.32)!important;
   box-shadow:0 7px 20px rgba(80,60,80,.028)!important;
 }
 .note-board-head{display:none}
 .note-board-surface{
   position:absolute;
-  inset:7px 7px 34px;
+  inset:7px 7px 28px;
   min-height:0;
 }
 .paper-note{
@@ -35,19 +35,28 @@
   background-repeat:no-repeat;
   background-size:100% 100%;
   color:#554753;
-  filter:drop-shadow(0 4px 5px rgba(88,57,72,.085));
+  filter:drop-shadow(0 3px 4px rgba(88,57,72,.065));
   transform:rotate(var(--note-rotation,0deg));
   transform-origin:50% 52%;
   overflow:hidden;
   z-index:var(--note-z,1);
 }
 .paper-note--nuo{
-  background-image:url('./assets/note-paper-nuo-clean.webp?v=20260924-2');
-  color:#5c484d;
+  background-image:url('./assets/note-paper-nuo-light.webp?v=20260924-3');
+  color:#684f59;
+}
+.paper-note--nuo.is-mirrored{
+  background-image:url('./assets/note-paper-nuo-light-mirror.webp?v=20260924-3');
+}
+.paper-note--nuo.has-flower{
+  background-image:url('./assets/note-paper-nuo-light-flower.webp?v=20260924-3');
+}
+.paper-note--nuo.has-flower.is-mirrored{
+  background-image:url('./assets/note-paper-nuo-light-flower-mirror.webp?v=20260924-3');
 }
 .paper-note--shen{
-  background-image:url('./assets/note-paper-shen-pin.webp?v=20260924-2');
-  color:#504b66;
+  background-image:url('./assets/note-paper-shen-light-pin.webp?v=20260924-3');
+  color:#55536b;
 }
 .paper-note-to{
   display:block;
@@ -82,19 +91,20 @@
 .note-board-surface[data-count="3"] .paper-note{padding:22% 13% 10% 15%}
 .note-board-surface[data-count="2"] .paper-note-to{font-size:10.5px}
 .note-board-surface[data-count="2"] .paper-note-copy{font-size:9.5px;-webkit-line-clamp:2}
-.note-board-surface[data-count="3"] .paper-note-to{font-size:9.5px}
-.note-board-surface[data-count="3"] .paper-note-copy{font-size:8.7px;-webkit-line-clamp:2}
+.note-board-surface[data-count="3"] .paper-note-to{font-size:9.7px}
+.note-board-surface[data-count="3"] .paper-note-copy{font-size:9px;-webkit-line-clamp:2}
 .note-board-surface[data-count="4"] .paper-note{padding:22% 12% 8% 14%}
 .note-board-surface[data-count="4"] .paper-note-to{margin-bottom:2px;font-size:8.5px}
-.note-board-surface[data-count="4"] .paper-note-copy{font-size:8px;line-height:1.35;-webkit-line-clamp:2}
+.note-board-surface[data-count="4"] .paper-note-copy{font-size:8.2px;line-height:1.35;-webkit-line-clamp:2}
+.paper-note.is-latest{filter:drop-shadow(0 4px 5px rgba(88,57,72,.08))}
 .note-board-surface:not([data-count="1"]) .paper-note-meta{display:none}
 
 /* Quiet icon-only controls: their visual mark is small, tap target remains 36px. */
 .note-board .note-edit-button,
 .note-board .note-history-button{
-  bottom:2px!important;
+  bottom:0!important;
   width:36px!important;
-  height:32px!important;
+  height:28px!important;
   min-width:36px!important;
   padding:0!important;
   display:grid!important;

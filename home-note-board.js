@@ -40,10 +40,10 @@
     { id:'preview-shen', author:'Shen', to:'Nuo', body:'我一直都在这里。', preview:true }
   ];
   const layouts = {
-    1:[{x:6,y:2,w:88,h:94}],
-    2:[{x:1,y:1,w:64,h:69},{x:36,y:29,w:63,h:69}],
-    3:[{x:1,y:1,w:56,h:58},{x:43,y:12,w:56,h:58},{x:20,y:43,w:58,h:57}],
-    4:[{x:1,y:1,w:50,h:50},{x:49,y:4,w:50,h:49},{x:4,y:48,w:50,h:49},{x:49,y:49,w:50,h:49}]
+    1:[{x:15,y:7,w:70,h:78}],
+    2:[{x:1,y:3,w:57,h:61},{x:42,y:35,w:58,h:63}],
+    3:[{x:1,y:1,w:48,h:49},{x:51,y:18,w:48,h:49},{x:7,y:51,w:54,h:48}],
+    4:[{x:1,y:1,w:45,h:45},{x:53,y:6,w:46,h:45},{x:2,y:54,w:46,h:44},{x:47,y:49,w:52,h:50}]
   };
   const hash = value => {
     let result = 2166136261;
@@ -71,18 +71,22 @@
     article.style.setProperty('--note-w',`${slot.w}%`);
     article.style.setProperty('--note-h',`${slot.h}%`);
     article.style.setProperty('--note-rotation',`${rotation.toFixed(2)}deg`);
-    article.style.setProperty('--note-z',String(2 + ((seed >>> 24) % count)));
+    article.style.setProperty('--note-z',String(2 + index));
   }
   function render() {
     const saved = safeCards();
     const cards = saved.length ? saved : previewCards;
     const count = Math.max(1,Math.min(4,cards.length));
+    const flowerIndex = cards.findIndex(card => card.author === 'Nuo');
     surface.dataset.count = String(count);
     surface.replaceChildren();
     cards.forEach((card,index) => {
       const article = document.createElement('article');
       const paper = card.author === 'Shen' ? 'shen' : 'nuo';
-      article.className = `paper-note paper-note--${paper}${card.preview ? ' is-preview' : ''}`;
+      const flower = index === flowerIndex && card.author === 'Nuo' ? ' has-flower' : '';
+      const mirrored = (hash(card.id || index) & 1) === 1 ? ' is-mirrored' : '';
+      const latest = index === cards.length - 1 ? ' is-latest' : '';
+      article.className = `paper-note paper-note--${paper}${flower}${mirrored}${latest}${card.preview ? ' is-preview' : ''}`;
       place(article,card,layouts[count][index],index,count);
       const to = document.createElement('span');
       to.className = 'paper-note-to';
