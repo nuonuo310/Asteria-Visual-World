@@ -24,7 +24,7 @@
 }
 .note-board-head{
   position:absolute;
-  top:3px;
+  top:8px;
   left:50%;
   z-index:9;
   transform:translateX(-50%);
