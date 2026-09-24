@@ -11,10 +11,16 @@
   min-height:182px!important;
   padding:0!important;
   overflow:hidden!important;
-  border:1px solid var(--line)!important;
+  border:1px solid var(--home-edge,var(--line))!important;
   border-radius:20px!important;
-  background:rgba(255,255,255,.32)!important;
-  box-shadow:0 7px 20px rgba(80,60,80,.028)!important;
+  background:
+    radial-gradient(80% 100% at 94% 8%,var(--home-card-accent,rgba(239,180,197,.16)),transparent 60%),
+    radial-gradient(66% 82% at 8% 94%,var(--home-card-accent-2,rgba(245,207,190,.11)),transparent 66%),
+    linear-gradient(145deg,rgba(255,255,255,.84),var(--home-card-warm,#fdf4f4))!important;
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,.9),
+    0 3px 5px var(--home-contact,rgba(126,76,94,.07)),
+    0 14px 30px var(--home-ambient,rgba(155,93,115,.09))!important;
 }
 .note-board-head{
   position:absolute;
@@ -24,9 +30,10 @@
   transform:translateX(-50%);
   padding:1px 7px 3px;
   border-radius:0 0 8px 8px;
-  background:rgba(255,251,253,.72);
-  color:color-mix(in srgb,var(--accent,#bd4f82) 76%,transparent);
-  font:italic 9px/1.15 Georgia,"Noto Serif SC",serif;
+  background:color-mix(in srgb,var(--home-card,#fff9f8) 76%,transparent);
+  color:var(--home-accent,#c86489);
+  font:italic 9.5px/1.15 Georgia,"Noto Serif SC",serif;
+  text-shadow:0 0 8px color-mix(in srgb,var(--home-accent,#c86489) 14%,transparent);
   letter-spacing:.055em;
   white-space:nowrap;
   pointer-events:none;
