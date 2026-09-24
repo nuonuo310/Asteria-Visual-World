@@ -1,52 +1,48 @@
 /* 2026-09-24 flower-paper review pass. The board consumes real local notes;
    neutral preview cards appear only when there are no saved notes yet. */
 .message-split{
-  grid-template-columns:1fr!important;
-  gap:10px!important;
-  min-height:0!important;
+  grid-template-columns:minmax(0,1.72fr) minmax(118px,.92fr)!important;
+  gap:8px!important;
+  min-height:182px!important;
 }
 .review-note.note-board{
   position:relative!important;
-  height:auto!important;
-  min-height:342px!important;
-  padding:18px 14px 46px!important;
+  height:182px!important;
+  min-height:182px!important;
+  padding:0!important;
   overflow:visible!important;
-  border:1px solid color-mix(in srgb,var(--home-edge) 88%,transparent)!important;
-  border-radius:24px!important;
-  background:
-    radial-gradient(82% 76% at 10% 12%,rgba(255,255,255,.54),transparent 72%),
-    linear-gradient(145deg,color-mix(in srgb,var(--home-card-warm) 78%,white),color-mix(in srgb,var(--home-card-accent) 42%,white))!important;
-  box-shadow:inset 0 1px 0 rgba(255,255,255,.86),0 12px 28px color-mix(in srgb,var(--home-ambient) 42%,transparent)!important;
+  border:0!important;
+  border-radius:20px!important;
+  background:transparent!important;
+  box-shadow:none!important;
 }
-.note-board-head{display:flex;align-items:baseline;justify-content:space-between;gap:12px;margin:0 5px 9px}
+.note-board-head{display:none}
 .note-board-head strong{font:italic 17px/1.2 Georgia,"Noto Serif SC",serif;font-weight:400;color:var(--home-ink)}
 .note-board-head small{font:10px/1.3 system-ui,sans-serif;color:var(--home-muted)}
-.note-board-surface{position:relative;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:3px 2px;min-height:258px;align-items:center}
+.note-board-surface{position:absolute;inset:-5px -4px -3px;display:block;min-height:0}
 .paper-note{
-  position:relative;isolation:isolate;aspect-ratio:1.095/1;
-  padding:27% 15% 16% 18%;
-  background-position:center;background-repeat:no-repeat;background-size:contain;
+  position:absolute;inset:0;isolation:isolate;aspect-ratio:auto;
+  padding:25% 15% 16% 18%;
+  background-position:center;background-repeat:no-repeat;background-size:100% 100%;
   color:#554753;filter:drop-shadow(0 7px 8px rgba(88,57,72,.10));
   transform:rotate(var(--note-rotation,0deg));
   overflow:hidden;
 }
 .paper-note--nuo{background-image:url('./assets/note-paper-nuo-flower.webp?v=20260924-1');color:#5c484d}
 .paper-note--shen{background-image:url('./assets/note-paper-shen-flower.webp?v=20260924-1');color:#504b66}
-.paper-note:nth-child(1){--note-rotation:-1.8deg;z-index:2}
-.paper-note:nth-child(2){--note-rotation:1.5deg;z-index:1}
-.paper-note:nth-child(3){--note-rotation:1.1deg;z-index:3;margin-top:-9px}
-.paper-note:nth-child(4){--note-rotation:-1.4deg;z-index:2;margin-top:-7px}
+.paper-note:not(:last-child){display:none}
+.paper-note:last-child{--note-rotation:-.7deg;z-index:2}
 .paper-note-to{display:block;margin:0 0 7px;font:italic 13px/1.2 Georgia,"Noto Serif SC",serif;letter-spacing:.02em}
 .paper-note-copy{display:-webkit-box;-webkit-box-orient:vertical;-webkit-line-clamp:3;overflow:hidden;margin:0;white-space:pre-wrap;overflow-wrap:anywhere;font:12px/1.58 "Noto Serif SC","Songti SC",serif}
 .paper-note-meta{position:absolute;right:15%;bottom:12%;font:8px/1.25 system-ui,sans-serif;letter-spacing:.035em;color:color-mix(in srgb,currentColor 68%,transparent);text-align:right}
 .paper-note.is-preview .paper-note-copy{color:color-mix(in srgb,currentColor 56%,transparent);font-style:italic}
-.note-board .note-edit-button{left:16px!important;bottom:13px!important}
-.note-board .note-history-button{right:16px!important;bottom:13px!important}
-.message-side{height:auto!important;grid-template-columns:1fr 1fr!important;grid-template-rows:none!important;gap:8px!important}
-.message-side .mini-panel{min-height:88px!important}
+.note-board .note-edit-button{left:18px!important;bottom:10px!important;z-index:4!important}
+.note-board .note-history-button{right:16px!important;bottom:10px!important;z-index:4!important}
+.message-side{height:182px!important;grid-template-columns:none!important;grid-template-rows:1fr 1fr!important;gap:8px!important}
+.message-side .mini-panel{min-height:0!important}
 @media(max-width:370px){
-  .review-note.note-board{min-height:326px!important;padding-left:10px!important;padding-right:10px!important}
-  .note-board-surface{min-height:246px}
+  .message-split{grid-template-columns:minmax(0,1.62fr) minmax(108px,.9fr)!important;gap:7px!important}
+  .review-note.note-board{height:182px!important;min-height:182px!important}
   .paper-note{padding-left:17%;padding-right:14%}
   .paper-note-to{font-size:12px}.paper-note-copy{font-size:11px}
 }
