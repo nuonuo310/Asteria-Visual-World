@@ -1,0 +1,41 @@
+/* Full-page note archive: date navigation above, one preserved paper at a time. */
+body.note-detail-open{overflow:hidden}
+.note-detail-backdrop{position:fixed;inset:0;z-index:40;display:grid;place-items:center;padding:max(14px,env(safe-area-inset-top)) 12px max(14px,env(safe-area-inset-bottom));background:color-mix(in srgb,var(--bg,#fbf8f6) 86%,rgba(247,225,234,.68));backdrop-filter:blur(18px) saturate(104%);-webkit-backdrop-filter:blur(18px) saturate(104%)}
+.note-detail-backdrop[hidden]{display:none!important}
+.note-detail-page{position:relative;width:min(100%,406px);height:min(680px,calc(100dvh - 28px - env(safe-area-inset-top) - env(safe-area-inset-bottom)));min-height:520px;overflow:hidden;border:1px solid var(--home-edge,var(--line));border-radius:27px;color:var(--home-ink,#65434f);background:radial-gradient(80% 100% at 94% 8%,var(--home-card-accent,rgba(239,180,197,.16)),transparent 60%),radial-gradient(66% 82% at 8% 94%,var(--home-card-accent-2,rgba(245,207,190,.11)),transparent 66%),linear-gradient(145deg,rgba(255,255,255,.88),var(--home-card-warm,#fdf4f4));box-shadow:inset 0 1px 0 rgba(255,255,255,.92),0 4px 7px var(--home-contact,rgba(126,76,94,.07)),0 22px 48px var(--home-ambient,rgba(155,93,115,.09))}
+.note-detail-page:before{content:"";position:absolute;inset:0;pointer-events:none;background:radial-gradient(70% 36% at 50% 46%,rgba(255,255,255,.48),transparent 76%)}
+.note-detail-topbar{position:relative;z-index:5;height:66px;display:grid;grid-template-columns:42px minmax(0,1fr) 48px;align-items:center;padding:8px 10px 0}
+.note-detail-close,.note-detail-arrow,.note-detail-day-arrow{border:0;background:transparent;color:var(--home-body,#80636e);cursor:pointer;-webkit-tap-highlight-color:transparent}
+.note-detail-close{width:42px;height:42px;border-radius:50%;font:400 25px/1 Georgia,serif}
+.note-detail-close:focus-visible,.note-detail-arrow:focus-visible,.note-detail-day-arrow:focus-visible,.note-detail-date-select:focus-visible{outline:1px solid var(--home-accent);outline-offset:2px}
+.note-detail-date-nav{min-width:0;display:grid;grid-template-columns:30px minmax(0,1fr) 30px;align-items:center;gap:2px}
+.note-detail-day-arrow{width:30px;height:36px;padding:0;border-radius:50%;font:18px/1 Georgia,serif;color:color-mix(in srgb,var(--home-body,#80636e) 66%,transparent)}
+.note-detail-day-arrow:disabled{opacity:.18;cursor:default}
+.note-detail-date-wrap{position:relative;min-width:0;text-align:center}
+.note-detail-date-select{width:100%;min-height:38px;padding:0 22px 0 8px;border:0;border-radius:999px;appearance:none;-webkit-appearance:none;text-align:center;text-align-last:center;color:var(--home-accent-strong,#9c4f72);background:color-mix(in srgb,var(--home-card,#fff9f8) 74%,transparent);font:italic 13px/1 Georgia,"Noto Serif SC",serif;letter-spacing:.11em;cursor:pointer}
+.note-detail-date-wrap:after{content:"⌄";position:absolute;right:8px;top:50%;transform:translateY(-55%);color:var(--home-muted,#aa8f99);font-size:11px;pointer-events:none}
+.note-detail-count{justify-self:end;padding-right:4px;color:var(--home-muted,#aa8f99);font:600 10px/1 system-ui,sans-serif;letter-spacing:.08em}
+.note-detail-stage{position:relative;z-index:2;height:calc(100% - 116px);min-height:390px;display:grid;place-items:center;overflow:hidden;touch-action:pan-y}
+.note-detail-papers{position:absolute;inset:0}
+.note-detail-paper{position:absolute;left:50%;top:48%;width:min(76%,300px);aspect-ratio:1.05/1;box-sizing:border-box;padding:20% 15% 14%;background-position:center;background-repeat:no-repeat;background-size:100% 100%;color:#684f59;filter:drop-shadow(0 12px 13px rgba(88,57,72,.12));transform:translate(-50%,-50%) rotate(var(--detail-rotate,-.4deg));transition:transform .25s ease,opacity .25s ease,filter .25s ease}
+.note-detail-paper--nuo{background-image:url('./assets/note-paper-nuo-light.webp?v=20260924-3')}
+.note-detail-paper--nuo.has-flower{background-image:url('./assets/note-paper-nuo-light-flower.webp?v=20260924-3')}
+.note-detail-paper--nuo.is-mirrored{background-image:url('./assets/note-paper-nuo-light-mirror.webp?v=20260924-3')}
+.note-detail-paper--nuo.has-flower.is-mirrored{background-image:url('./assets/note-paper-nuo-light-flower-mirror.webp?v=20260924-3')}
+.note-detail-paper--shen{background-image:url('./assets/note-paper-shen-light-pin.webp?v=20260924-3');color:#55536b}
+.note-detail-paper.is-peek{width:min(65%,255px);opacity:.42;filter:drop-shadow(0 7px 8px rgba(88,57,72,.07));pointer-events:none}
+.note-detail-paper.is-prev{transform:translate(-112%,-49%) rotate(-2.2deg)}
+.note-detail-paper.is-next{transform:translate(12%,-47%) rotate(2.2deg)}
+.note-detail-to{display:block;margin:0 0 12px;font:italic clamp(16px,5vw,21px)/1.15 Georgia,"Noto Serif SC",serif;letter-spacing:.01em}
+.note-detail-copy{display:-webkit-box;-webkit-box-orient:vertical;-webkit-line-clamp:7;overflow:hidden;margin:0;white-space:pre-wrap;overflow-wrap:anywhere;color:color-mix(in srgb,currentColor 92%,transparent);font:clamp(14px,4.25vw,17px)/1.65 "Noto Serif SC","Songti SC",serif}
+.note-detail-time{position:absolute;right:14%;bottom:12%;color:color-mix(in srgb,currentColor 58%,transparent);font:9px/1.3 system-ui,sans-serif;letter-spacing:.045em}
+.note-detail-arrow{position:absolute;z-index:7;top:50%;width:40px;height:40px;margin-top:-20px;border:1px solid color-mix(in srgb,var(--home-accent) 27%,transparent);border-radius:50%;background:color-mix(in srgb,var(--home-card,#fff9f8) 88%,transparent);box-shadow:0 5px 13px color-mix(in srgb,var(--home-contact) 76%,transparent);color:var(--home-accent-strong,#9c4f72);font:22px/1 Georgia,serif}
+.note-detail-arrow--prev{left:10px}.note-detail-arrow--next{right:10px}
+.note-detail-arrow:disabled{opacity:0;pointer-events:none}
+.note-detail-footer{position:absolute;z-index:6;left:0;right:0;bottom:0;height:58px;display:flex;align-items:flex-start;justify-content:center;padding-top:8px}
+.note-detail-dots{display:flex;align-items:center;justify-content:center;gap:8px;min-height:18px}
+.note-detail-dot{width:6px;height:6px;padding:0;border:0;border-radius:50%;background:color-mix(in srgb,var(--home-muted) 36%,transparent)}
+.note-detail-dot.is-active{width:8px;height:8px;background:var(--home-accent,#c86489);box-shadow:0 0 0 3px color-mix(in srgb,var(--home-accent) 9%,transparent)}
+.note-detail-empty{position:absolute;inset:0;display:grid;place-items:center;width:72%;margin:auto;color:var(--home-muted,#aa8f99);text-align:center;font:13px/1.8 "Noto Serif SC","Songti SC",serif}
+@media(max-width:370px){.note-detail-page{border-radius:24px}.note-detail-paper{width:min(78%,278px)}.note-detail-paper.is-peek{width:min(66%,235px)}.note-detail-to{margin-bottom:9px}.note-detail-arrow{width:36px;height:36px;margin-top:-18px}.note-detail-arrow--prev{left:7px}.note-detail-arrow--next{right:7px}}
+@media(prefers-reduced-motion:reduce){.note-detail-paper{transition:none}}
