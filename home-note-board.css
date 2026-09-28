@@ -10,8 +10,9 @@
   box-shadow:inset 0 1px 0 rgba(255,255,255,.92),0 3px 5px var(--home-contact,rgba(126,76,94,.07)),0 14px 30px var(--home-ambient,rgba(155,93,115,.09))!important;
 }
 .review-note.note-board:after{
-  content:'';position:absolute;left:3px;bottom:11px;width:105px;height:98px;pointer-events:none;z-index:1;
-  background:radial-gradient(ellipse at 37% 75%,rgba(255,225,166,.63),rgba(255,230,190,.24) 38%,transparent 73%);
+  content:'';position:absolute;left:-11px;bottom:36px;width:174px;height:126px;pointer-events:none;z-index:1;
+  background:radial-gradient(ellipse at 31% 66%,rgba(255,224,159,.64) 0,rgba(255,230,185,.34) 29%,rgba(255,237,210,.13) 49%,transparent 72%);
+  filter:blur(3px);
   opacity:0;transform:scale(.7);transition:opacity .65s ease,transform .7s ease;
 }
 .review-note.note-board:is(.is-reading,.is-writing):after{opacity:1;transform:scale(1)}
@@ -26,16 +27,16 @@
 .note-board-surface{position:absolute;inset:42px 11px 27px;z-index:3;min-height:0;display:flex;flex-direction:column;justify-content:flex-start;overflow:hidden}
 .note-board-entry{min-width:0;max-width:100%}
 .note-board-entry--second{text-align:right;padding-left:27px}
-.note-board-author{display:block;color:var(--home-accent-strong,#9c4f72);font:italic 11.5px/1.2 Georgia,'Noto Serif SC',serif;white-space:nowrap}
+.note-board-author{display:block;margin-bottom:8px;color:var(--home-accent-strong,#9c4f72);font:italic 11.5px/1.2 Georgia,'Noto Serif SC',serif;white-space:nowrap}
 .note-board-entry--shen .note-board-author{color:#786c8a}
-.note-board-copy{display:-webkit-box;-webkit-box-orient:vertical;-webkit-line-clamp:2;overflow:hidden;white-space:pre-wrap;overflow-wrap:anywhere;margin:5px 0 3px;color:var(--home-ink,#65434f);font:11px/1.38 system-ui,'Noto Sans SC',sans-serif}
+.note-board-copy{display:-webkit-box;-webkit-box-orient:vertical;-webkit-line-clamp:2;overflow:hidden;white-space:pre-wrap;overflow-wrap:anywhere;margin:0 0 8px;color:var(--home-ink,#65434f);font:11px/1.55 system-ui,'Noto Sans SC',sans-serif}
 .note-board-time{display:block;color:var(--home-muted,#aa8f99);font:9px/1.2 system-ui,sans-serif;white-space:nowrap}
-.note-board-divider{display:flex;align-items:center;gap:4px;margin:8px 0 7px;color:color-mix(in srgb,var(--home-accent,#c86489) 67%,transparent);font:9px/1 Georgia,serif}
+.note-board-divider{display:flex;align-items:center;gap:6px;margin:14px 0 12px;color:color-mix(in srgb,var(--home-accent,#c86489) 76%,transparent);font:10px/1 Georgia,serif}
 .note-board-divider i{height:8px;flex:1;background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='76' height='8'%3E%3Cpath d='M0 4 Q10 0 19 4 T38 4 T57 4 T76 4' fill='none' stroke='%23c69bb1' stroke-opacity='.65' stroke-width='1'/%3E%3C/svg%3E") center / 76px 8px repeat-x}
 .note-board-empty{margin:22px 0 0;color:var(--home-body,#80636e);font:11px/1.65 'Noto Serif SC',serif;max-width:145px}
-.note-board-surface[data-count="1"] .note-board-entry{margin-top:18px}
+.note-board-surface[data-count="1"] .note-board-entry{margin-top:12px}
 .note-board-surface[data-count="1"] .note-board-copy{font-size:12px;-webkit-line-clamp:3}
-.note-board-lamp{position:absolute;left:12px;bottom:29px;z-index:2;width:31px;height:37px;background:url('./assets/note-lamp-bow.svg?v=20260928-1') center / contain no-repeat;filter:drop-shadow(0 1px 2px rgba(136,95,111,.12));pointer-events:none}
+.note-board-lamp{position:absolute;left:13px;bottom:31px;z-index:2;width:43px;height:51px;background:url('./assets/note-lamp-bow.svg?v=20260928-1') center / contain no-repeat;filter:drop-shadow(0 2px 3px rgba(136,95,111,.13));pointer-events:none}
 .note-board-count{position:absolute;bottom:8px;left:50%;transform:translateX(-50%);z-index:4;color:var(--home-muted,#aa8f99);font:9px/1 system-ui,sans-serif;white-space:nowrap}
 .note-board .note-edit-button,.note-board .note-history-button{bottom:0!important;width:38px!important;height:34px!important;min-width:38px!important;padding:0!important;display:grid!important;place-items:center!important;border:0!important;border-radius:50%!important;background:transparent!important;box-shadow:none!important;color:color-mix(in srgb,var(--home-muted,var(--muted)) 65%,transparent)!important;line-height:1!important;z-index:5!important}
 .note-board .note-edit-button{left:7px!important;font-size:18px!important}

@@ -67,13 +67,6 @@
       return;
     }
     entries.forEach((entry,index) => {
-      if (index > 0) {
-        const divider = document.createElement('div');
-        divider.className = 'note-board-divider';
-        divider.setAttribute('aria-hidden','true');
-        divider.innerHTML = '<i></i><span>✦</span><i></i>';
-        surface.appendChild(divider);
-      }
       const article = document.createElement('article');
       article.className = `note-board-entry note-board-entry--${entry.author.toLowerCase()}${index ? ' note-board-entry--second' : ''}`;
       const name = document.createElement('span');
@@ -92,6 +85,13 @@
         article.appendChild(stamp);
       }
       surface.appendChild(article);
+      if (index === 0) {
+        const divider = document.createElement('div');
+        divider.className = 'note-board-divider';
+        divider.setAttribute('aria-hidden','true');
+        divider.innerHTML = '<i></i><span>✦</span><i></i>';
+        surface.appendChild(divider);
+      }
     });
   }
 
