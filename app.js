@@ -336,7 +336,7 @@
         const current = getCards();
         const target = current.find(item => item.id === card.id);
         if (!target) return;
-        target.replies = [...(Array.isArray(target.replies) ? target.replies : []), { author: author.value, body, createdAt: new Date().toISOString(), localDraft: true }];
+        target.replies = [...(Array.isArray(target.replies) ? target.replies : []), { id: crypto.randomUUID(), author: author.value, body, createdAt: new Date().toISOString(), replyTo: target.id, localDraft: true }];
         if (saveCards(current, 'home-local-message-reply')) { renderCards(); openHistory(); showToast('回复已保存在本机，尚未同步'); }
       });
       article.appendChild(replyForm);

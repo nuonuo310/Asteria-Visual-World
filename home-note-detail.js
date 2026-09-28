@@ -49,7 +49,17 @@
     validCards().forEach(card => {
       const key = dayKey(card.createdAt);
       if (!groups.has(key)) groups.set(key,[]);
-      groups.get(key).push(card);
+      groups.get(key).push({...card,entryType:'note'});
+      (Array.isArray(card.replies) ? card.replies : []).forEach((reply,index) => {
+        if (!reply || typeof reply.body !== 'string' || !['Nuo','Shen'].includes(reply.author)) return;
+        groups.get(key).push({
+          ...reply,
+          id:reply.id || `${card.id}-reply-${index}`,
+          to:card.author,
+          replyTo:card.id,
+          entryType:'reply'
+        });
+      });
     });
     groups.forEach(cards => cards.sort((a,b) => new Date(a.createdAt) - new Date(b.createdAt)));
     return groups;
@@ -212,6 +222,7 @@
     renderDates(selectedDate);
     backdrop.hidden = false;
     document.body.classList.add('note-detail-open');
+    window.dispatchEvent(new CustomEvent('asteria:note-history-opened'));
     closeButton.focus({preventScroll:true});
   }
   function closeDetail() {
