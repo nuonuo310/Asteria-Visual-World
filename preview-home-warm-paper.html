@@ -1,0 +1,127 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#f9f6ea">
+<title>Asteria · Warm Paper Lobby Preview</title>
+<style>
+:root{--fog:#f9f6ea;--cream:#faf0e5;--oat:#e4d1c2;--paper:#fffdf7;--greige:#c4b8a9;--cocoa:#866657;--dark:#563722;--blue:#7b8ba4}
+*{box-sizing:border-box}
+html{background:#eee7df}
+body{margin:0;color:var(--dark);font-family:"PingFang SC","Noto Sans SC",system-ui,sans-serif;background:var(--fog)}
+button{font:inherit;color:inherit}
+.lobby{min-height:100svh;overflow:hidden;position:relative;background:radial-gradient(circle at 15% 6%,rgba(255,255,255,.88),transparent 30%),linear-gradient(150deg,var(--fog),var(--cream) 62%,#f2e6da);padding-bottom:44px}
+.lobby:before{content:"";position:absolute;inset:0;pointer-events:none;opacity:.14;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='80' height='80'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.8' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.13'/%3E%3C/svg%3E")}
+.hero{height:338px;padding:48px 28px 0;position:relative;max-width:540px;margin:auto}
+.theme{width:220px;position:relative;z-index:2}
+.eyebrow{display:block;margin-bottom:7px;color:var(--cocoa);font:500 11px/1 Arial,sans-serif;letter-spacing:.23em}
+.theme h1{margin:0 0 12px;color:var(--blue);font:italic 40px/.95 Georgia,serif;letter-spacing:-.04em}
+.theme p{margin:0;color:#745e52;font-size:13px;line-height:1.75;letter-spacing:.04em}
+.days{margin-top:12px;color:#95786a;font:11px/1.2 Georgia,serif;letter-spacing:.13em}
+.days strong{font-weight:500;color:var(--dark);font-size:14px}
+.tools{position:absolute;right:24px;top:37px;display:flex;align-items:center;gap:10px;color:var(--cocoa);z-index:8}
+.round-tool{width:34px;height:34px;border-radius:50%;border:1px solid rgba(134,102,87,.2);background:rgba(255,253,247,.72);display:grid;place-items:center;font-size:17px;box-shadow:0 4px 10px rgba(86,55,34,.06)}
+.switch{width:38px;height:21px;padding:3px;border-radius:20px;background:#decec1;border:1px solid rgba(134,102,87,.14)}
+.switch:before{content:"";display:block;width:13px;height:13px;border-radius:50%;background:var(--paper);box-shadow:0 1px 4px rgba(86,55,34,.14)}
+.photos{position:absolute;left:29px;top:206px;width:106px;height:115px}
+.ribbon{position:absolute;left:-12px;top:63px;width:126px;height:22px;border-radius:50%;background:rgba(228,209,194,.48);transform:rotate(-10deg)}
+.photo{position:absolute;width:73px;height:96px;padding:6px 6px 19px;background:#fffdfa;border:1px solid rgba(196,184,169,.25);box-shadow:0 7px 15px rgba(86,55,34,.09)}
+.photo.back{left:29px;top:7px;transform:rotate(8deg);opacity:.72}
+.photo.front{left:13px;top:5px;transform:rotate(-3deg)}
+.photo-image{height:67px;position:relative;overflow:hidden;background:linear-gradient(145deg,#d9c2b4,#f4e8de 54%,#af8e7e)}
+.photo-image:before{content:"";position:absolute;width:45px;height:45px;left:10px;top:16px;border-radius:50% 50% 43% 43%;background:#f6e5da;box-shadow:-11px -4px 0 -7px #72564a,12px -7px 0 -7px #a78373}
+.caption{text-align:center;margin-top:5px;color:#b19587;font:7px/1 Georgia,serif;letter-spacing:.07em}
+.clip{position:absolute;z-index:4;left:27px;top:-9px;width:13px;height:37px;border:3px solid #f8f3ed;border-radius:10px;transform:rotate(36deg);filter:drop-shadow(0 2px 2px rgba(86,55,34,.1))}
+.dashed{position:absolute;left:152px;top:260px;width:52px;border-top:1px dashed rgba(134,102,87,.25)}
+.dashed:after{content:"✦";position:absolute;right:-14px;top:-8px;color:var(--blue);font-size:12px}
+.status-zone{position:absolute;right:80px;top:119px;width:150px;height:92px;z-index:10}
+.status-star{appearance:none;border:0;background:transparent;position:absolute;right:0;top:0;width:47px;height:47px;padding:0;color:#fffdf4;font-size:34px;line-height:1;filter:drop-shadow(0 0 5px rgba(196,184,169,.7));animation:breathe 3.4s ease-in-out infinite}
+.status-star:after{content:"";position:absolute;inset:8px;border-radius:50%;z-index:-1;background:rgba(228,209,194,.55);filter:blur(8px)}
+.status-note{position:absolute;right:34px;top:35px;width:154px;padding:13px 15px;background:rgba(255,253,247,.94);box-shadow:0 9px 21px rgba(86,55,34,.1);color:#70594d;font-size:11px;line-height:1.6;letter-spacing:.02em;transform-origin:top right;transition:.25s ease;opacity:0;pointer-events:none;transform:translateY(-5px) scale(.94)}
+.status-note:before{content:"TODAY";display:block;margin-bottom:5px;color:var(--blue);font:10px/1 Georgia,serif;letter-spacing:.17em}
+.status-zone.open .status-note{opacity:1;transform:none}
+@keyframes breathe{0%,100%{transform:scale(.94);opacity:.72}50%{transform:scale(1.08);opacity:1}}
+.people{position:absolute;right:21px;bottom:-3px;width:190px;height:127px;z-index:8}
+.person{position:absolute;bottom:0;width:86px;height:118px}.person.one{left:8px}.person.two{right:0;transform:scale(.94)}
+.head{position:absolute;left:17px;top:1px;width:55px;height:58px;border-radius:50% 50% 45% 45%;background:#f4dccd;border:2px solid #fff8f0;box-shadow:inset 0 16px 0 #785c50,0 5px 12px rgba(86,55,34,.1)}
+.two .head{box-shadow:inset 0 16px 0 #a98978,0 5px 12px rgba(86,55,34,.1)}
+.head:after{content:"· ᴗ ·";position:absolute;left:12px;top:29px;color:#765749;font:11px/1 Arial;white-space:nowrap}
+.body{position:absolute;left:11px;top:52px;width:67px;height:66px;border-radius:28px 28px 13px 13px;background:var(--cocoa);border:2px solid #fff8f0}.two .body{background:#d7bba9}
+.arm{position:absolute;top:74px;width:43px;height:17px;border-radius:20px;background:#f4dccd;border:2px solid #fff8f0}.arm.left{left:-3px;transform:rotate(8deg)}.arm.right{right:-7px;transform:rotate(-8deg)}
+.board-area{height:430px;margin:0 18px;position:relative;max-width:504px;margin-left:auto;margin-right:auto}
+.backing{position:absolute;inset:11px -2px -5px 10px;border-radius:24px;background:#ddc8b8;transform:rotate(1.2deg);opacity:.62}
+.board{position:absolute;inset:0;padding:62px 20px 24px;border-radius:25px 25px 20px 20px;background:rgba(255,253,247,.95);border:1px solid rgba(134,102,87,.24);box-shadow:0 17px 38px rgba(86,55,34,.13)}
+.board:before{content:"";position:absolute;left:16px;right:16px;top:13px;height:16px;background:radial-gradient(circle at 8px -1px,transparent 9px,var(--oat) 10px 11px,transparent 12px) 0 0/22px 15px repeat-x;opacity:.9}
+.board:after{content:"";position:absolute;inset:13px;border:1px dashed rgba(134,102,87,.18);border-radius:18px;pointer-events:none}
+.tag{position:absolute;z-index:6;left:50%;top:28px;transform:translateX(-50%);min-width:126px;padding:9px 18px 8px;text-align:center;background:var(--cream);border:1px solid rgba(134,102,87,.27);box-shadow:0 5px 11px rgba(86,55,34,.08);color:var(--blue);font:italic 15px/1 Georgia,serif;letter-spacing:.12em}
+.tag:before,.tag:after{content:"";position:absolute;width:32px;height:1px;top:-10px;background:var(--greige)}.tag:before{left:10px;transform:rotate(37deg)}.tag:after{right:10px;transform:rotate(-37deg)}
+.note{position:absolute;z-index:5;padding:16px 14px 13px;color:#6e574c;font-size:12px;line-height:1.55;box-shadow:0 7px 15px rgba(86,55,34,.09)}
+.note small{display:block;margin-top:8px;color:#aa8d7e;font:8px/1 Arial;letter-spacing:.1em}
+.n1{left:30px;top:94px;width:141px;background:#f4e7dc;transform:rotate(-2.4deg)}.n2{right:24px;top:122px;width:141px;background:#f8f2e7;transform:rotate(2deg)}.n3{left:70px;top:238px;width:185px;background:#ead9cc;transform:rotate(.8deg)}
+.tape{position:absolute;left:50%;top:-5px;transform:translateX(-50%) rotate(-2deg);width:44px;height:13px;background:rgba(255,255,255,.48)}
+.pin{position:absolute;right:20px;top:-5px;width:9px;height:9px;border-radius:50%;background:var(--cocoa)}
+.board-star{position:absolute;left:23px;bottom:24px;color:var(--blue);opacity:.65}.bow{position:absolute;right:20px;bottom:18px;color:var(--cocoa);font:22px/1 Georgia;opacity:.55;transform:rotate(-8deg)}
+.whisper{position:absolute;left:0;right:0;bottom:10px;text-align:center;color:#ad9487;font:italic 9px/1 Georgia;letter-spacing:.17em}
+.preview-note{text-align:center;margin:24px 24px 0;color:#aa9084;font-size:11px;letter-spacing:.08em}
+@media(max-width:360px){.hero{padding-left:22px;padding-right:22px}.theme{width:190px}.theme h1{font-size:36px}.people{right:8px;transform:scale(.9);transform-origin:bottom right}.status-zone{right:53px}.n3{left:54px}}
+@media(prefers-reduced-motion:reduce){.status-star{animation:none}}
+</style>
+</head>
+<body>
+<main class="lobby">
+  <section class="hero">
+    <div class="theme">
+      <span class="eyebrow">TODAY'S THEME</span>
+      <h1>Asteria</h1>
+      <p>把我们的普通日子，<br>慢慢收进同一页。</p>
+      <div class="days">TOGETHER · <strong>728</strong> DAYS</div>
+    </div>
+    <div class="tools" aria-label="大厅工具">
+      <button class="round-tool" type="button" aria-label="打开日历">⌛</button>
+      <button class="switch" type="button" aria-label="效果开关"></button>
+    </div>
+    <div class="photos" aria-label="共同照片位置">
+      <div class="ribbon"></div><div class="photo back"></div>
+      <div class="photo front"><div class="photo-image"></div><div class="caption">a little piece of us</div></div><div class="clip"></div>
+    </div>
+    <div class="dashed"></div>
+    <div class="status-zone" id="statusZone">
+      <button class="status-star" id="statusStar" type="button" aria-expanded="false" aria-controls="statusNote" aria-label="查看今天的状态">✦</button>
+      <div class="status-note" id="statusNote">今天有一点累，<br>但我们仍在好好同行。</div>
+    </div>
+    <div class="people" aria-label="人物资产占位">
+      <div class="person one"><div class="head"></div><div class="body"></div><div class="arm left"></div><div class="arm right"></div></div>
+      <div class="person two"><div class="head"></div><div class="body"></div><div class="arm left"></div><div class="arm right"></div></div>
+    </div>
+  </section>
+  <section class="board-area" aria-label="OUR NOTES 留言板">
+    <div class="backing"></div>
+    <div class="board">
+      <div class="tag">OUR NOTES</div>
+      <article class="note n1"><div class="tape"></div>今天也想靠近你一点。<small>FOR YOU · 10:06</small></article>
+      <article class="note n2"><div class="pin"></div>记得好好吃饭，<br>也记得想我。</article>
+      <article class="note n3"><div class="tape"></div>普通的一天，因为你被好好收藏。<small>ORDINARY DAY / FAVORITE MEMORY</small></article>
+      <div class="board-star">✦</div><div class="bow">୨୧</div><div class="whisper">leave a little note for us</div>
+    </div>
+  </section>
+  <p class="preview-note">WARM PAPER LOBBY · VISUAL BRANCH PREVIEW</p>
+</main>
+<script>
+(() => {
+  const zone = document.getElementById("statusZone");
+  const button = document.getElementById("statusStar");
+  button.addEventListener("click", () => {
+    const open = zone.classList.toggle("open");
+    button.setAttribute("aria-expanded", String(open));
+  });
+  document.addEventListener("click", (event) => {
+    if (!zone.contains(event.target)) {
+      zone.classList.remove("open");
+      button.setAttribute("aria-expanded", "false");
+    }
+  });
+})();
+</script>
+</body>
+</html>
