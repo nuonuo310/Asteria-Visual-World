@@ -20,3 +20,7 @@ For locked Home / Mind surfaces, the intended direction is:
 `locked UI -> view data contract -> local store -> runtime events/actions`
 
 Unconfirmed Chat, Memory, Shen/Nuo room structures should not be frozen into code merely to make the data layer look complete.
+
+## 最新 Home 视觉确认版
+
+[2026-10-12 确认版预览](previews/approved-2026-10-12/index.html) · [锁定范围与数据边界](previews/approved-2026-10-12/README.md)
