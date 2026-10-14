@@ -409,6 +409,7 @@ button{font:inherit;color:inherit}.page{position:relative;isolation:isolate;widt
   const dockButtons=[...dock.querySelectorAll('button')];
   dockButtons[0].addEventListener('click',()=>{window.location.href='index.html';});
   dockButtons[1].addEventListener('click',()=>{window.location.href='chat/';});
+  dockButtons[3].addEventListener('click',()=>{window.location.href='memory.html';});
   dock.querySelector('.on').addEventListener('click',()=>{location.hash='mind';});
   window.addEventListener('hashchange',render);render();
 })();
