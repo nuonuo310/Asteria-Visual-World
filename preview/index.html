@@ -1,0 +1,37 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="robots" content="noindex, nofollow">
+  <title>Asteria Chat / Call · 静态视觉预览</title>
+  <style>
+    :root{color-scheme:light;--ink:#6d4d43;--muted:#9b7d75;--rose:#c98b9f;--blue:#8eb2c7;--paper:#fffaf3;--line:rgba(150,106,92,.19)}
+    *{box-sizing:border-box}body{margin:0;min-height:100dvh;font-family:ui-serif,"Songti SC","Noto Serif SC",serif;color:var(--ink);background:radial-gradient(circle at 18% 10%,rgba(241,191,206,.27),transparent 34%),radial-gradient(circle at 88% 82%,rgba(179,210,224,.25),transparent 30%),#fbf4e9}
+    body:before{content:"";position:fixed;inset:0;pointer-events:none;opacity:.46;background-image:radial-gradient(circle,rgba(143,103,86,.14) 1px,transparent 1.4px);background-size:23px 23px}
+    main{position:relative;width:min(100% - 32px,880px);margin:auto;padding:68px 0 52px}.eyebrow{margin:0;color:var(--muted);font:600 .7rem/1.2 system-ui,sans-serif;letter-spacing:.24em;text-transform:uppercase}.brand{margin:12px 0 4px;font:italic 500 clamp(3.2rem,9vw,5.8rem)/.95 Georgia,serif}.brand i{color:var(--blue);font-style:normal}.sub{max-width:630px;margin:22px 0 40px;font-size:1rem;line-height:1.9;color:#81645c}.notice{display:inline-flex;gap:8px;align-items:center;margin-top:18px;padding:8px 13px;border:1px dashed rgba(143,103,86,.38);border-radius:999px;background:rgba(255,250,244,.72);font:600 .74rem/1.2 system-ui,sans-serif;color:#9b706f}.grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:18px}.card{position:relative;min-height:238px;padding:28px;border:1px solid rgba(157,116,100,.2);border-radius:30px;background:rgba(255,251,246,.78);box-shadow:0 20px 55px rgba(112,77,61,.1),inset 0 0 0 1px rgba(255,255,255,.62);backdrop-filter:blur(16px);text-decoration:none;color:inherit;overflow:hidden;transition:.2s ease}.card:hover{transform:translateY(-3px);box-shadow:0 25px 62px rgba(112,77,61,.15)}.card:after{content:"";position:absolute;width:150px;height:150px;border-radius:50%;right:-48px;bottom:-60px;background:radial-gradient(circle,rgba(222,168,184,.28),transparent 66%)}.number{font:italic 2.8rem/1 Georgia,serif;color:rgba(201,139,159,.42)}h2{margin:22px 0 8px;font-size:1.65rem;font-weight:600}.card p{margin:0;color:var(--muted);line-height:1.7}.open{position:absolute;right:26px;top:27px;font:600 .68rem/1 system-ui,sans-serif;letter-spacing:.16em;color:var(--blue)}footer{margin-top:34px;padding-top:18px;border-top:1px solid var(--line);font:500 .7rem/1.6 system-ui,sans-serif;color:#aa8e86}.dot{color:var(--rose)}
+    @media(max-width:640px){main{padding-top:42px}.grid{grid-template-columns:1fr}.card{min-height:190px}.sub{margin-bottom:28px}}
+  </style>
+</head>
+<body>
+  <main>
+    <p class="eyebrow">Asteria · visual handoff</p>
+    <h1 class="brand">Chat <i>/</i> Call.</h1>
+    <p class="sub">沿用 Asteria-Call 真实页面结构制作的独立视觉副本。所有文字、字幕和通话状态均为合成展示数据。</p>
+    <p class="notice"><span>✦</span> 静态视觉预览，未接入真实通话</p>
+    <section class="grid" aria-label="预览入口">
+      <a class="card" href="../chat/">
+        <span class="open">OPEN ↗</span><span class="number">01</span>
+        <h2>Chat 文字与语音</h2>
+        <p>文字气泡、用户语音、沈述语音与转写展开状态。</p>
+      </a>
+      <a class="card" href="../call/">
+        <span class="open">OPEN ↗</span><span class="number">02</span>
+        <h2>Call 全状态</h2>
+        <p>来电、聆听、处理、说话、失败、拒播回退与结束卡片。</p>
+      </a>
+    </section>
+    <footer>BASELINE · commit 56f78b41c6732f26be0c0579c95bf111e5361f4e <span class="dot">·</span> expected tree 2260e9cc4b7df94b263699ad402f0516b1b2953d（来自总控，本环境未独立核验）</footer>
+  </main>
+</body>
+</html>

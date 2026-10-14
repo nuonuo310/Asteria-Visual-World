@@ -1,0 +1,718 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="robots" content="noindex, nofollow">
+<meta name="referrer" content="no-referrer">
+<title>Asteria 通话</title>
+<style>
+  /* E4.27 ice-mist / snow-mist palette. Every colour on the page comes from
+     here; nothing below this block hardcodes a colour. */
+  :root {
+    color-scheme: light;
+    --moon-white: #F8FBFD;
+    --ice-mist: #E5F0F8;
+    --pale-gray-blue: #B5C8DA;
+    --active-top: #F4F8FB;
+    --active-bottom: #C9DDE9;
+    --ink: #355B7A;
+    --secondary-blue: #7195B7;
+    --hangup-coral: #D97874;
+    /* Avatar seam: point this at a real image to replace the letter placeholder. */
+    --call-avatar-image: url("../chat/assets/avatars/shen-amusement-v1.jpg");
+    --incoming-card-width: 72%;
+    --incoming-card-max: 286px;
+    --avatar-incoming: 78px;
+    --avatar-incall: 120px;
+    --avatar-ended: 68px;
+    --btn-incoming: 44px;
+    --btn-control: 44px;
+    --btn-hangup: 48px;
+    --hit-expand: 0px;
+  }
+  * { box-sizing: border-box; }
+  [hidden] { display: none !important; }
+  body {
+    margin: 0;
+    font: 16px/1.5 system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", "Microsoft YaHei UI", "Microsoft YaHei", "PingFang SC", sans-serif;
+    color: var(--ink);
+    background: linear-gradient(180deg, var(--moon-white), var(--ice-mist));
+  }
+
+  /* ------------------------------------------------ screens */
+  .screen {
+    min-height: 100dvh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: calc(18px + env(safe-area-inset-top)) calc(16px + env(safe-area-inset-right)) calc(18px + env(safe-area-inset-bottom)) calc(16px + env(safe-area-inset-left));
+  }
+
+  /* ------------------------------------------------ avatar (shared) */
+  .avatar {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: var(--avatar-incoming);
+    height: var(--avatar-incoming);
+    border-radius: 50%;
+    background-color: var(--pale-gray-blue);
+    background-image: var(--call-avatar-image);
+    background-size: cover;
+    background-position: center;
+    color: var(--moon-white);
+    font-size: 1.05rem;
+    letter-spacing: 0.02em;
+    user-select: none;
+    border: 2px solid var(--moon-white);
+    box-shadow: 0 8px 24px color-mix(in srgb, var(--secondary-blue) 20%, transparent);
+  }
+
+  /* ------------------------------------------------ buttons (shared) */
+  .btn {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: var(--btn-incoming);
+    height: var(--btn-incoming);
+    padding: 0;
+    border: none;
+    border-radius: 50%;
+    background: transparent;
+    color: var(--ink);
+    font: inherit;
+    cursor: pointer;
+  }
+  /* The visual circle stays light and small; the hit area is about 44px. */
+  .btn::before {
+    content: "";
+    position: absolute;
+    inset: var(--hit-expand);
+    border-radius: 50%;
+  }
+  .btn:focus-visible { outline: 2px solid var(--secondary-blue); outline-offset: 3px; }
+  .btn:disabled { cursor: default; opacity: 0.45; }
+
+  /* ------------------------------------------------ incoming */
+  #screen-incoming {
+    justify-content: flex-start;
+    padding-top: max(78px, calc(11dvh + env(safe-area-inset-top)));
+    padding-left: env(safe-area-inset-left);
+    padding-right: env(safe-area-inset-right);
+    background:
+      radial-gradient(circle at 50% 16%, color-mix(in srgb, var(--moon-white) 92%, transparent) 0 15%, transparent 47%),
+      linear-gradient(180deg, var(--moon-white), var(--ice-mist));
+  }
+  .incoming-card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: var(--incoming-card-width);
+    max-width: var(--incoming-card-max);
+    min-width: 250px;
+    padding: 24px 22px 20px;
+    border: 1px solid color-mix(in srgb, var(--moon-white) 78%, var(--pale-gray-blue));
+    border-radius: 28px;
+    background: color-mix(in srgb, var(--moon-white) 88%, var(--ice-mist));
+    box-shadow: 0 22px 60px color-mix(in srgb, var(--secondary-blue) 18%, transparent);
+    text-align: center;
+  }
+  .incoming-theme {
+    margin: 0;
+    font-size: 0.66rem;
+    font-weight: 500;
+    letter-spacing: 0.24em;
+    color: color-mix(in srgb, var(--secondary-blue) 82%, var(--ink));
+  }
+  .incoming-divider {
+    display: grid;
+    grid-template-columns: 1fr 7px 1fr;
+    align-items: center;
+    gap: 8px;
+    width: 132px;
+    margin: 8px 0 16px;
+    color: var(--secondary-blue);
+  }
+  .incoming-divider::before,
+  .incoming-divider::after {
+    content: "";
+    height: 1px;
+  }
+  .incoming-divider::before {
+    background: linear-gradient(90deg, transparent, color-mix(in srgb, var(--secondary-blue) 74%, transparent));
+  }
+  .incoming-divider::after {
+    background: linear-gradient(90deg, color-mix(in srgb, var(--secondary-blue) 74%, transparent), transparent);
+  }
+  .incoming-star {
+    width: 7px;
+    height: 7px;
+    background: currentColor;
+    clip-path: polygon(50% 0, 61% 39%, 100% 50%, 61% 61%, 50% 100%, 39% 61%, 0 50%, 39% 39%);
+    opacity: 0.78;
+  }
+  .caller-name {
+    margin: 13px 0 0;
+    font-size: 1.08rem;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+  }
+  .caller-line {
+    margin: 5px 0 0;
+    font-size: 0.88rem;
+    font-weight: 400;
+    letter-spacing: 0.03em;
+    color: var(--secondary-blue);
+  }
+  .caller-line::before { content: "“"; }
+  .caller-line::after { content: "”"; }
+  .incoming-actions {
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+    gap: 58px;
+    margin-top: 21px;
+  }
+  .incoming-action {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 7px;
+    min-width: 48px;
+    font-size: 0.72rem;
+    color: var(--secondary-blue);
+  }
+  .incoming-actions .btn {
+    background: color-mix(in srgb, var(--moon-white) 94%, var(--pale-gray-blue));
+    color: var(--secondary-blue);
+    box-shadow: 0 7px 18px color-mix(in srgb, var(--secondary-blue) 14%, transparent);
+  }
+  .incoming-actions .btn svg { width: 19px; height: 19px; }
+  #btn-answer { background: var(--secondary-blue); color: var(--moon-white); }
+  .local-note { display: none; }
+
+  /* ------------------------------------------------ in call */
+  #screen-incall {
+    justify-content: flex-start;
+    padding-top: max(22px, calc(3dvh + env(safe-area-inset-top)));
+    background:
+      radial-gradient(circle at 50% 12%, color-mix(in srgb, var(--moon-white) 90%, transparent) 0 12%, transparent 42%),
+      linear-gradient(180deg, var(--active-top), var(--active-bottom));
+  }
+  .incall-top {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    flex: none;
+    width: 100%;
+  }
+  .call-eyebrow {
+    margin: 0;
+    font-size: 0.66rem;
+    font-weight: 500;
+    letter-spacing: 0.24em;
+    color: var(--secondary-blue);
+  }
+  .call-duration {
+    margin: 3px 0 20px;
+    font-size: 0.82rem;
+    color: color-mix(in srgb, var(--secondary-blue) 88%, var(--ink));
+    font-variant-numeric: tabular-nums;
+    letter-spacing: 0.08em;
+  }
+  .avatar-signal {
+    position: relative;
+    display: grid;
+    place-items: center;
+    width: var(--avatar-incall);
+    height: var(--avatar-incall);
+  }
+  .avatar-signal::before,
+  .avatar-signal::after {
+    content: "";
+    position: absolute;
+    border-radius: 50%;
+    pointer-events: none;
+  }
+  .avatar-signal::before {
+    inset: -7px;
+    border: 1px solid color-mix(in srgb, var(--secondary-blue) 42%, transparent);
+  }
+  .avatar-signal::after {
+    inset: -14px;
+    border: 1px solid color-mix(in srgb, var(--secondary-blue) 20%, transparent);
+  }
+  #incall-avatar {
+    position: relative;
+    z-index: 1;
+    width: var(--avatar-incall);
+    height: var(--avatar-incall);
+    font-size: 1.7rem;
+  }
+  #incall-name { margin-top: 17px; }
+  .call-status {
+    margin: 4px 0 0;
+    font-size: 0.9rem;
+    font-style: normal;
+    font-weight: 400;
+    color: color-mix(in srgb, var(--ink) 78%, var(--secondary-blue));
+  }
+  body:has(#phase[data-phase="speaking"]) .avatar-signal::before {
+    animation: avatar-speaking-inner 1.8s ease-in-out infinite;
+  }
+  body:has(#phase[data-phase="speaking"]) .avatar-signal::after {
+    animation: avatar-speaking-outer 1.8s ease-out infinite;
+  }
+
+  /* call-ui:subtitles:start */
+  .subtitles {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+    width: 100%;
+    max-width: 390px;
+    flex: 1 1 auto;
+    min-height: 0;
+    justify-content: center;
+    padding: 28px 18px 18px;
+    overflow-y: auto;
+  }
+  .sub-line { display: flex; flex-direction: column; gap: 5px; }
+  .sub-line .who {
+    font-size: 0.72rem;
+    color: var(--secondary-blue);
+    letter-spacing: 0.06em;
+  }
+  .sub-line .said {
+    max-width: 88%;
+    margin: 0;
+    font-size: 1.03rem;
+    line-height: 1.72;
+    font-weight: 400;
+    color: color-mix(in srgb, var(--ink) 76%, var(--secondary-blue));
+    white-space: pre-wrap;
+    word-break: break-word;
+  }
+  .sub-line.user { align-items: flex-end; text-align: right; }
+  .sub-line.user .said { color: color-mix(in srgb, var(--ink) 66%, var(--secondary-blue)); }
+  .sub-line.partner { align-items: flex-start; text-align: left; }
+  .sub-line.partner .said { color: color-mix(in srgb, var(--ink) 84%, var(--secondary-blue)); }
+  .subtitle-history { display: flex; flex-direction: column; gap: 20px; }
+  .subtitle-round { display: grid; gap: 4px; opacity: 0.65; }
+  .subtitle-round:first-child:not(:last-child) { opacity: 0.45; }
+  .subtitle-round .who { font-size: 0.68rem; color: var(--secondary-blue); }
+  .subtitle-round .said { margin: 0; font-size: 0.88rem; line-height: 1.55; white-space: pre-wrap; word-break: break-word; }
+  /* call-ui:subtitles:end */
+
+  .voice-wave {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    height: 22px;
+    margin: 13px 0 0;
+  }
+  .voice-wave .bar {
+    width: 3px;
+    height: 3px;
+    border-radius: 3px;
+    background: var(--secondary-blue);
+    opacity: 0.82;
+  }
+
+  .play-card { width: 100%; max-width: 350px; margin: 0 auto 12px; text-align: center; }
+  .play-card audio { width: 100%; }
+  .play-action { min-width: 120px; min-height: 44px; margin: 4px; border: 1px solid var(--secondary-blue); border-radius: 22px; background: var(--moon-white); color: var(--ink); cursor: pointer; }
+
+  .incall-controls {
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+    gap: 28px;
+    flex: none;
+    margin-top: auto;
+  }
+  .control { display: flex; flex-direction: column; align-items: center; gap: 7px; width: 62px; }
+  .control .btn {
+    background: color-mix(in srgb, var(--moon-white) 80%, var(--ice-mist));
+    color: var(--ink);
+    box-shadow: 0 7px 18px color-mix(in srgb, var(--secondary-blue) 12%, transparent);
+  }
+  #btn-hangup { width: var(--btn-hangup); height: var(--btn-hangup); background: var(--hangup-coral); color: var(--moon-white); }
+  #btn-primary { width: var(--btn-control); height: var(--btn-control); }
+  #btn-sound { width: var(--btn-control); height: var(--btn-control); }
+  #btn-sound[aria-pressed="true"] { background: var(--pale-gray-blue); }
+  .control-label { font-size: 0.72rem; color: var(--secondary-blue); }
+  .control .glyph { display: inline-flex; align-items: center; justify-content: center; line-height: 1; }
+  .control .glyph svg { width: 19px; height: 19px; }
+  .hint { margin: 10px 0 0; min-height: 1.2em; font-size: 0.76rem; color: var(--secondary-blue); text-align: center; }
+
+  /* ------------------------------------------------ ended */
+  #screen-ended {
+    justify-content: center;
+    gap: 20px;
+    background:
+      radial-gradient(circle at 50% 28%, color-mix(in srgb, var(--moon-white) 92%, transparent) 0 16%, transparent 48%),
+      linear-gradient(180deg, var(--moon-white), var(--ice-mist));
+  }
+  .ended-card {
+    width: min(78%, 304px);
+    min-width: 272px;
+    padding: 22px 20px 20px;
+    border: 1px solid color-mix(in srgb, var(--moon-white) 76%, var(--pale-gray-blue));
+    border-radius: 26px;
+    background: color-mix(in srgb, var(--moon-white) 86%, var(--ice-mist));
+    box-shadow: 0 20px 54px color-mix(in srgb, var(--secondary-blue) 16%, transparent);
+  }
+  .ended-row {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 15px;
+  }
+  .ended-copy { min-width: 0; }
+  .ended-row .avatar {
+    width: var(--avatar-ended);
+    height: var(--avatar-ended);
+    font-size: 1.05rem;
+    flex: none;
+  }
+  .ended-title {
+    margin: 0;
+    font-size: 1.04rem;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+  }
+  .ended-meta {
+    margin: 5px 0 0;
+    font-size: 0.78rem;
+    color: var(--secondary-blue);
+    font-variant-numeric: tabular-nums;
+    white-space: nowrap;
+  }
+  .ended-divider {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    margin: 18px 0 20px;
+    color: var(--secondary-blue);
+    opacity: 0.86;
+  }
+  .ended-divider .wave { width: 84px; height: 8px; }
+  .ended-divider .spark { width: 10px; height: 10px; }
+  .ended-actions { display: flex; gap: 24px; justify-content: center; }
+  .btn-pill {
+    width: auto;
+    min-width: 96px;
+    min-height: 38px;
+    padding: 8px 15px;
+    border-radius: 19px;
+    border: 1px solid color-mix(in srgb, var(--pale-gray-blue) 82%, transparent);
+    background: color-mix(in srgb, var(--moon-white) 94%, var(--ice-mist));
+    color: var(--ink);
+    font-size: 0.84rem;
+  }
+  .btn-pill::before { content: none; }
+  .btn-pill[aria-pressed="true"],
+  .btn-pill:active {
+    border-color: var(--secondary-blue);
+    background: var(--secondary-blue);
+    color: var(--moon-white);
+    box-shadow: 0 7px 18px color-mix(in srgb, var(--secondary-blue) 18%, transparent);
+  }
+  /* The revealed transcript sits under the card instead of stretching, so the
+     ended card stays in place when 查看字幕 is tapped. */
+  .ended-subtitles { width: min(78%, 304px); flex: 0 1 auto; max-height: 46vh; }
+
+  /* ------------------------------------------------ diagnostics (the unchanged lines) */
+  .diag { max-width: 720px; margin: 0 auto 24px; padding: 0 16px; font-size: 0.85rem; color: var(--ink); }
+  .diag summary { cursor: pointer; padding: 10px 0; color: var(--secondary-blue); }
+  .diag .card { border: 1px solid var(--pale-gray-blue); border-radius: 10px; padding: 12px; margin-bottom: 12px; }
+  .diag h2 { font-size: 0.85rem; margin: 0 0 8px; text-transform: uppercase; letter-spacing: 0.04em; color: var(--secondary-blue); }
+  .diag .row { display: flex; gap: 10px; align-items: center; flex-wrap: wrap; }
+  .diag button { font: inherit; padding: 10px 14px; min-height: 44px; border-radius: 8px; border: 1px solid var(--pale-gray-blue); background: var(--moon-white); color: var(--ink); }
+  .diag .note { font-size: 0.78rem; color: var(--secondary-blue); }
+  .diag .text { font-size: 1rem; margin: 0; white-space: pre-wrap; word-break: break-word; }
+  .diag .err { color: var(--hangup-coral); font-size: 0.85rem; margin: 8px 0 0; }
+  .diag table { width: 100%; border-collapse: collapse; font-size: 0.78rem; }
+  .diag th, .diag td { text-align: left; vertical-align: top; padding: 5px 6px; border-bottom: 1px solid var(--pale-gray-blue); word-break: break-word; }
+  .diag ul { margin: 6px 0 0; padding-left: 20px; color: var(--secondary-blue); }
+  .diag audio { width: 100%; margin-top: 8px; }
+
+  @keyframes avatar-speaking-inner {
+    0%, 100% { transform: scale(1); opacity: 0.62; }
+    50% { transform: scale(1.035); opacity: 0.88; }
+  }
+  @keyframes avatar-speaking-outer {
+    0% { transform: scale(0.96); opacity: 0.2; }
+    55% { opacity: 0.48; }
+    100% { transform: scale(1.09); opacity: 0; }
+  }
+
+  @media (max-width: 360px) {
+    .incall-controls { gap: 16px; }
+    .control { width: 56px; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    * { transition: none !important; animation: none !important; }
+  }
+</style>
+<style>
+  /* Independent visual preview skin. The production call DOM remains the base. */
+  :root {
+    --moon-white:#fffaf4; --ice-mist:#f2e8e0; --pale-gray-blue:#c8dce5;
+    --active-top:#fffaf4; --active-bottom:#eadde1; --ink:#6f5046;
+    --secondary-blue:#8faebb; --hangup-coral:#a96f67;
+    --avatar-incoming:86px; --avatar-ended:76px;
+    --btn-control:48px; --btn-hangup:54px;
+  }
+  body { background:radial-gradient(circle at 16% 12%,rgba(237,183,201,.28),transparent 32%),radial-gradient(circle at 86% 76%,rgba(170,204,220,.23),transparent 28%),linear-gradient(180deg,#fffaf3,#f4e9df); }
+  body::before { content:"";position:fixed;inset:0;pointer-events:none;opacity:.42;background-image:radial-gradient(circle,rgba(143,103,86,.13) 1px,transparent 1.4px);background-size:24px 24px; }
+  .preview-console { position:fixed;z-index:20;top:max(8px,env(safe-area-inset-top));left:50%;transform:translateX(-50%);width:min(calc(100% - 16px),920px);padding:8px 10px;border:1px dashed rgba(150,106,92,.36);border-radius:20px;background:rgba(255,250,244,.88);box-shadow:0 12px 34px rgba(112,77,61,.12);backdrop-filter:blur(18px); }
+  .preview-console-head { display:flex;align-items:center;gap:9px;margin-bottom:7px; }
+  .preview-console-head a { display:grid;place-items:center;width:30px;height:30px;border-radius:50%;color:#9c7180;background:rgba(237,207,214,.56);text-decoration:none;font-size:1.25rem; }
+  .preview-console-head strong,.preview-console-head small { display:block; }
+  .preview-console-head strong { font-size:.7rem;letter-spacing:.08em;color:#8a625a; }
+  .preview-console-head small { font-size:.59rem;color:#ad8c83; }
+  .preview-states { display:flex;gap:5px;overflow-x:auto;scrollbar-width:none; }
+  .preview-states::-webkit-scrollbar{display:none}.preview-states button{flex:0 0 auto;min-height:30px;padding:0 10px;border:1px solid rgba(157,116,100,.22);border-radius:999px;background:rgba(255,255,255,.54);color:#987970;font:500 .65rem/1 system-ui,sans-serif}.preview-states button[aria-pressed="true"]{border-color:transparent;color:#fffaf5;background:linear-gradient(145deg,#d59aab,#bd8094);box-shadow:0 5px 12px rgba(172,107,131,.18)}
+  .screen { padding-top:max(112px,calc(13dvh + env(safe-area-inset-top))); }
+  #screen-incall {
+    background:
+      radial-gradient(circle at 50% 15%,rgba(255,252,246,.96) 0 14%,transparent 42%),
+      radial-gradient(circle at 88% 78%,rgba(177,128,108,.1),transparent 30%),
+      linear-gradient(180deg,#fffaf3 0%,#f7ece4 51%,#ead9d4 100%);
+  }
+  #screen-ended {
+    background:
+      linear-gradient(180deg,rgba(255,250,246,.14),rgba(250,237,234,.2)),
+      url("../chat/assets/cocoa-bear-chat-bg.png") center bottom/cover no-repeat;
+  }
+  #screen-incoming {
+    background:
+      linear-gradient(180deg,rgba(255,251,245,.38),rgba(246,230,224,.46)),
+      url("../chat/assets/cocoa-bear-chat-bg.png") center bottom/cover no-repeat;
+  }
+  .incoming-card,.ended-card {
+    position:relative;
+    overflow:hidden;
+    border:1px solid rgba(139,96,82,.2);
+    background:linear-gradient(155deg,rgba(255,252,247,.96),rgba(247,236,230,.93));
+    box-shadow:0 20px 54px rgba(104,69,54,.16),inset 0 1px 0 rgba(255,255,255,.82);
+    backdrop-filter:blur(16px) saturate(1.08);
+  }
+  .incoming-card::before,.incoming-card::after,.ended-card::before,.ended-card::after { content:none; }
+  .incoming-card { width:min(78%,300px);max-width:300px;padding:22px 22px 19px;border-radius:27px; }
+  .incoming-theme { color:#a87578;font-size:.63rem;letter-spacing:.2em; }
+  .incoming-divider { width:118px;margin:7px 0 15px;color:#b77f8d; }
+  .incoming-divider::before { background:linear-gradient(90deg,transparent,rgba(161,110,119,.54)); }
+  .incoming-divider::after { background:linear-gradient(90deg,rgba(161,110,119,.54),transparent); }
+  .avatar { background-color:#ead8cd;background-image:var(--call-avatar-image);background-position:center 34%;background-size:cover;background-repeat:no-repeat;border-color:#fffaf4;color:#79564c;font-size:2.15rem;box-shadow:0 9px 24px rgba(105,68,55,.15); }
+  #incoming-avatar { font-size:2.6rem; }
+  .incoming-actions { gap:48px;margin-top:20px; }
+  .incoming-action { color:#8e6c64; }
+  .incoming-actions .btn { border:1px solid rgba(135,92,80,.18);background:rgba(255,247,242,.94);color:#866057;box-shadow:0 8px 19px rgba(102,66,51,.12); }
+  #btn-decline { background:linear-gradient(145deg,#fffaf5,#ead9d2);color:#8b6158; }
+  #btn-answer { border-color:transparent;background:linear-gradient(145deg,#b88c7a,#986858);color:#fffaf6;box-shadow:0 9px 22px rgba(119,76,59,.24); }
+  #incall-avatar { font-size:3.2rem; }
+  #ended-avatar { font-size:1.32rem; }
+  .caller-name,.ended-title,#incall-name{color:#765146}.caller-line,.call-status,.control-label,.ended-meta{color:#99786f}.call-eyebrow{color:#bd8196}.ended-divider{color:#b77f8d}
+  .subtitles { max-width:430px; }.sub-line .who,.subtitle-round .who{color:#ad7484;font-size:.78rem;font-weight:600;letter-spacing:.04em}.sub-line .said{color:#765b52}.sub-line.user .said{color:#8a6c64}
+  .subtitle-history { align-items:center;width:100%;padding-left:0;border-left:0;text-align:center; }
+  .subtitle-history .subtitle-round { width:min(88%,340px);justify-items:center; }
+  .subtitle-history .subtitle-round .who,.subtitle-history .subtitle-round .said { text-align:center; }
+  .control .glyph svg { width:21px;height:21px; }
+  #btn-hangup .glyph svg { width:23px;height:23px; }
+  .voice-wave .bar{background:#c58a9f}.play-card{padding:10px 14px;border:1px dashed rgba(157,116,100,.24);border-radius:18px;background:rgba(255,250,245,.5)}.play-action{border-color:#c38a9c;background:#fff9f4;color:#815f56}.note{color:#9c7b72}
+  .ended-card { width:min(82%,316px);min-width:272px;padding:22px 20px 20px;border-radius:27px; }
+  .ended-divider { gap:10px;margin:17px 0 18px;color:#986755;opacity:1; }
+  .ended-divider .wave { width:84px;height:8px; }
+  .ended-divider .spark { width:11px;height:11px;filter:drop-shadow(0 1px 3px rgba(121,79,61,.16)); }
+  .ended-actions { gap:10px; }
+  .ended-actions .btn-pill { min-width:104px;border-color:rgba(139,96,82,.2);background:rgba(255,248,243,.88);color:#7b574e;box-shadow:0 7px 16px rgba(105,68,55,.08); }
+  #btn-redial { border-color:transparent;background:linear-gradient(145deg,#b88c7a,#986858);color:#fffaf6;box-shadow:0 8px 19px rgba(119,76,59,.2); }
+  #btn-view-transcript[aria-pressed="true"] { border-color:rgba(139,96,82,.18);background:#ead8d2;color:#704f47; }
+  .ended-subtitles { width:min(88%,390px);padding:18px;flex:0 1 auto;border:1px solid rgba(169,126,111,.18);border-radius:24px;background:rgba(255,250,245,.78);box-shadow:0 16px 40px rgba(112,77,61,.09);backdrop-filter:blur(14px); }.ended-history{display:grid;gap:12px}.ended-history .subtitle-round{padding-bottom:10px;border-bottom:1px dashed rgba(157,116,100,.16)}.ended-history .subtitle-round:last-child{border-bottom:0}.preview-kicker{margin:0 0 4px;color:#bd8196;font:600 .6rem/1.3 system-ui,sans-serif;letter-spacing:.14em}
+  body[data-preview-state="processing"] .avatar-signal::before{animation:avatar-speaking-inner 2.2s ease-in-out infinite}body[data-preview-state="processing"] .avatar-signal::after{animation:avatar-speaking-outer 2.2s ease-out infinite}body[data-preview-state="failed"] #incall-avatar{filter:grayscale(.28);opacity:.78}body[data-preview-state="fallback"] .play-card{border-color:rgba(201,127,131,.42)}
+  @media(min-width:760px){.preview-console{display:grid;grid-template-columns:220px minmax(0,1fr);align-items:center;gap:10px}.preview-console-head{margin:0}.screen{padding-top:max(88px,calc(9dvh + env(safe-area-inset-top)))}#screen-incall{max-width:760px;margin:auto;min-height:100dvh;border-left:1px solid rgba(157,116,100,.12);border-right:1px solid rgba(157,116,100,.12)}}
+  @media(max-width:390px){.preview-states button{padding:0 9px}.screen{padding-left:14px;padding-right:14px}.subtitles{padding-left:12px;padding-right:12px}}
+</style>
+</head>
+<body>
+<aside class="preview-console" aria-label="静态视觉预览控制">
+  <div class="preview-console-head"><a href="../preview/" aria-label="返回预览入口">‹</a><div><strong>静态视觉预览</strong><small>未接入真实通话 · 合成数据</small></div></div>
+  <div class="preview-states" role="group" aria-label="通话状态切换">
+    <button type="button" data-call-preview="incoming" aria-pressed="true">来电</button>
+    <button type="button" data-call-preview="listening" aria-pressed="false">聆听</button>
+    <button type="button" data-call-preview="processing" aria-pressed="false">处理</button>
+    <button type="button" data-call-preview="speaking" aria-pressed="false">说话</button>
+    <button type="button" data-call-preview="failed" aria-pressed="false">失败</button>
+    <button type="button" data-call-preview="fallback" aria-pressed="false">拒播回退</button>
+    <button type="button" data-call-preview="ended" aria-pressed="false">结束卡片</button>
+  </div>
+</aside>
+<main id="call-app">
+  <!-- 来电：纵向居中，头像 -> 名字 -> 文案 -> 双按钮。 -->
+  <section id="screen-incoming" class="screen" aria-labelledby="incoming-name">
+    <div class="incoming-card" id="incoming-card">
+      <p class="incoming-theme">ASTERIA CALL</p>
+      <div class="incoming-divider" aria-hidden="true"><i class="incoming-star"></i></div>
+      <div class="avatar" id="incoming-avatar" aria-hidden="true">沈</div>
+      <p class="caller-name" id="incoming-name">沈述</p>
+      <p class="caller-line">想听听你的声音</p>
+      <div class="incoming-actions">
+        <div class="incoming-action">
+          <button id="btn-decline" class="btn" type="button" aria-label="等一会">
+            <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M6.2 5.2 18.8 17.8M8.7 15.3l-2.6 2.1a1.5 1.5 0 0 1-2-.1l-.8-.8a2 2 0 0 1-.3-2.4c1.9-3.2 5.1-5.3 9-5.3 1 0 2 .1 2.9.4M18.2 11.2c1.1.8 2 1.8 2.8 3a2 2 0 0 1-.3 2.4l-.8.8a1.5 1.5 0 0 1-2 .1l-2.6-2.1a1.5 1.5 0 0 1-.5-1.5l.2-1" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </button>
+          <span>等一会</span>
+        </div>
+        <div class="incoming-action">
+          <button id="btn-answer" class="btn" type="button" aria-label="开始通话">
+            <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M4.5 5.1c0 7.9 6.5 14.4 14.4 14.4.7 0 1.3-.5 1.5-1.2l.5-2.4a1.5 1.5 0 0 0-1-1.7l-3.2-1.1a1.5 1.5 0 0 0-1.7.6l-.8 1.2a12 12 0 0 1-5.1-5.1l1.2-.8a1.5 1.5 0 0 0 .6-1.7L9.8 4.1a1.5 1.5 0 0 0-1.7-1l-2.4.5c-.7.2-1.2.8-1.2 1.5Z" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </button>
+          <span>开始通话</span>
+        </div>
+      </div>
+    </div>
+    <p class="local-note" id="incoming-note">这是本页的本地界面：远端来电、系统通知与持久记忆都还没有实现；接通后是否录音由你决定。</p>
+  </section>
+
+  <!-- 通话中：顶部身份与状态，中部字幕，底部三个轻量控制。 -->
+  <section id="screen-incall" class="screen" hidden aria-labelledby="incall-name">
+    <header class="incall-top">
+      <p class="call-eyebrow" aria-hidden="true">ASTERIA CALL</p>
+      <p class="call-duration" id="call-duration">00:00</p>
+      <div class="avatar-signal" aria-hidden="true">
+        <div class="avatar" id="incall-avatar">沈</div>
+      </div>
+      <p class="caller-name" id="incall-name">沈述</p>
+      <p class="call-status" id="call-status" role="status" aria-live="polite">哥哥在这里</p>
+      <p class="hint" id="live-hint" role="status" aria-live="polite" hidden></p>
+      <div class="voice-wave" id="voice-wave" aria-hidden="true" hidden>
+        <span class="bar"></span><span class="bar"></span><span class="bar"></span><span class="bar"></span><span class="bar"></span><span class="bar"></span><span class="bar"></span>
+      </div>
+    </header>
+
+    <div class="subtitles" id="subtitles">
+      <div class="subtitle-history" id="subtitle-history" aria-label="较早的通话字幕" hidden></div>
+      <div class="sub-line user" id="sub-user" hidden>
+        <span class="who" id="sub-user-label">你</span>
+        <p class="said" id="sub-user-text"></p>
+      </div>
+      <div class="sub-line partner" id="sub-partner" hidden>
+        <span class="who" id="sub-partner-label">沈述</span>
+        <p class="said" id="sub-partner-text"></p>
+      </div>
+    </div>
+
+    <div class="play-card" id="play-card" hidden>
+      <audio id="reply-audio" preload="none" hidden></audio>
+      <button id="btn-stop-playback" class="play-action" type="button" aria-label="停止播放" hidden disabled>停止播放</button>
+      <button id="btn-play-voice" class="play-action" type="button" aria-label="播放语音" hidden disabled>播放语音</button>
+      <p class="note" id="playback-truth" data-playback="none" role="status" aria-live="polite" hidden></p>
+      <p class="note" id="playback-truth-note" hidden>这里只显示浏览器播放状态，不代表已经听见，也不会影响录音或发送。</p>
+      <p class="note" id="voice" data-voice="unmeasured" hidden></p>
+      <p id="timing" class="note" hidden></p>
+    </div>
+
+    <footer class="incall-controls">
+      <div class="control">
+        <button id="btn-primary" class="btn" type="button" aria-label="开始说"><span class="glyph" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none"><path d="M12 3a3 3 0 0 0-3 3v5a3 3 0 0 0 6 0V6a3 3 0 0 0-3-3Z" stroke="currentColor" stroke-width="1.7"/><path d="M6.5 10.5v.5a5.5 5.5 0 0 0 11 0v-.5M12 16.5V21M9.5 21h5" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/></svg></span></button>
+        <span class="control-label" id="primary-label">开始说</span>
+      </div>
+      <div class="control">
+        <button id="btn-hangup" class="btn" type="button" aria-label="结束通话"><span class="glyph" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none"><path d="M4 15.5c4.7-4.7 11.3-4.7 16 0l-2.4 2.4a1.5 1.5 0 0 1-1.7.3l-2.1-1a1.5 1.5 0 0 1-.8-1.4v-.7a9 9 0 0 0-2 0v.7a1.5 1.5 0 0 0-.8 1.4l-2.1 1a1.5 1.5 0 0 1-1.7-.3L4 15.5Z" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/></svg></span></button>
+        <span class="control-label">结束通话</span>
+      </div>
+      <div class="control">
+        <button id="btn-sound" class="btn" type="button" aria-label="声音" aria-pressed="false" aria-disabled="true" disabled><span class="glyph" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none"><path d="M5 10v4h3l4 3V7l-4 3H5Z" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/><path d="M15 9.5a4 4 0 0 1 0 5M17.5 7a7.5 7.5 0 0 1 0 10" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/></svg></span></button>
+        <span class="control-label" id="sound-label">声音</span>
+      </div>
+    </footer>
+    <p class="hint" id="hangup-hint" role="status" aria-live="polite"></p>
+  </section>
+
+  <!-- 通话结束：更矮更横向；分隔只使用同系蓝色。 -->
+  <section id="screen-ended" class="screen" hidden>
+    <div class="ended-card" id="ended-card">
+      <div class="ended-row">
+        <div class="avatar" id="ended-avatar" aria-hidden="true">沈</div>
+        <div class="ended-copy">
+          <p class="ended-title">沈述</p>
+          <p class="ended-meta">通话结束 · <span id="ended-duration">00:00</span> · <span id="ended-turns">0</span> 轮</p>
+        </div>
+      </div>
+      <div class="ended-divider" id="ended-divider" aria-hidden="true">
+        <svg class="wave" viewBox="0 0 84 8" width="84" height="8" fill="none" aria-hidden="true"><defs><linearGradient id="ended-wave-left" x1="0" y1="0" x2="84" y2="0" gradientUnits="userSpaceOnUse"><stop stop-color="#CDB3A4" stop-opacity="0"/><stop offset=".7" stop-color="#AC7C69" stop-opacity=".64"/><stop offset="1" stop-color="#865948" stop-opacity=".96"/></linearGradient></defs><path d="M1 4 C 8 4 11 1.7 18 1.7 S 29 6.2 38 5.2 S 49 2.2 58 2.7 S 70 5.4 83 4" stroke="url(#ended-wave-left)" stroke-width="1.15" stroke-linecap="round"/></svg>
+        <svg class="spark" viewBox="0 0 12 12" width="10" height="10" fill="none" aria-hidden="true"><path d="M6 1 L7 5 L11 6 L7 7 L6 11 L5 7 L1 6 L5 5 Z" fill="currentColor"/></svg>
+        <svg class="wave" viewBox="0 0 84 8" width="84" height="8" fill="none" aria-hidden="true"><defs><linearGradient id="ended-wave-right" x1="0" y1="0" x2="84" y2="0" gradientUnits="userSpaceOnUse"><stop stop-color="#865948" stop-opacity=".96"/><stop offset=".3" stop-color="#AC7C69" stop-opacity=".64"/><stop offset="1" stop-color="#CDB3A4" stop-opacity="0"/></linearGradient></defs><path d="M1 4 C 8 4 11 1.7 18 1.7 S 29 6.2 38 5.2 S 49 2.2 58 2.7 S 70 5.4 83 4" stroke="url(#ended-wave-right)" stroke-width="1.15" stroke-linecap="round"/></svg>
+      </div>
+      <div class="ended-actions">
+        <button id="btn-view-transcript" class="btn btn-pill" type="button" aria-label="查看字幕" aria-pressed="false">查看字幕</button>
+        <button id="btn-redial" class="btn btn-pill" type="button" aria-label="再打一次">再打一次</button>
+      </div>
+    </div>
+    <div class="subtitles ended-subtitles" id="ended-subtitles" hidden>
+      <div class="sub-line user" id="ended-user" hidden>
+        <span class="who" id="ended-user-label">你</span>
+        <p class="said" id="ended-user-text"></p>
+      </div>
+      <div class="sub-line partner" id="ended-partner" hidden>
+        <span class="who">沈述</span>
+        <p class="said" id="ended-partner-text"></p>
+      </div>
+    </div>
+  </section>
+</main>
+
+<details class="diag" id="local-details" hidden>
+  <summary>本机细节（诊断）</summary>
+  <div class="card">
+    <h2>通话</h2>
+    <div class="row">
+      <button id="start" type="button">开始录音</button>
+      <button id="stop" type="button">停止</button>
+        <button id="send" type="button" hidden disabled>发送</button>
+      <button id="prewarm" type="button" hidden>重试准备耳朵</button>
+      <span id="duration">0.000 s</span>
+      <span id="meter">—</span>
+    </div>
+    <p id="stt" class="note" data-stt="unknown" hidden></p>
+    <p id="phase" data-phase="idle">空闲：点「开始录音」</p>
+    <p id="observation" data-observation="unobserved" role="status" aria-live="polite" hidden></p>
+    <p class="note" id="observation-note">录音时这里只描述听到的声音，不会自动停止，也不会自动发送。</p>
+    <p class="note" id="turn-decision" data-turn-decision="idle" role="status" aria-live="polite" hidden></p>
+    <p class="note" id="observation-diag" data-observation-diag="off" hidden></p>
+    <p class="note" id="probe" data-probe="idle" role="status" aria-live="polite" hidden></p>
+    <p class="note" id="smart-turn" data-smart-turn="idle" role="status" aria-live="polite" hidden></p>
+    <p id="error" class="err" hidden></p>
+  </div>
+  <div class="card">
+    <h2>识别到的内容</h2>
+    <p id="transcript" class="text">—</p>
+  </div>
+  <div class="card">
+    <h2>回复文字</h2>
+    <p id="reply" class="text">—</p>
+  </div>
+  <div class="card">
+    <h2>本次通话参数</h2>
+    <table><tbody id="diag-body"></tbody></table>
+    <p class="note">录音只写进电脑上 Git 忽略的临时目录，处理完即删除；回复音频只按不透明编号读取。</p>
+  </div>
+  <div class="card">
+    <h2>隐私</h2>
+    <ul>
+      <li>录音在点「发送」之前只存在于这个页面内存里。</li>
+      <li>页面不会显示 Codex 凭据、运行目录或完整线程 ID。</li>
+      <li>访问链接里的临时凭据只在本次服务启动期间有效。</li>
+    </ul>
+  </div>
+</details>
+
+<script type="module" src="./preview-adapter.js"></script>
+</body>
+</html>

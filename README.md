@@ -8,6 +8,7 @@ Home and Mind now have a locked mobile-first visual / interaction baseline. The 
 
 - Home: `index.html` — structure / content skeleton locked; surface assets and real data may continue to evolve.
 - Mind: `mind.html` — visual structure and current interaction language locked.
+- Chat / Call: `chat/`, `call/`, and `preview/` — Sites v36 visual source imported on 2026-10-14; Home ↔ Chat ↔ Mind use repository-relative navigation. [Source and verification record](docs/chat-call-sync-2026-10-14.md).
 - Current visual status / lock baseline: [docs/visual-status-2026-09-18.md](docs/visual-status-2026-09-18.md)
 - Previous construction record: [docs/visual-status-2026-09-17.md](docs/visual-status-2026-09-17.md)
 

@@ -1,0 +1,130 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="robots" content="noindex, nofollow">
+<meta name="referrer" content="no-referrer">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self'; style-src 'self'; connect-src 'self'; img-src 'self' data:; media-src 'self' blob:; base-uri 'none'; form-action 'none'; frame-ancestors 'none'">
+<title>沈述 · 文字</title>
+<link rel="stylesheet" href="./chat.css">
+</head>
+<body>
+<div class="ambient ambient-one" aria-hidden="true"></div>
+<div class="ambient ambient-two" aria-hidden="true"></div>
+
+<header class="chat-header">
+  <div class="chat-avatar" aria-hidden="true"></div>
+  <div class="chat-identity">
+    <p class="chat-name">沈述</p>
+    <p class="chat-connection" id="chat-connection" data-state="connecting">连接中…</p>
+  </div>
+  <div class="header-actions">
+    <a class="header-icon chat-call-entry" id="chat-call-entry" href="../call/" rel="noreferrer" aria-label="给沈述打电话">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8.2 3.8 6.4 2.5a1.7 1.7 0 0 0-2.3.3L2.8 4.4c-.7.8-.9 2-.5 3 1.6 5 5.3 9.1 10.1 11.4 1 .5 2.2.4 3.1-.2l1.8-1.2c.9-.6 1.2-1.8.7-2.7l-1.4-2.5a1.7 1.7 0 0 0-2.1-.7l-1.8.8a15.2 15.2 0 0 1-4.3-4.8l1-1.7a1.7 1.7 0 0 0-.4-2.1Z"/></svg>
+    </a>
+    <button class="header-icon" type="button" aria-label="视频功能稍后接入" disabled>
+      <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="6" width="12" height="12" rx="3"/><path d="m15 10 5-3v10l-5-3"/></svg>
+    </button>
+    <button class="header-icon" id="chat-more" type="button" aria-label="打开更多选项">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="5" cy="12" r="1.6"/><circle cx="12" cy="12" r="1.6"/><circle cx="19" cy="12" r="1.6"/></svg>
+    </button>
+  </div>
+</header>
+
+<main class="chat-timeline" id="chat-timeline" role="log" aria-live="polite" aria-label="对话"></main>
+
+<footer class="chat-composer">
+  <div class="composer-meta">
+    <p class="chat-status" id="chat-status" role="status"></p>
+    <button type="button" id="chat-retry" class="retry-button" hidden>重试</button>
+    <button type="button" class="model-pill" aria-label="当前模型 Astra" disabled>Astra <span>⌄</span></button>
+  </div>
+  <p class="chat-notice" id="chat-notice" hidden>链接无效，请重新从服务启动页进入</p>
+  <div class="voice-bar" id="chat-voice-bar" hidden>
+    <span class="voice-pulse" aria-hidden="true"></span>
+    <p class="voice-status" id="chat-voice-status" role="status" aria-live="polite"></p>
+    <button type="button" class="voice-cancel" id="chat-voice-cancel" hidden>取消</button>
+  </div>
+  <section class="voice-draft" id="chat-voice-draft" hidden aria-label="语音草稿">
+    <div class="voice-draft-head">
+      <button type="button" class="voice-draft-play" id="chat-voice-draft-play" aria-label="播放语音">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8.5 5.5v13l10-6.5-10-6.5Z"/></svg>
+      </button>
+      <span class="voice-draft-meter" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></span>
+      <span class="voice-draft-duration" id="chat-voice-draft-duration">0:00</span>
+      <button type="button" class="voice-draft-transcript-toggle" id="chat-voice-draft-transcript-toggle" aria-expanded="false" aria-controls="chat-voice-draft-transcript">查看转写</button>
+    </div>
+    <p class="voice-draft-status" id="chat-voice-draft-status" role="status" aria-live="polite"></p>
+    <div class="voice-draft-transcript" id="chat-voice-draft-transcript" hidden></div>
+    <div class="voice-draft-actions">
+      <button type="button" class="voice-draft-send" id="chat-voice-draft-send">发送语音</button>
+      <button type="button" id="chat-voice-draft-to-text">转成文字</button>
+      <button type="button" id="chat-voice-draft-delete">删除</button>
+    </div>
+  </section>
+  <div class="composer-shell">
+    <button class="composer-icon composer-plus" type="button" aria-label="更多输入方式稍后接入" disabled>
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg>
+    </button>
+    <label class="sr-only" for="chat-input">输入消息</label>
+    <textarea id="chat-input" rows="1" placeholder="和沈述说点什么…" autocomplete="off" enterkeyhint="send" disabled></textarea>
+    <button class="composer-icon chat-voice" id="chat-voice" type="button" aria-label="语音输入" aria-pressed="false">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="9" y="3" width="6" height="11" rx="3"/><path d="M5.5 11.5a6.5 6.5 0 0 0 13 0M12 18v3M8.5 21h7"/></svg>
+    </button>
+    <button type="button" id="chat-send" class="send-button" aria-label="发送" disabled>
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m3.5 11 16-7-5.8 16-2.5-6.6L3.5 11Z"/><path d="m11.2 13.4 8.3-9.4"/></svg>
+    </button>
+  </div>
+</footer>
+
+<nav class="asteria-dock" id="asteria-dock" aria-label="Asteria 主入口">
+  <a href="../index.html" aria-label="回到 Asteria Home"><span><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.35" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3.4 9.2 10 3.7l6.6 5.5v7.5a1 1 0 0 1-1 1H4.4a1 1 0 0 1-1-1z"/><path d="M8.1 17.7v-5h3.8v5"/></svg></span>Home</a>
+  <button type="button" class="is-current" aria-current="page"><span><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.35" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.2 4.8h10.5a2.5 2.5 0 0 1 2.5 2.5v6.1a2.5 2.5 0 0 1-2.5 2.5H8.5L5 18v-2.5a2.5 2.5 0 0 1-3-2.4V7.3a2.5 2.5 0 0 1 2.2-2.5z"/><path d="M6.3 9.5h6.8M6.3 12.1h4.9"/></svg></span>Chat</button>
+  <a href="../mind.html" aria-label="进入 Asteria Mind"><span><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 7.8C8.2 5 8.8 2.2 10.7 2.2c1.9 0 2.6 2.1 1.6 5.2 3-2.2 5.6-1.7 6.1.2.5 1.9-1 3.3-4.3 3.8 3.3.7 4.5 2.7 3.4 4.2-1.1 1.5-3.3 1.5-5.2-.7.2 3.4-1.4 5.2-3.2 4.5-1.8-.7-2.2-2.8-.9-5.8-2.4 2.4-4.7 2.1-5.5.3-.7-1.8.4-3.5 3.7-4.1-3.3-.6-4.5-2.4-3.6-4.1.9-1.7 3-1.9 5.2.5Z"/><circle cx="10" cy="10" r="1.55" fill="#f2d8d5" stroke="currentColor" stroke-width=".8"/></svg></span>Mind</a>
+  <button type="button" disabled><span><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.35" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 3.2c.6 2.6 1.3 4.2 2.3 4.8 1 .6 2.7 1.1 5.2 2-2.5.8-4.2 1.4-5.2 2.3-1 .9-1.7 2.5-2.3 4.6-.6-2.1-1.3-3.7-2.3-4.6C6.7 11.4 5 10.8 2.5 10c2.5-.9 4.2-1.4 5.2-2 1-.6 1.7-2.2 2.3-4.8z"/><path d="M16.8 3v2.4M15.6 4.2H18M16.6 15v2M15.6 16h2"/></svg></span>Memory</button>
+  <button type="button" disabled><span><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.25" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.2 17.4V8.1a5.8 5.8 0 0 1 11.6 0v9.3"/><path d="M6.6 17.4v-9a3.4 3.4 0 0 1 6.8 0v9M2.9 17.4h14.2"/><path d="M9.6 10.2c-.8-1.2-2.3-.4-1.7.8l2.1 2.1 2.1-2.1c.6-1.2-.9-2-1.7-.8" fill="#f2d8d5" stroke-width=".8"/></svg></span>Detour</button>
+</nav>
+
+<div class="move-overlay" id="move-overlay" hidden>
+  <section class="move-card" role="dialog" aria-modal="true" aria-labelledby="move-title">
+    <button class="move-close" id="move-close" type="button" aria-label="关闭换窗卡片">×</button>
+    <p class="move-kicker">PACKING FOR THE NEXT WINDOW</p>
+    <h1 id="move-title">去下一扇窗 <span>✦</span></h1>
+    <p class="move-copy">把没说完的话，一起带过去</p>
+    <p class="move-state"><span>✦</span> 这一窗快住满了</p>
+
+    <fieldset class="round-picker">
+      <legend>带走最近的对话</legend>
+      <button type="button" data-rounds="10" aria-pressed="false">10 轮</button>
+      <button type="button" data-rounds="25" aria-pressed="true">25 轮</button>
+    </fieldset>
+    <div class="star-divider" aria-hidden="true"><span></span><b>✦</b><span></span></div>
+
+    <h2>行李预览</h2>
+    <div class="packing-layout">
+      <ul class="packing-list">
+        <li data-ready="false"><span class="packing-star" aria-hidden="true">✧</span><div><strong>刚才的对话</strong><small>把我们说过的话一起带上</small></div></li>
+        <li data-ready="false"><span class="packing-star" aria-hidden="true">✧</span><div><strong>没做完的事</strong><small>接上已经决定的下一步</small></div></li>
+        <li data-ready="false"><span class="packing-star" aria-hidden="true">✧</span><div><strong>此刻的你</strong><small>记得你现在的心情</small></div></li>
+      </ul>
+      <div class="packing-illustration" aria-label="沈述在整理行李" role="img"></div>
+    </div>
+
+    <button class="move-details-toggle" id="move-details-toggle" type="button" aria-expanded="false">展开确认携带内容 <span>⌄</span></button>
+    <div class="move-details" id="move-details" hidden>
+      <p>最近的完整对话会同时包含糯糯说的话和沈述的回答。</p>
+      <p>未完事项、重要约定与相关入口只做预览，确认以后才会进入下一扇窗。</p>
+    </div>
+    <p class="packing-summary">未完事项 3 <i>·</i> 重要约定 2 <i>·</i> 相关入口 4</p>
+    <div class="move-actions">
+      <button type="button" id="move-later">再住一会儿</button>
+      <button type="button" class="move-primary" id="move-start" disabled>开始搬家</button>
+    </div>
+    <p class="move-promise"><span></span><b>✦</b>只带走我们想留下的<b>✦</b><span></span></p>
+  </section>
+</div>
+
+<script type="module" src="./preview-adapter.js"></script>
+</body>
+</html>
