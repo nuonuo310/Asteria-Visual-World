@@ -408,6 +408,7 @@ button{font:inherit;color:inherit}.page{position:relative;isolation:isolate;widt
   const traceHead=document.querySelector('.trace-head'),oldLink=traceHead.lastElementChild,traceLink=document.createElement('button');traceLink.type='button';traceLink.className='trace-open';traceLink.textContent='查看';traceLink.setAttribute('aria-label','查看最近三小时变化');traceLink.addEventListener('click',()=>{location.hash='trace';});oldLink.replaceWith(traceLink);
   const dockButtons=[...dock.querySelectorAll('button')];
   dockButtons[0].addEventListener('click',()=>{window.location.href='index.html';});
+  dockButtons[1].addEventListener('click',()=>{window.location.href='https://asteria-chat-call-visual-preview.tnuonuo310.chatgpt.site/chat/';});
   dock.querySelector('.on').addEventListener('click',()=>{location.hash='mind';});
   window.addEventListener('hashchange',render);render();
 })();
