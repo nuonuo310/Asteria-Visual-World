@@ -1,0 +1,317 @@
+/* Asteria letters v4: use the complete stationery artwork as one surface. */
+.letter-card,
+.letter-card.pink {
+  width: calc(100% - 6px);
+  aspect-ratio: 1584 / 760;
+  margin: 0 auto 18px;
+  padding: 0;
+  overflow: hidden;
+  border: 0;
+  border-radius: 2px;
+  color: #6f4e41;
+  background: url("assets/letter-envelope-v5.png") center / 100% 100% no-repeat;
+  box-shadow: 0 8px 19px rgba(103, 70, 52, .11);
+}
+
+.letter-card::before,
+.letter-card::after { display: none; }
+
+.letter-card .sender-row {
+  position: absolute;
+  z-index: 1;
+  top: 13%;
+  right: 21.5%;
+  left: 30%;
+  margin: 0;
+  color: #8d7164;
+  font-size: clamp(9px, 2.8vw, 12px);
+  font-weight: 450;
+  letter-spacing: .025em;
+  white-space: nowrap;
+}
+
+.letter-card .sender-row time {
+  margin-left: auto;
+  color: #8e7062;
+  font: 500 clamp(9px, 2.65vw, 11px) Georgia, serif;
+}
+
+.letter-card .unread {
+  width: 5px;
+  height: 5px;
+  flex: 0 0 auto;
+  background: #d48fa1;
+  box-shadow: 0 0 0 4px rgba(245, 207, 216, .55);
+}
+
+.letter-card .stamp { display: none; }
+
+.letter-card h2 {
+  position: absolute;
+  z-index: 1;
+  top: 43%;
+  right: 29%;
+  left: 8.5%;
+  width: max-content;
+  max-width: 62.5%;
+  margin: 0;
+  overflow: hidden;
+  color: #75584d;
+  font-size: clamp(15px, 4.25vw, 19px);
+  font-weight: 500;
+  line-height: 1.35;
+  letter-spacing: .012em;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  background: none;
+}
+
+.letter-card p {
+  position: absolute;
+  z-index: 1;
+  top: 66%;
+  right: 40%;
+  left: 8.5%;
+  display: block;
+  margin: 0;
+  overflow: hidden;
+  color: #8f776a;
+  font-size: clamp(10px, 2.8vw, 12px);
+  line-height: 1.55;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+#letter-title {
+  position: relative;
+  isolation: isolate;
+  z-index: 0;
+  display: block;
+  width: max-content;
+  max-width: 100%;
+}
+
+#letter-title::after {
+  content: "";
+  position: absolute;
+  z-index: -1;
+  right: -14px;
+  bottom: 1px;
+  left: -8px;
+  height: .68em;
+  border-radius: 7px 13px 5px 10px;
+  background: linear-gradient(90deg, rgba(243, 191, 201, .48), rgba(239, 174, 188, .38) 78%, rgba(247, 204, 211, .20));
+  transform: rotate(-.8deg) skewX(-4deg);
+}
+
+.detail-date {
+  color: #8d6c60;
+  font-size: 12px;
+  font-weight: 500;
+  letter-spacing: .025em;
+}
+
+.paper {
+  isolation: isolate;
+  min-height: 590px;
+  margin: 12px auto 0;
+  padding: 100px 27px 145px;
+  overflow: hidden;
+  border: 0;
+  border-radius: 2px;
+  color: #704f42;
+  background: url("assets/letter-paper-v4.png") center / 100% 100% no-repeat;
+  box-shadow: 0 10px 24px rgba(115, 83, 69, .10);
+}
+
+.paper::before,
+.paper::after { display: none; }
+
+.paper p,
+.paper .signature {
+  position: relative;
+  z-index: 1;
+  background: transparent;
+}
+
+.paper p {
+  margin: 0 0 16px;
+  padding: 0 2px;
+  font-size: 14px;
+  line-height: 1.9;
+  letter-spacing: .02em;
+}
+
+.paper .salutation {
+  display: inline-block;
+  margin: 0 0 20px;
+  padding: 0 5px 1px;
+  color: #65473c;
+  font-size: 18px;
+  font-weight: 650;
+  background: linear-gradient(177deg, transparent 33%, rgba(238, 181, 190, .43) 34% 89%, transparent 90%);
+}
+
+.paper .signature {
+  margin: 20px 5px 0;
+  padding: 2px 0 0;
+  color: #765548;
+  font-size: 19px;
+  font-weight: 400;
+  text-align: right;
+}
+
+.paper .signature small {
+  display: block;
+  margin-top: 7px;
+  color: #9b796b;
+  font-size: 10px;
+  font-weight: 500;
+}
+
+@media (max-width: 360px) {
+  .letter-card { width: calc(100% - 2px); }
+  .letter-card .sender-row { font-size: 8px; }
+  .letter-card h2 { font-size: 15px; }
+  .paper {
+    min-height: 570px;
+    padding: 94px 23px 137px;
+  }
+  .paper p { font-size: 13px; }
+}
+
+/* Compact letter index heading and the same broad brush used on detail titles. */
+.letters-page .topline { margin-bottom: 27px; }
+.letters-page .topline .back {
+  position: relative;
+  top: -14px;
+}
+.letter-card::before {
+  content: "";
+  display: block;
+  position: absolute;
+  top: 60%;
+  left: 8.5%;
+  right: 36%;
+  height: 0;
+  border: 0;
+  border-top: 1px dashed rgba(173, 141, 124, .32);
+  border-radius: 0;
+  background: none;
+  pointer-events: none;
+}
+.heading .kicker { display: block; }
+.heading .page-title {
+  position: relative;
+  isolation: isolate;
+  display: inline-block;
+  margin: 10px 0 7px;
+}
+.heading .page-title::after {
+  content: "";
+  position: absolute;
+  z-index: -1;
+  right: -10px;
+  bottom: 1px;
+  left: -7px;
+  height: .62em;
+  border-radius: 7px 13px 5px 10px;
+  background: linear-gradient(90deg, rgba(243, 191, 201, .46), rgba(239, 174, 188, .34) 78%, rgba(247, 204, 211, .18));
+  transform: rotate(-.8deg) skewX(-4deg);
+}
+.heading .subtitle { line-height: 1.55; }
+.letters-page > .kicker { display: block; margin-bottom: 8px; }
+.letters-page > #letter-title { margin: 0 0 10px; }
+.letters-page > .detail-date { margin: 0; }
+.filters { align-items: center; margin: 18px 0 8px; }
+.list-meta { margin-bottom: 5px; }
+
+.letter-search-toggle {
+  display: grid;
+  place-items: center;
+  width: 30px;
+  height: 30px;
+  margin-left: auto;
+  padding: 0;
+  color: #8ca7b5;
+  border: 1px solid #d7e0e4;
+  border-radius: 50%;
+  background: rgba(244, 249, 250, .86);
+}
+.letter-search-toggle svg { width: 15px; height: 15px; }
+.letter-search-panel { margin: -5px 0 15px; }
+.letter-search-panel input {
+  width: 100%;
+  padding: 11px 15px;
+  color: #745548;
+  font-size: 11px;
+  border: 1px solid #e4d6cb;
+  border-radius: 22px;
+  outline: none;
+  background: rgba(255, 251, 246, .88);
+}
+.letter-search-panel input:focus { border-color: #b9ccd5; box-shadow: 0 0 0 3px rgba(185, 204, 213, .16); }
+.letter-pager {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 13px;
+  margin: 22px 0 8px;
+  color: #a58b7a;
+  font-size: 10px;
+}
+.letter-pager button {
+  padding: 7px 11px;
+  color: #927768;
+  border: 1px solid #e4d6cb;
+  border-radius: 18px;
+  background: #fffaf5;
+}
+.letter-pager button:disabled { opacity: .38; }
+
+.letters-page .compose {
+  position: static;
+  display: flex;
+  width: max-content;
+  max-width: 100%;
+  margin: 19px auto 0;
+  padding: 10px 20px;
+  gap: 7px;
+  border: 1px solid #dfc7c4;
+  border-radius: 24px;
+  background: #f3e2e1;
+  color: #936f6b;
+  box-shadow: 0 3px 10px rgba(115, 83, 69, .05);
+  font-size: 12px;
+  line-height: 1.4;
+  white-space: nowrap;
+}
+.letters-page .compose svg { width: 14px; height: 14px; }
+.letters-page .list-end { margin: 15px 0 0; }
+
+/* Quiet motion: feedback on touch, one entrance for the reading surface. */
+.letter-card {
+  transition: transform 160ms ease, box-shadow 160ms ease;
+  -webkit-tap-highlight-color: transparent;
+}
+.letter-card:active {
+  transform: translateY(1px) scale(.99);
+  box-shadow: 0 3px 9px rgba(103, 70, 52, .10);
+}
+.compose { transition: transform 150ms ease; }
+.compose:active { transform: scale(.97); }
+#letter-body { animation: letter-paper-arrive 520ms cubic-bezier(.2,.65,.3,1) both; }
+.letter-card .unread { animation: letter-unread-breathe 3.4s ease-in-out infinite; }
+@keyframes letter-paper-arrive {
+  from { opacity: 0; transform: translateY(7px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+@keyframes letter-unread-breathe {
+  0%,100% { opacity: .7; box-shadow: 0 0 0 3px rgba(245,207,216,.38); }
+  50% { opacity: 1; box-shadow: 0 0 0 5px rgba(245,207,216,.58); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .letter-card, .compose { transition: none; }
+  #letter-body, .letter-card .unread { animation: none; }
+  .letter-card:active, .compose:active { transform: none; }
+}

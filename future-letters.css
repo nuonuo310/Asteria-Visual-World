@@ -1,0 +1,36 @@
+.letters-page .filters {gap:6px;align-items:center;flex-wrap:wrap}
+.letters-page .filter {padding:9px 10px;font-size:10px;white-space:nowrap}
+.future-letter-section {padding:9px 0 5px;text-align:center}
+.future-intro>span {font:8px Arial,sans-serif;letter-spacing:.2em;color:#ac8e82}
+.future-intro>p {margin:9px 0 0;font-size:12px;color:#94786b}
+.sealed-letter {position:relative;display:block;width:92%;height:226px;margin:12px auto 0;border:0;padding:0;background:none;color:#846253;-webkit-tap-highlight-color:transparent}
+.future-slip {position:absolute;left:10%;right:10%;top:40px;height:120px;padding-top:18px;background:#fffaf4;border:1px solid #e5d3c7;box-shadow:0 2px 9px #80634b0b;font-size:16px;letter-spacing:.04em;transition:transform .65s ease}
+.envelope-front {position:absolute;inset:76px 0 0;overflow:hidden;border:1px solid #d9beb2;border-radius:3px;background:radial-gradient(ellipse at center,#f5dce0aa,transparent 75%),#f7ebe2;box-shadow:0 9px 17px #80634b12}
+.envelope-front:before,.envelope-front:after {content:'';position:absolute;top:0;width:65%;height:200%;border:1px solid #d8bcb06b;background:#fbf1e7;transform-origin:top}
+.envelope-front:before {left:0;transform:skewY(32deg)}
+.envelope-front:after {right:0;transform:skewY(-32deg)}
+.envelope-flap {position:absolute;z-index:2;inset:0 0 28%;background:linear-gradient(165deg,#faeee5,#efd4d5);clip-path:polygon(0 0,100% 0,50% 90%);filter:drop-shadow(0 1px 0 #d9bfb2)}
+.wax-seal {position:absolute;z-index:3;left:calc(50% - 17px);top:44%;display:grid;place-items:center;width:34px;height:34px;border-radius:48% 53% 47% 51%;border:1px solid #cda4a8;background:#e7bdc3;color:#fff6eb;font-size:23px;box-shadow:0 2px 4px #a7796b22}
+.envelope-caption {position:absolute;z-index:4;bottom:13px;left:0;right:0;font-size:10px;letter-spacing:.1em;color:#a38a7a}
+.future-status {margin:17px 0 0}
+.future-date {font-size:14px;color:#866457;margin:0 0 8px}
+.future-hint {font-size:11px;line-height:1.8;color:#ae9080;margin:0;min-height:20px}
+.future-demo,.future-reset {display:inline-block;border:0;border-bottom:1px dashed #d6bcb1;background:none;color:#a6877c;font-size:10px;padding:5px 1px;margin-top:17px}
+.future-preview-note {font-size:9px;color:#b29b8d;margin:19px 0 0}
+.has-arrived .future-slip {transform:translateY(-29px)}
+.has-arrived .wax-seal {box-shadow:0 0 0 4px #f2d8dc66,0 0 16px #e6b7c177}
+.is-open .sealed-letter {display:none}
+.future-opened {text-align:left;scroll-margin-top:20px}
+.future-opened .paper {animation:letter-paper-arrive .55s ease both;text-align:left;margin-top:20px}
+.future-opened .future-reset {display:block;margin:17px auto 0}
+.sealed-letter:active {transform:translateY(1px)}
+.envelope-front {overflow:visible;border-color:#d7c2b6;background:radial-gradient(ellipse at 40% 70%,#efcbd46b,transparent 75%),#fbf2e8}
+.envelope-front:before,.envelope-front:after {display:none}
+.envelope-flap {border-radius:2px;background:linear-gradient(165deg,#fcf2e9,#efd2d7)}
+.envelope-ornaments {position:absolute;z-index:4;inset:0;border-radius:3px;background:url('assets/future-envelope-ornaments.svg?v=3') center/100% 100% no-repeat;pointer-events:none}
+.future-bears {position:absolute;z-index:5;right:-9px;bottom:-6px;width:32%;height:auto;pointer-events:none;filter:drop-shadow(0 2px 2px #a4876c12)}
+.envelope-caption {left:0;right:0;bottom:17px;font-size:10px;letter-spacing:.04em;text-align:center}
+.wax-seal {background:radial-gradient(circle at 35% 30%,#efcbd1,#deb0bc);border-color:#cca4ab}
+.future-slip {background:radial-gradient(ellipse at 50% 90%,#f7e3e6aa,transparent),#fffaf4;font-size:15px}
+@media(max-width:360px){.letters-page .filter{padding:8px;font-size:10px}.letters-page .filters{gap:5px}.sealed-letter{height:205px}.envelope-front{top:65px}}
+@media(prefers-reduced-motion:reduce){.future-slip{transition:none}.future-opened .paper{animation:none}}
