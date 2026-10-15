@@ -1,0 +1,38 @@
+/* Shared finish for Memory reading and archive pages. */
+.page{min-height:100svh;padding-bottom:145px}
+.page:before{bottom:30px}
+.page:after{content:"";position:absolute;z-index:-1;left:0;right:0;bottom:0;height:30px;pointer-events:none;background:url("./assets/memory-bear-cream-v2.png") center bottom/100% auto no-repeat}
+.detail-title,.relation-title,.archive-card h2{overflow-wrap:anywhere}
+.memory-context,.detail-tags{min-width:0}
+.context-fold summary,.context-jump{white-space:normal;overflow-wrap:anywhere}
+.context-content,.detail-paper p,.relation-card p{overflow-wrap:anywhere}
+.relation-title{align-items:flex-start;line-height:1.6}
+.relation-arrow{margin-top:2px}
+.relation-card+.relation-card,.relations-more .relation-card{margin-top:10px}
+.relations-more{margin-top:12px}
+.relations-more>summary{padding:10px 13px;border:1px solid #e2d4c8;border-radius:14px;background:#f5ece3;color:#977b68;font-size:11px;cursor:pointer}
+.relation-footnote{display:none}
+.detail-preview-note{margin-top:17px;font-size:9px}
+.archive-search input{font-family:inherit;font-size:12px;line-height:1.6}
+.filter-line{display:flex;align-items:flex-start;gap:10px;margin-top:14px}
+.filter-caption{flex:none;padding-top:8px;color:#a78e7c;font-size:10px;line-height:1.5}
+.filter-line .archive-filters{margin:0}
+.topics-line{margin-top:10px}
+.topic-controls{display:flex;flex-wrap:wrap;align-items:flex-start;gap:7px;flex:1;min-width:0}
+.topic-filters{display:flex;flex-wrap:wrap;gap:7px}
+.topic-filters button,.all-topics>summary{padding:6px 10px;border:1px solid #e0d9ce;border-radius:999px;background:#fffaf4;color:#a08976;font-family:inherit;font-size:10px;line-height:1.5;cursor:pointer;list-style:none}
+.topic-filters button{font-size:10px;line-height:1.5}
+.topic-filters button:nth-child(3n+2){background:#f4e8e7;border-color:#ead5d3;color:#af8586}
+.topic-filters button:nth-child(3n+3){background:#edf3f5;border-color:#dce7eb;color:#839dab}
+.topic-filters button[aria-pressed="true"]{background:#e8d7c5;border-color:#c9ad90;color:#7e5e43;box-shadow:inset 0 0 0 1px #c9ad9040}
+.all-topics>summary{font-size:10px;line-height:1.5;background:#f6efdf;border-color:#e8dcc6;color:#9b8769}
+.all-topics>summary::-webkit-details-marker{display:none}
+.all-topics>summary:after{content:"＋";margin-left:7px;font-family:Arial,sans-serif}
+.all-topics[open]{flex-basis:100%}
+.all-topics[open]>summary{display:inline-block}
+.all-topics[open]>summary:after{content:"−"}
+.all-topics #moreTopics{margin-top:9px}
+.filter-reset-row{display:flex;justify-content:flex-end;min-height:17px;margin:7px 2px 3px}
+.filter-reset-row button{border:0;background:transparent;padding:3px 0;color:#a28a7a;font-size:10px;text-decoration:underline;text-underline-offset:3px}
+.memory-notice{position:fixed;z-index:30;left:50%;bottom:86px;transform:translateX(-50%);padding:10px 17px;border-radius:18px;background:#755b4c;color:#fffaf4;font-size:12px;max-width:calc(100% - 40px);box-shadow:0 6px 20px #56372218}
+@media(prefers-reduced-motion:no-preference){html{scroll-behavior:smooth}}

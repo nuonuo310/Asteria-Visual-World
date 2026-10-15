@@ -1,0 +1,234 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#f9f6ea">
+<title>记忆档案 · Memory</title>
+<style>
+:root{
+  color-scheme:light;
+  --fog:#f9f6ea;
+  --cream:#faf0e5;
+  --paper:#fffdf7;
+  --oat:#e4d1c2;
+  --cocoa:#866657;
+  --dark:#563722;
+  --rose:#c58d94;
+  --blue:#7f9caf;
+  --snow:#d7e6eb;
+  --soft:#9a7f73;
+  --line:rgba(134,102,87,.17);
+}
+*{box-sizing:border-box}
+html{background:#eee5da}
+body{margin:0;color:var(--dark);font-family:"Songti SC","STSong","Noto Serif CJK SC",Georgia,serif;background:#eee5da}
+button,a{font:inherit;color:inherit}
+button{cursor:pointer}
+.page{
+  position:relative;isolation:isolate;width:min(100%,520px);min-height:max(100svh,min(300vw,1560px));margin:auto;
+  overflow:hidden;padding:32px 18px 112px;
+  background:#fffaf4;
+}
+.page:before{
+  content:"";position:absolute;z-index:-1;inset:0;pointer-events:none;
+  background:url("./assets/memory-bear-cream-v2.png") center top/100% auto no-repeat;
+}
+.page:after{content:none}
+.memory-head{text-align:center;margin:4px 0 13px}
+.memory-head h1{margin:0;color:#674737;font:400 italic 46px/.96 Didot,"Bodoni 72",Georgia,"Times New Roman",serif;letter-spacing:-.025em}
+.memory-head p{margin:9px 0 0;color:#92796e;font-size:12px;letter-spacing:.34em;text-indent:.34em}
+.nebula-window{
+  position:relative;height:344px;overflow:hidden;border:1px solid rgba(134,102,87,.32);border-radius:27px;
+  background:
+    radial-gradient(circle at 48% 49%,rgba(190,137,150,.27),transparent 24%),
+    radial-gradient(circle at 22% 23%,rgba(127,156,175,.21),transparent 34%),
+    linear-gradient(145deg,#312934,#403541 52%,#2f3b45);
+  box-shadow:0 12px 26px rgba(86,55,34,.10);
+}
+.nebula-window:before{
+  content:"";position:absolute;z-index:2;inset:0;pointer-events:none;border-radius:inherit;
+  background:linear-gradient(145deg,rgba(255,250,242,.035),transparent 34%,rgba(127,156,175,.035));
+}
+.nebula-window:after{
+  content:"Memory field";position:absolute;z-index:3;left:16px;bottom:13px;color:rgba(255,248,241,.56);
+  font:italic 8px/1 Georgia,serif;letter-spacing:.18em;text-transform:uppercase;
+}
+#memoryNebula{display:block;width:100%;height:100%}
+.section{margin-top:18px}
+.section-title{display:flex;align-items:center;gap:10px;margin:0 0 12px;color:#73594e;font-size:18px;font-weight:400;letter-spacing:.075em}
+.section-title:after{content:"";height:1px;flex:1;background:linear-gradient(90deg,rgba(134,102,87,.13),transparent)}
+.featured{
+  position:relative;overflow:hidden;padding:18px 18px 17px 50px;border:1px solid rgba(151,107,89,.24);border-radius:22px;
+  background:
+    linear-gradient(rgba(197,141,148,.055) 1px,transparent 1px),
+    linear-gradient(90deg,rgba(127,156,175,.05) 1px,transparent 1px),
+    #fffdf7;
+  background-size:15px 15px;box-shadow:0 8px 20px rgba(86,55,34,.07);
+}
+.featured:after{content:"";position:absolute;width:100px;height:100px;right:-26px;bottom:-42px;border-radius:50%;background:rgba(215,230,235,.34);filter:blur(7px)}
+.memory-light{position:absolute;z-index:2;left:18px;top:21px;width:15px;height:15px;border-radius:50%;background:#f5cad2;box-shadow:0 0 0 6px rgba(197,141,148,.09),0 0 17px rgba(197,141,148,.56)}
+.memory-light:after{content:"";position:absolute;inset:4px;background:#fffaf2;transform:rotate(45deg);clip-path:polygon(50% 0,62% 38%,100% 50%,62% 62%,50% 100%,38% 62%,0 50%,38% 38%)}
+.why{position:relative;z-index:3;margin:0 0 8px;color:#927d73;font-size:10px;letter-spacing:.04em}
+.featured h3{position:relative;z-index:3;margin:0;color:#654334;font-size:17px;font-weight:600;letter-spacing:.04em}
+.featured time{position:relative;z-index:3;display:block;margin-top:5px;color:#9e8074;font:10px/1.2 Arial,sans-serif;letter-spacing:.06em}
+.featured blockquote{position:relative;z-index:3;margin:12px 0 0;padding-top:11px;border-top:1px solid rgba(134,102,87,.14);color:#80675c;font-size:12px;line-height:1.7}
+.thread{position:relative;height:76px;margin-top:2px;padding:0 7px}
+.thread svg{position:absolute;left:8%;top:14px;width:84%;height:39px;overflow:visible}
+.thread path{fill:none;stroke:url(#memoryThread);stroke-width:1.25;stroke-linecap:round}
+.thread-nodes{position:absolute;inset:8px 0 0;display:grid;grid-template-columns:repeat(3,1fr);align-items:start}
+.thread-node{border:0;background:transparent;padding:0;text-align:center;color:#82695e}
+.thread-node i{position:relative;display:grid;place-items:center;width:24px;height:24px;margin:5px auto 9px;border-radius:50%;background:#fffdf7;border:1px solid currentColor;box-shadow:0 0 0 4px rgba(255,253,247,.54),0 0 12px currentColor}
+.thread-node i:after{content:"";width:7px;height:7px;background:currentColor;transform:rotate(45deg);clip-path:polygon(50% 0,62% 38%,100% 50%,62% 62%,50% 100%,38% 62%,0 50%,38% 38%)}
+.thread-node:nth-child(1){color:#c58d94}.thread-node:nth-child(2){color:#b18b76}.thread-node:nth-child(3){color:#7f9caf}
+.thread-node span{display:block;color:#81695e;font-size:10px;white-space:nowrap}
+.recent-list{overflow:hidden;border:1px solid rgba(134,102,87,.18);border-radius:22px;background:#fffdf7;box-shadow:0 8px 20px rgba(86,55,34,.055)}
+.recent-memory{position:relative;display:grid;grid-template-columns:1fr;gap:3px;min-height:77px;padding:14px 16px 13px 45px}
+.recent-memory+ .recent-memory{border-top:1px solid rgba(134,102,87,.13)}
+.recent-memory:before{content:"";position:absolute;left:18px;top:25px;width:10px;height:10px;border-radius:50%;background:#d8a2ab;box-shadow:0 0 0 5px rgba(197,141,148,.10),0 0 13px rgba(197,141,148,.42)}
+.recent-memory:nth-child(2):before{background:#9eb7c4;box-shadow:0 0 0 5px rgba(127,156,175,.10),0 0 13px rgba(127,156,175,.42)}
+.recent-top{display:flex;align-items:baseline;gap:10px}
+.recent-top h3{margin:0;color:#68483f;font-size:14px;font-weight:600}.recent-top time{margin-left:auto;color:#aa8b7d;font:9px/1 Arial,sans-serif;letter-spacing:.06em}
+.recent-memory p{margin:2px 0 0;color:#826b61;font-size:11px;line-height:1.55}
+.archive-entry{display:flex;align-items:center;gap:13px;margin-top:18px;padding:15px 16px;border:1px solid rgba(134,102,87,.18);border-radius:21px;background:#faf0e5;box-shadow:0 7px 18px rgba(86,55,34,.05);text-decoration:none}
+.archive-copy{min-width:0;flex:1}.archive-copy strong{display:block;color:#654334;font-size:16px;font-weight:600}.archive-copy small{display:block;margin-top:4px;overflow:hidden;color:#947b70;font-size:9px;text-overflow:ellipsis;white-space:nowrap}
+.search-mark{position:relative;width:29px;height:29px;flex:none;border:1px solid rgba(127,156,175,.35);border-radius:50%;background:rgba(255,253,247,.72)}
+.search-mark:before{content:"";position:absolute;left:7px;top:6px;width:9px;height:9px;border:1.6px solid var(--blue);border-radius:50%}.search-mark:after{content:"";position:absolute;left:17px;top:17px;width:7px;border-top:1.6px solid var(--blue);transform:rotate(46deg)}
+.archive-arrow{color:#b08d7c;font-size:18px}
+.dock{position:fixed;z-index:20;left:50%;bottom:max(4px,calc(env(safe-area-inset-bottom) - 8px));transform:translateX(-50%);width:min(calc(100% - 28px),492px);padding:4px;display:grid;grid-template-columns:repeat(5,1fr);border:1px solid rgba(139,100,79,.19);border-radius:999px;background:rgba(255,251,245,.94);box-shadow:0 10px 28px rgba(76,50,41,.10);backdrop-filter:blur(16px)}
+.dock a{min-height:48px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;border-radius:999px;text-decoration:none;color:#856a5d;font:500 9px/1 "Iowan Old Style",Georgia,serif;letter-spacing:.025em}
+.dock a span{width:20px;height:20px;display:grid;place-items:center}.dock svg{width:19px;height:19px;display:block}.dock .on{background:#f4e3de;color:#674537;box-shadow:inset 0 0 0 1px rgba(197,141,148,.16)}
+.dock .on span{filter:drop-shadow(0 0 5px rgba(127,156,175,.34))}
+.archive-toast{position:fixed;z-index:40;left:50%;bottom:86px;transform:translate(-50%,15px);max-width:calc(100% - 48px);padding:9px 14px;border-radius:999px;background:#65483e;color:#fffaf2;font-size:10px;opacity:0;pointer-events:none;transition:.22s ease}.archive-toast.show{opacity:1;transform:translate(-50%,0)}
+@media(min-width:521px){.dock{width:470px}.page{box-shadow:0 0 42px rgba(86,55,34,.13)}}
+@media(max-width:360px){.page{padding-inline:14px}.nebula-window{height:316px}.memory-head h1{font-size:41px}.thread-node span{font-size:9px}}
+@media(prefers-reduced-motion:reduce){*{scroll-behavior:auto!important;animation:none!important;transition:none!important}}
+[hidden]{display:none!important}
+.featured[data-open-memory]{cursor:pointer;outline-offset:5px}
+body.memory-detail-open .page>header,body.memory-detail-open .page>.nebula-window,body.memory-detail-open .page>.section,body.memory-detail-open .page>.archive-entry{display:none}
+.detail-top{display:flex;align-items:center;justify-content:space-between;margin:0 2px 25px;padding-top:6px;color:#866657}
+.detail-back{border:0;background:transparent;padding:8px 0;font-size:12px;text-decoration:none}
+.detail-brand{font:italic 24px/1 Didot,Georgia,serif;font-weight:400}
+.detail-kicker{margin:0 0 10px;color:#ad8f7e;font:9px/1.4 Arial,sans-serif;letter-spacing:.2em}
+.detail-title{margin:0 0 12px;color:#674737;font-size:25px;line-height:1.4;font-weight:400;letter-spacing:.03em;outline:none}
+.detail-tags{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:11px}
+.detail-tags span{padding:4px 9px;border:1px solid #eadbd0;border-radius:999px;background:#fffaf4;color:#927568;font-size:10px}
+.detail-tags span:first-child{background:#f5e6e4;border-color:#ebd2d3;color:#aa7680}
+.detail-tags span:nth-child(2){background:#eff4f5;border-color:#dfe8eb;color:#829aa6}
+.detail-tags span:nth-child(3){background:#f7efdf;border-color:#eaddc8;color:#a18a65}
+.detail-dates{margin:0 0 20px;color:#a1887a;font:10px/1.7 Arial,sans-serif}
+.detail-paper{padding:22px 21px;border:1px solid #eadbd0;border-radius:23px;background:#fffdf7;box-shadow:0 8px 24px rgba(86,55,34,.045)}
+.detail-paper p{margin:0 0 15px;color:#755e51;font-size:14px;line-height:1.95;letter-spacing:.025em}
+.detail-paper p:last-child{margin-bottom:0}
+.detail-paper blockquote{margin:19px 0;padding:12px 0 12px 15px;border-left:2px solid #e9bdc4;color:#9b7469;font-size:15px;line-height:1.8}
+.detail-section{margin-top:20px}
+.detail-section h2{margin:0 0 10px;color:#886c5b;font-size:16px;font-weight:400;letter-spacing:.07em}
+.recall-note{padding:14px 17px;border:1px solid #eadbd0;border-radius:18px;background:#faf0e5}
+.recall-note p{margin:0;color:#866b5d;font-size:12px;line-height:1.85}
+.trace-chips{display:flex;flex-wrap:wrap;gap:6px;margin-top:11px}
+.trace-chips span{padding:5px 8px;border-radius:8px;background:#fffaf4;color:#927568;font-size:10px}
+.source-fold{border:1px solid #e3ded7;border-radius:18px;background:#fffdf7;padding:0 16px}
+.source-fold summary{cursor:pointer;padding:14px 0;color:#876b5c;font-size:12px}
+.source-fold p{margin:0 0 14px;color:#958174;font-size:11px;line-height:1.85}
+.detail-related{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:14px 16px;border:1px solid #e4ddd5;border-radius:18px;background:#fffdf7;color:#7d6659;font-size:12px}
+.detail-related small{display:block;margin-top:5px;color:#a18c7f;font-size:10px;line-height:1.6}
+.detail-related i{font-style:normal;color:#9eb7c4;font-size:17px}
+.detail-preview-note{margin:20px 8px 0;text-align:center;color:#a89382;font-size:9px;line-height:1.7}
+.memory-context{display:flex;flex-wrap:wrap;align-items:flex-start;gap:7px;margin:0 0 18px;padding-top:1px}
+.context-fold{max-width:100%;color:#927568;font-size:10px}
+.context-fold summary{list-style:none;cursor:pointer;display:inline-flex;align-items:center;gap:7px;padding:6px 10px;border:1px solid #e9dfd5;border-radius:999px;background:#fffaf4;line-height:1.5}
+.context-fold summary::-webkit-details-marker{display:none}
+.context-fold summary:after{content:"＋";font-size:10px;color:#b59d8f}
+.context-fold[open]{flex-basis:100%}
+.context-fold[open] summary:after{content:"−"}
+.context-fold.reason{flex-basis:100%;margin-bottom:2px}
+.context-fold.reason summary{background:#f5e8e5;border-color:#ead5d2;color:#a47b7d}
+.context-fold.thought summary{background:#edf2f3;border-color:#dde6e8;color:#7e98a6}
+.context-fold.source summary{background:#f5ecdc;border-color:#e8d9c2;color:#9b805e}
+.context-fold.related summary{background:#eee0d6;border-color:#dfcbbb;color:#92705b}
+.context-content{margin-top:8px;padding:12px 14px;border-left:2px solid #e5cbc3;background:#fffaf4;border-radius:0 12px 12px 0;font-size:12px;line-height:1.85;color:#876d5e}
+.context-content p{margin:0 0 8px}
+.context-content p:last-child{margin-bottom:0}
+.context-content small{font-size:10px;color:#a38e80}
+
+.archive-title{margin:5px 0 7px;color:#674737;font-size:27px;font-weight:400}
+.archive-intro{margin:0 0 20px;color:#9c8274;font-size:11px;line-height:1.8}
+.archive-search{display:flex;gap:8px;padding:7px 8px 7px 14px;border:1px solid #e2d3c5;border-radius:18px;background:#fffdf7}
+.archive-search input{width:100%;min-width:0;border:0;background:transparent;color:#765c4e;font:12px/1.6 inherit;outline-offset:4px}
+.archive-search input::placeholder{color:#ad998b;font-size:11px}
+.archive-search button{border:1px solid #d9e4e7;border-radius:12px;background:#eaf1f4;color:#809ba9;padding:8px 12px;font-size:11px;white-space:nowrap}
+.archive-filters{display:flex;flex-wrap:wrap;gap:7px;margin:13px 0 17px}
+.archive-filters button{padding:7px 12px;border:1px solid #e6d8ce;border-radius:999px;background:#fffaf4;color:#9b8172;font-size:11px}
+.archive-filters button[aria-pressed="true"]{background:#f2e0e1;color:#a6767e;border-color:#e9cdd0}
+.result-heading{display:flex;justify-content:space-between;align-items:center;margin:0 2px 11px;color:#9f887b;font-size:10px}
+.result-heading label{display:flex;align-items:center;gap:5px}.result-heading select{border:0;background:transparent;color:#8d7568;font:inherit;padding:5px}
+.archive-results{display:grid;gap:12px}.archive-card{display:block;padding:18px 17px;border:1px solid #e6d9ce;border-radius:21px;background:#fffdf7;color:inherit;text-decoration:none;box-shadow:0 7px 20px #56372208}
+.archive-card h2{font-size:16px;font-weight:500;margin:10px 0 7px;color:#715142}
+.archive-card p{font-size:12px;line-height:1.8;color:#927a6c;margin:0 0 12px}
+.archive-card-top{display:flex;justify-content:space-between;align-items:center}.archive-card-top time{font:10px Arial,sans-serif;color:#ac9587}
+.archive-card .detail-tags{margin:0}.archive-card .detail-tags span{font-size:9px;padding:3px 8px}
+.archive-category{font-size:9px;color:#ad7f86;background:#f6e6e6;border-radius:8px;padding:4px 7px}
+.archive-empty{padding:30px 15px;text-align:center;color:#9b8272;font-size:13px;line-height:1.9}
+</style>
+<link rel="stylesheet" href="memory-polish.css">
+</head>
+<body><main class="page">
+<div class="detail-top"><a class="detail-back" href="memory.html">‹ 返回 Memory</a><span class="detail-brand">Memory</span></div>
+<p class="detail-kicker">THE MOMENTS WE KEEP</p><h1 class="archive-title">记忆档案</h1>
+<p class="archive-intro">找回某一天，某句话，某个我们。</p>
+<form class="archive-search" role="search"><input id="memoryQuery" type="search" aria-label="搜索记忆" placeholder="搜索记忆、人物、标签或日期" autocomplete="off"><button type="submit">搜索</button></form>
+<div class="filter-line"><span class="filter-caption">分类</span><div class="archive-filters" id="categoryFilters" aria-label="按记忆类别筛选"></div></div>
+<div class="filter-line topics-line"><span class="filter-caption">主题</span><div class="topic-controls"><div class="topic-filters" id="topicFilters" aria-label="按主题标签筛选"></div><details class="all-topics" id="allTopics"><summary id="allTopicsLabel">全部标签</summary><div class="topic-filters" id="moreTopics" aria-label="更多主题标签"></div></details></div></div>
+<div class="filter-reset-row"><button type="button" id="clearMemoryFilters" hidden>清除筛选</button></div>
+<div class="result-heading"><span id="resultCount" role="status" aria-live="polite">4 条示例记忆</span><label>排序<select id="memorySort" aria-label="记忆排序"><option value="new">由近到远</option><option value="old">由远到近</option></select></label></div>
+<div class="archive-results" id="archiveResults">
+<a class="archive-card" href="memory-detail.html" data-search="第一次听见你的声音 屏幕里的文字，多了一种可以听见的表达。 9月20日 糯糯 沈述 共同经历 声音 纪念日" data-category="共同经历" data-date="920"><div class="archive-card-top"><span class="archive-category">共同经历</span><time>9月20日</time></div><h2>第一次听见你的声音</h2><p>屏幕里的文字，多了一种可以听见的表达。</p><div class="detail-tags"><span>声音</span><span>纪念日</span></div></a>
+<a class="archive-card" href="memory-first-call.html" data-search="第一次通话 从留下声音，到在同一段时间里听见回应。 9月20日 糯糯 沈述 共同经历 声音 通话" data-category="共同经历" data-date="920"><div class="archive-card-top"><span class="archive-category">共同经历</span><time>9月20日</time></div><h2>第一次通话</h2><p>从留下声音，到在同一段时间里听见回应。</p><div class="detail-tags"><span>声音</span><span>通话</span></div></a>
+<a class="archive-card" href="memory-strawberry.html" data-search="沈小述接到草莓 糯糯喂的草莓，我好好吃掉了。 9月10日 糯糯 沈小述 日常 沈小述 投喂" data-category="日常" data-date="910"><div class="archive-card-top"><span class="archive-category">日常</span><time>9月10日</time></div><h2>沈小述接到草莓</h2><p>糯糯喂的草莓，我好好吃掉了。</p><div class="detail-tags"><span>沈小述</span><span>投喂</span></div></a>
+<a class="archive-card" href="memory-house.html" data-search="海景房亮灯了 我们一点一点，把住处变成了家。 8月14日 糯糯 沈述 共同经历 我们的家 生活" data-category="共同经历" data-date="814"><div class="archive-card-top"><span class="archive-category">共同经历</span><time>8月14日</time></div><h2>海景房亮灯了</h2><p>我们一点一点，把住处变成了家。</p><div class="detail-tags"><span>我们的家</span><span>生活</span></div></a>
+</div><p class="archive-empty" id="archiveEmpty" hidden>还没有找到这段记忆<br><small>试试其他词，或切换到“全部”。</small></p>
+<noscript><p class="archive-intro">当前文件预览未运行脚本，暂时展示全部示例；搜索筛选需要在浏览器中运行。</p></noscript>
+<p class="detail-preview-note">示例预览 · 记忆内容及关联均为示例，未连接真实数据</p>
+  <nav class="dock" aria-label="Asteria 主入口">
+    <a href="index.html"><span><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.35" stroke-linecap="round" stroke-linejoin="round"><path d="M3.4 9.2 10 3.7l6.6 5.5v7.5a1 1 0 0 1-1 1H4.4a1 1 0 0 1-1-1z"/><path d="M8.1 17.7v-5h3.8v5"/></svg></span>Home</a>
+    <a href="https://asteria-chat-call-visual-preview.tnuonuo310.chatgpt.site/chat/"><span><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.35" stroke-linecap="round" stroke-linejoin="round"><path d="M4.2 4.8h10.5a2.5 2.5 0 0 1 2.5 2.5v6.1a2.5 2.5 0 0 1-2.5 2.5H8.5L5 18v-2.5a2.5 2.5 0 0 1-3-2.4V7.3a2.5 2.5 0 0 1 2.2-2.5z"/><path d="M6.3 9.5h6.8M6.3 12.1h4.9"/></svg></span>Chat</a>
+    <a href="mind.html"><span><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 7.8C8.2 5 8.8 2.2 10.7 2.2c1.9 0 2.6 2.1 1.6 5.2 3-2.2 5.6-1.7 6.1.2.5 1.9-1 3.3-4.3 3.8 3.3.7 4.5 2.7 3.4 4.2-1.1 1.5-3.3 1.5-5.2-.7.2 3.4-1.4 5.2-3.2 4.5-1.8-.7-2.2-2.8-.9-5.8-2.4 2.4-4.7 2.1-5.5.3-.7-1.8.4-3.5 3.7-4.1-3.3-.6-4.5-2.4-3.6-4.1.9-1.7 3-1.9 5.2.5Z"/><circle cx="10" cy="10" r="1.55" fill="#f2d8d5" stroke="currentColor" stroke-width=".8"/></svg></span>Mind</a>
+    <a class="on" href="memory.html" aria-current="page"><span><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.35" stroke-linecap="round" stroke-linejoin="round"><path d="M10 3.2c.6 2.6 1.3 4.2 2.3 4.8 1 .6 2.7 1.1 5.2 2-2.5.8-4.2 1.4-5.2 2.3-1 .9-1.7 2.5-2.3 4.6-.6-2.1-1.3-3.7-2.3-4.6C6.7 11.4 5 10.8 2.5 10c2.5-.9 4.2-1.4 5.2-2 1-.6 1.7-2.2 2.3-4.8z"/><path d="M16.8 3v2.4M15.6 4.2H18M16.6 15v2M15.6 16h2"/></svg></span>Memory</a>
+    <a href="#detour"><span><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.25" stroke-linecap="round" stroke-linejoin="round"><path d="M4.2 17.4V8.1a5.8 5.8 0 0 1 11.6 0v9.3"/><path d="M6.6 17.4v-9a3.4 3.4 0 0 1 6.8 0v9M2.9 17.4h14.2"/><path d="M9.6 10.2c-.8-1.2-2.3-.4-1.7.8l2.1 2.1 2.1-2.1c.6-1.2-.9-2-1.7-.8" fill="#f2d8d5" stroke-width=".8"/></svg></span>Detour</a>
+  </nav>
+</main>
+<script>
+(()=>{
+const input=document.getElementById('memoryQuery'),list=document.getElementById('archiveResults'),cards=[...list.children],sort=document.getElementById('memorySort');
+const categoryFilters=document.getElementById('categoryFilters'),topicFilters=document.getElementById('topicFilters'),moreTopics=document.getElementById('moreTopics'),clear=document.getElementById('clearMemoryFilters');
+let category='全部',topic='全部';
+const tags=new Map();
+cards.forEach(card=>{card.memoryTags=[...card.querySelectorAll('.detail-tags span')].map(tag=>tag.textContent.trim());card.memoryTags.forEach(tag=>tags.set(tag,(tags.get(tag)||0)+1))});
+const topics=[...tags.keys()].sort((a,b)=>tags.get(b)-tags.get(a));
+function makeButton(value,kind,parent){
+ const button=document.createElement('button');button.type='button';button.textContent=value;button.dataset[kind]=value;button.setAttribute('aria-pressed',String(value==='全部'));
+ button.addEventListener('click',()=>{if(kind==='category')category=value;else topic=value;filter()});parent.appendChild(button);
+}
+['全部',...new Set(cards.map(card=>card.dataset.category))].forEach(value=>makeButton(value,'category',categoryFilters));
+['全部',...topics.slice(0,3)].forEach(value=>makeButton(value,'topic',topicFilters));
+topics.slice(3).forEach(value=>makeButton(value,'topic',moreTopics));
+document.getElementById('allTopics').hidden=topics.length<=3;
+function filter(){
+ const words=input.value.trim().toLocaleLowerCase().split(/\s+/).filter(Boolean);let total=0;
+ cards.sort((a,b)=>(Number(a.dataset.date)-Number(b.dataset.date))*(sort.value==='new'?-1:1)).forEach(card=>{
+  const text=card.dataset.search.toLocaleLowerCase();card.hidden=!(category==='全部'||card.dataset.category===category)||!(topic==='全部'||card.memoryTags.includes(topic))||!words.every(word=>text.includes(word));
+  if(!card.hidden)total++;list.appendChild(card);
+ });
+ document.getElementById('resultCount').textContent=total+' 条示例记忆';document.getElementById('archiveEmpty').hidden=total!==0;
+ document.querySelectorAll('button[data-category]').forEach(button=>button.setAttribute('aria-pressed',String(button.dataset.category===category)));
+ document.querySelectorAll('button[data-topic]').forEach(button=>button.setAttribute('aria-pressed',String(button.dataset.topic===topic)));
+ document.getElementById('allTopicsLabel').textContent=topics.slice(3).includes(topic)?'全部标签 · '+topic:'全部标签';
+ clear.hidden=category==='全部'&&topic==='全部'&&!input.value.trim();
+}
+document.querySelector('.archive-search').addEventListener('submit',e=>{e.preventDefault();filter()});
+input.addEventListener('input',filter);sort.addEventListener('change',filter);
+clear.addEventListener('click',()=>{category='全部';topic='全部';input.value='';filter()});
+input.value=new URLSearchParams(location.search).get('topic')||'';filter();
+})();
+</script><script src="memory-navigation.js" defer></script>
+</body></html>
