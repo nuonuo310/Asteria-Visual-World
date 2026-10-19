@@ -40,10 +40,7 @@ button{cursor:pointer}
 .memory-head p{margin:9px 0 0;color:#92796e;font-size:12px;letter-spacing:.34em;text-indent:.34em}
 .nebula-window{
   position:relative;height:344px;overflow:hidden;border:1px solid rgba(134,102,87,.32);border-radius:27px;
-  background:
-    radial-gradient(circle at 48% 49%,rgba(190,137,150,.27),transparent 24%),
-    radial-gradient(circle at 22% 23%,rgba(127,156,175,.21),transparent 34%),
-    linear-gradient(145deg,#312934,#403541 52%,#2f3b45);
+  background:#050209;
   box-shadow:0 12px 26px rgba(86,55,34,.10);
 }
 .nebula-window:before{
@@ -51,10 +48,13 @@ button{cursor:pointer}
   background:linear-gradient(145deg,rgba(255,250,242,.035),transparent 34%,rgba(127,156,175,.035));
 }
 .nebula-window:after{
-  content:"Memory field";position:absolute;z-index:3;left:16px;bottom:13px;color:rgba(255,248,241,.56);
+  content:"示例星河";position:absolute;z-index:3;left:16px;bottom:13px;color:rgba(255,248,241,.56);
   font:italic 8px/1 Georgia,serif;letter-spacing:.18em;text-transform:uppercase;
 }
-#memoryNebula{display:block;width:100%;height:100%}
+.galaxy-preview{display:block;width:100%;height:100%;border:0;pointer-events:none}
+.galaxy-open{position:absolute;inset:0;z-index:4;text-decoration:none;border-radius:inherit}
+.galaxy-open span{position:absolute;right:16px;bottom:13px;font-size:11px;letter-spacing:.08em;color:rgba(245,231,250,.7)}
+.galaxy-open:focus-visible{outline:2px solid #d5bedc;outline-offset:-5px}
 .section{margin-top:18px}
 .section-title{display:flex;align-items:center;gap:10px;margin:0 0 12px;color:#73594e;font-size:18px;font-weight:400;letter-spacing:.075em}
 .section-title:after{content:"";height:1px;flex:1;background:linear-gradient(90deg,rgba(134,102,87,.13),transparent)}
@@ -140,8 +140,9 @@ body.memory-detail-open .page>header,body.memory-detail-open .page>.nebula-windo
 <main class="page">
   <header class="memory-head"><h1>Memory</h1><p>记忆星云</p></header>
 
-  <section class="nebula-window" aria-label="记忆星云视觉占位">
-    <canvas id="memoryNebula"></canvas>
+  <section class="nebula-window" aria-label="记忆星河预览，当前展示示例记忆">
+    <iframe class="galaxy-preview" src="memory-galaxy.html?embed=1" title="双臂记忆星河" loading="lazy" tabindex="-1" aria-hidden="true"></iframe>
+    <a class="galaxy-open" href="memory-galaxy.html" aria-label="打开完整记忆星河"><span>轻点进入 ↗</span></a>
   </section>
 
   <section class="section" aria-labelledby="surfacedTitle">
@@ -188,38 +189,7 @@ body.memory-detail-open .page>header,body.memory-detail-open .page>.nebula-windo
   </nav>
 </main>
 <script>
-(()=>{
-  const canvas=document.getElementById('memoryNebula'),ctx=canvas.getContext('2d',{alpha:true});
-  const reduce=matchMedia('(prefers-reduced-motion: reduce)').matches;
-  let width=0,height=0,dpr=1,points=[],stars=[],frame=0;
-  const palette=[[235,178,196],[183,193,224],[245,213,175],[216,190,222]];
-  function seeded(i){const x=Math.sin(i*9283.71+17.23)*43758.5453;return x-Math.floor(x)}
-  function build(){
-    const rect=canvas.getBoundingClientRect();dpr=Math.min(devicePixelRatio||1,2);width=rect.width;height=rect.height;
-    canvas.width=Math.round(width*dpr);canvas.height=Math.round(height*dpr);ctx.setTransform(dpr,0,0,dpr,0,0);
-    const count=Math.round(Math.min(1500,Math.max(820,width*3.3)));points=[];
-    for(let i=0;i<count;i++){
-      const t=seeded(i)*Math.PI*2,layer=i%3,base=[.29,.39,.48][layer];
-      const petal=.13*Math.cos(5*t+.22)+.035*Math.cos(10*t-.4);
-      const scatter=(seeded(i+41)-.5)*.14,rad=(base+petal+scatter)*Math.min(width,height);
-      const squash=.79+(seeded(i+2)-.5)*.05;
-      points.push({x:Math.cos(t)*rad,y:Math.sin(t)*rad*squash,z:seeded(i+7),size:.42+seeded(i+8)*1.28,alpha:.15+seeded(i+9)*.55,color:palette[i%palette.length],phase:seeded(i+15)*6.28});
-    }
-    stars=[[-.28,-.18,3.2],[.27,-.2,2.4],[.3,.28,2.8],[-.22,.3,2.1]];
-  }
-  function glow(x,y,r,color,alpha){const g=ctx.createRadialGradient(x,y,0,x,y,r);g.addColorStop(0,`rgba(${color},${alpha})`);g.addColorStop(.3,`rgba(${color},${alpha*.38})`);g.addColorStop(1,`rgba(${color},0)`);ctx.fillStyle=g;ctx.beginPath();ctx.arc(x,y,r,0,Math.PI*2);ctx.fill()}
-  function draw(time=0){
-    ctx.clearRect(0,0,width,height);const cx=width*.5,cy=height*.49,scale=Math.min(width,height)*.86,rot=reduce?0:Math.sin(time*.00008)*.025;
-    ctx.save();ctx.translate(cx,cy);ctx.rotate(rot);ctx.globalCompositeOperation='lighter';
-    points.forEach(p=>{const pulse=.78+.22*Math.sin(time*.001+p.phase);ctx.fillStyle=`rgba(${p.color[0]},${p.color[1]},${p.color[2]},${p.alpha*pulse})`;ctx.beginPath();ctx.arc(p.x*scale/Math.min(width,height),p.y*scale/Math.min(width,height),p.size,0,Math.PI*2);ctx.fill()});
-    ctx.restore();ctx.globalCompositeOperation='source-over';
-    glow(cx,cy,Math.min(width,height)*.095,'246,207,160',.5);glow(cx,cy,Math.min(width,height)*.035,'255,244,211',.9);
-    stars.forEach((s,i)=>{const x=cx+s[0]*width*.73,y=cy+s[1]*height*.72,a=.48+.28*Math.sin(time*.0012+i);glow(x,y,13+(i%2)*5,i===1?'194,173,212':'231,189,201',a);ctx.strokeStyle=`rgba(255,247,226,${a})`;ctx.lineWidth=.8;ctx.beginPath();ctx.moveTo(x-s[2]*2.2,y);ctx.lineTo(x+s[2]*2.2,y);ctx.moveTo(x,y-s[2]*2.2);ctx.lineTo(x,y+s[2]*2.2);ctx.stroke()});
-    if(!reduce){frame=requestAnimationFrame(draw)}
-  }
-  new ResizeObserver(()=>{cancelAnimationFrame(frame);if(!canvas.getBoundingClientRect().width)return;build();draw(performance.now())}).observe(canvas);
-  document.querySelectorAll('.thread-node').forEach(node=>node.addEventListener('click',()=>{document.querySelectorAll('.thread-node').forEach(item=>item.removeAttribute('aria-current'));node.setAttribute('aria-current','true')}));
-})();
+document.querySelectorAll('.thread-node').forEach(node=>node.addEventListener('click',()=>{document.querySelectorAll('.thread-node').forEach(item=>item.removeAttribute('aria-current'));node.setAttribute('aria-current','true')}));
 </script>
 
 <script src="memory-navigation.js" defer></script>
