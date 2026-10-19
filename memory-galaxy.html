@@ -117,7 +117,10 @@ body{font-family:"Noto Serif SC","Songti SC",serif;color:#F3EAF5}
 #memoryCount{position:fixed;left:50%;transform:translateX(-50%);bottom:calc(env(safe-area-inset-bottom) + 104px);z-index:12;min-height:44px;padding:9px 16px;border:1px solid #685974;border-radius:24px;background:#120c1bd9;color:#e5d9ee;font:12px sans-serif;white-space:nowrap}
 #memoryCount:focus-visible{outline:2px solid #e5d9ee;outline-offset:3px}
 .galaxy-back{position:fixed;z-index:13;left:18px;top:calc(env(safe-area-inset-top) + 22px);color:rgba(230,215,240,.7);text-decoration:none;font:13px Georgia,serif;padding:8px}
-html.embedded .head,html.embedded #loading,html.embedded #veil,html.embedded .hint,html.embedded #memoryCount,html.embedded .palette-switch,html.embedded .galaxy-back{display:none!important}
+.memory-legend{position:fixed;left:22px;bottom:calc(env(safe-area-inset-bottom) + 164px);z-index:7;margin:0;padding:0;list-style:none;display:grid;gap:7px;color:rgba(224,211,235,.64);font:400 11px/1.3 "Songti SC",serif;letter-spacing:.04em;pointer-events:none}
+.memory-legend li{display:flex;align-items:center;gap:8px}
+.memory-legend i{width:5px;height:5px;flex:none;border-radius:50%;background:var(--star-color);box-shadow:0 0 5px color-mix(in srgb,var(--star-color) 35%,transparent)}
+html.embedded .head,html.embedded #loading,html.embedded #veil,html.embedded .hint,html.embedded #memoryCount,html.embedded .palette-switch,html.embedded .galaxy-back,html.embedded .memory-legend{display:none!important}
 html.embedded,html.embedded body{background:#050209}
 </style>
 <script type="importmap">
@@ -147,6 +150,12 @@ html.embedded,html.embedded body{background:#050209}
   <div class="opening-zh">回忆渐明</div>
 </div>
 <div class="hint" id="hint">轻拖转动 · 双指缩放 · 点亮一段记忆</div>
+<ul class="memory-legend" aria-label="记忆星颜色说明">
+  <li><i style="--star-color:#e84291" aria-hidden="true"></i>共同记忆</li>
+  <li><i style="--star-color:#91a7c2" aria-hidden="true"></i>思考</li>
+  <li><i style="--star-color:#c4ad88" aria-hidden="true"></i>经历</li>
+  <li><i style="--star-color:#ac91c9" aria-hidden="true"></i>OS · 内心记录</li>
+</ul>
 <button id="memoryCount" hidden>1,089 颗示例 · 切换 40 颗</button>
 <div class="palette-switch" aria-label="同一画面切换配色"><button id="pinkPalette" aria-pressed="false">原粉紫</button><button id="bluePalette" aria-pressed="false">浅蓝</button><button id="lilacPalette" aria-pressed="true">藤紫</button><button id="rotationToggle" aria-pressed="false">暂停旋转</button></div>
 
