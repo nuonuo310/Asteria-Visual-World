@@ -48,12 +48,12 @@ button{cursor:pointer}
   background:linear-gradient(145deg,rgba(255,250,242,.035),transparent 34%,rgba(127,156,175,.035));
 }
 .nebula-window:after{
-  content:"示例星河";position:absolute;z-index:3;left:16px;bottom:13px;color:rgba(255,248,241,.56);
-  font:italic 8px/1 Georgia,serif;letter-spacing:.18em;text-transform:uppercase;
+  content:"Inner sky";position:absolute;z-index:3;left:19px;top:20px;color:rgba(237,222,240,.62);
+  font:italic 12px/1 Georgia,serif;letter-spacing:.055em;
 }
 .galaxy-preview{display:block;width:100%;height:100%;border:0;pointer-events:none}
 .galaxy-open{position:absolute;inset:0;z-index:4;text-decoration:none;border-radius:inherit}
-.galaxy-open span{position:absolute;right:16px;bottom:13px;font-size:11px;letter-spacing:.08em;color:rgba(245,231,250,.7)}
+.galaxy-open svg{position:absolute;right:18px;bottom:17px;width:21px;height:27px;fill:none;stroke:rgba(236,217,241,.7);stroke-width:.85}
 .galaxy-open:focus-visible{outline:2px solid #d5bedc;outline-offset:-5px}
 .section{margin-top:18px}
 .section-title{display:flex;align-items:center;gap:10px;margin:0 0 12px;color:#73594e;font-size:18px;font-weight:400;letter-spacing:.075em}
@@ -142,7 +142,7 @@ body.memory-detail-open .page>header,body.memory-detail-open .page>.nebula-windo
 
   <section class="nebula-window" aria-label="记忆星河预览，当前展示示例记忆">
     <iframe class="galaxy-preview" src="memory-galaxy.html?embed=1" title="双臂记忆星河" loading="lazy" tabindex="-1" aria-hidden="true"></iframe>
-    <a class="galaxy-open" href="memory-galaxy.html" aria-label="打开完整记忆星河"><span>轻点进入 ↗</span></a>
+    <a class="galaxy-open" href="memory-galaxy.html" aria-label="打开完整记忆星河"><svg viewBox="0 0 16 22" aria-hidden="true"><path d="M8 1C8.7 8.5 9.5 10 15 11C9.5 12 8.7 13.5 8 21C7.3 13.5 6.5 12 1 11C6.5 10 7.3 8.5 8 1Z"/></svg></a>
   </section>
 
   <section class="section" aria-labelledby="surfacedTitle">
